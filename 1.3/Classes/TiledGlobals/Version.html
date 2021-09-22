@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../../index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='../../img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='../../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='../../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../../Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='../../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../../Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='../../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../../Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='../../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -253,6 +251,30 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
               </li>
             </ul>
           </li>
@@ -269,38 +291,17 @@
 
                 </div>
               </div>
-            <h3 id='overview' class='heading'>Overview</h3>
-
-<p>Structure representing the framework version (semantic version).</p>
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>The <code>Version</code> structure represents the framework version (semantic version).</p>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">major</td>
-<td style="text-align: left">Framework major version.</td>
-</tr>
-<tr>
-<td style="text-align: left">minor</td>
-<td style="text-align: left">Framework minor version.</td>
-</tr>
-<tr>
-<td style="text-align: left">patch</td>
-<td style="text-align: left">Framework patch version.</td>
-</tr>
-<tr>
-<td style="text-align: left">build</td>
-<td style="text-align: left">Framework build versions.</td>
-</tr>
-<tr>
-<td style="text-align: left">suffix</td>
-<td style="text-align: left">Version suffix.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>major</code>: Framework major version.</li>
+<li><code>minor</code>: Framework minor version.</li>
+<li><code>patch</code>: Framework patch version.</li>
+<li><code><a href="../../Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC5buildSSSgvp">build</a></code>: Framework build versions.</li>
+<li><code>suffix</code>: Version suffix.</li>
+</ul>
 
           </div>
         </section>
@@ -321,8 +322,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC7VersionV6stringAESS_tcfc"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC7VersionV6stringAESS_tcfc"></a> -->
+                    <a name="/init(string:).s:7SKTiled12TiledGlobalsC7VersionV6stringAESS_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(string:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC7VersionV6stringAESS_tcfc">init(string:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC7VersionV6stringAESS_tcfc">init(string:<wbr>)</a>
                     </code>
                   </div>
@@ -362,7 +365,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L596-L621">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L733-L758">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -370,8 +373,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC7VersionV7integerAESS_tcfc"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC7VersionV7integerAESS_tcfc"></a> -->
+                    <a name="/init(integer:).s:7SKTiled12TiledGlobalsC7VersionV7integerAESS_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(integer:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC7VersionV7integerAESS_tcfc">init(integer:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC7VersionV7integerAESS_tcfc">init(integer:<wbr>)</a>
                     </code>
                   </div>
@@ -411,7 +416,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L626-L639">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L763-L776">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -419,8 +424,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC7VersionV12integerValues5Int32Vvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC7VersionV12integerValues5Int32Vvp"></a> -->
+                    <a name="/integerValue.s:7SKTiled12TiledGlobalsC7VersionV12integerValues5Int32Vvp"></a>
                     <a name="//apple_ref/swift/Property/integerValue" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC7VersionV12integerValues5Int32Vvp">integerValue</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC7VersionV12integerValues5Int32Vvp">integerValue</a>
                     </code>
                   </div>
@@ -441,7 +448,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L642-L648">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L779-L785">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

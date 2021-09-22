@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>TiledEventHandler Protocol Reference</title>
+    <link rel='stylesheet' type='text/css' href='../css/jazzy.css' />
+    <link rel='stylesheet' type='text/css' href='../css/highlight.css' />
+    <!-- <link rel='stylesheet' type='text/css' href='../css/custom.css' /> -->
+    <meta charset='utf-8'>
+    <script src='../js/jquery.min.js' defer></script>
+    <script src='../js/jazzy.js' defer></script>
+    <script src='../js/retina-preprocess.js' defer></script>
+    <script src='../js/retina.js' defer></script>
+  </head>
+  <body>
+
+    <a name='//apple_ref/swift/Protocol/TiledEventHandler' class='dashAnchor'></a>
+
+    <a title='TiledEventHandler Protocol Reference'></a>
+
+    <header class='header'>
+      <p class='header-col header-col--primary'>
+        <a class='header-link' href='../index.html'>
+          SKTiled v1.30b2 Docs
+        </a>
+         (91% documented)
+      </p>
+    
+        <p class='header-col header-col--secondary'>
+          <a class='header-link' href='https://github.com/mfessenden/SKTiled'>
+            <img class='header-icon' src='../img/gh.png'/>
+            View on GitHub
+          </a>
+        </p>
+        <p class='header-col header-col--secondary'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
+            <img class='header-icon' src='../img/dash.png'/>
+            Install in Dash
+          </a>
+        </p>
+    </header>
+
+    <p class='breadcrumbs'>
+      <a class='breadcrumb' href='../index.html'>SKTiled Reference</a>
+      <img class='carat' src='../img/carat.png' />
+      TiledEventHandler Protocol Reference
+    </p>
+
+    <div class='content-wrapper'>
+      <nav class='navigation'>
+        <ul class='nav-groups'>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Table of Contents.html'>Table of Contents</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../whats-new.html'>What&#39;s New</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../getting-started.html'>Getting Started</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../migration-guide.html'>Migration Guide</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../scene-setup.html'>Scene Setup</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../working-with-maps.html'>Working with Maps</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../working-with-tilesets.html'>Working with Tilesets</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../working-with-layers.html'>Working with Layers</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../working-with-tiles.html'>Working with Tiles</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../coordinates.html'>Coordinates</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../working-with-objects.html'>Working with Objects</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../tiled-properties.html'>Tiled Properties</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../gameplaykit.html'>GameplayKit</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../extending-sktiled.html'>Extending SKTiled</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../other-api-features.html'>Other API Features</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../debugging.html'>Debugging</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../troubleshooting.html'>Troubleshooting</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Protocols.html'>Protocols</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledMappableGeometryType.html'>TiledMappableGeometryType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledSceneDelegate.html'>TiledSceneDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TilemapDelegate.html'>TilemapDelegate</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TilesetDataSource.html'>TilesetDataSource</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Class Hierarchy.html'>Class Hierarchy</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTilemap.html'>SKTilemap</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC21CameraZoomConstraintsV'>– CameraZoomConstraints</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTilemap/RenderStatistics.html'>– RenderStatistics</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileset.html'>SKTileset</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledLayerObject.html'>TiledLayerObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledLayerObject/TileOffset.html'>– TileOffset</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileLayer.html'>SKTileLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKObjectGroup.html'>SKObjectGroup</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKGroupLayer.html'>SKGroupLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKImageLayer.html'>SKImageLayer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTile.html'>SKTile</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTile.html#/s:7SKTiled6SKTileC17TileAlignmentHintO'>– TileAlignmentHint</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTile.html#/s:7SKTiled6SKTileC12PhysicsShapeO'>– PhysicsShape</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTilesetData.html'>SKTilesetData</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileObject.html'>SKTileObject</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC4TypeO'>– TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC05TiledC5ShapeO'>– TiledObjectShape</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTileObject.html#/s:7SKTiled12SKTileObjectC13CollisionTypeO'>– CollisionType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTiledScene.html'>SKTiledScene</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTiledSceneCamera.html'>SKTiledSceneCamera</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/SKTiledGraphNode.html'>SKTiledGraphNode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TileAnimationFrame.html'>TileAnimationFrame</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TileFlags.html'>TileFlags</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TileID.html'>TileID</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Globals.html'>Globals</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals.html'>TiledGlobals</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals/Version.html'>– Version</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals/RenderQuality.html'>– RenderQuality</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals/DebugDisplayOptions.html'>– DebugDisplayOptions</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC15TimeDisplayModeO'>– TimeDisplayMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Enums/TileUpdateMode.html'>TileUpdateMode</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TextObjectAttributes.html'>TextObjectAttributes</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class='main-content'>
+
+        <section class='section'>
+          <div class='section-content'>
+            <h1>TiledEventHandler</h1>
+              <div class='declaration'>
+                <div class='language'>
+                  <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TiledEventHandler</span></code></pre>
+
+                </div>
+              </div>
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>The <code>TiledEventHandler</code> protocol delegates <em>optional</em> handlers for mouse (macOS) and touch (iOS) events.</p>
+<h3 id='instance-methods' class='heading'>Instance Methods</h3>
+
+<ul>
+<li><code>mouseOverTileHandler</code>: Custom tile mouse over event handler.       macOS<br></li>
+<li><code>mouseOverObjectHandler</code>: Custom object mouse over event handler.    macOS</li>
+<li><code>tileClickedHandler</code>: Custom tile mouse click event handler.     macOS</li>
+<li><code>objectClickedHandler</code>: Custom object mouse click event handler.   macOS</li>
+<li><code>tileTouchedHandler</code>: Custom tile touch event handler.            iOS</li>
+<li><code>objectTouchedHandler</code>: Custom object touch event handler.          iOS</li>
+</ul>
+<h2 id='usage' class='heading'>Usage</h2>
+<h3 id='mouse-amp-touch-handlers' class='heading'>Mouse &amp; Touch Handlers</h3>
+
+<p>The optional delegate method <a href="TiledEventHandler.html#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)mouseOverTileHandlerWithGlobalID:ofType:"><code>mouseOverTileHandler</code></a> allows mouse and touch event handlers to be added to tiles and vector objects:</p>
+<pre class="highlight swift"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">mouseOverTileHandler</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">((</span><span class="kt">SKTile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())?</span> <span class="p">{</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">tileType</span> <span class="o">=</span> <span class="n">ofType</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">nil</span>
+    <span class="p">}</span>
+
+    <span class="k">switch</span> <span class="n">tileType</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="s">"floors"</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span> <span class="p">(</span><span class="n">tile</span><span class="p">)</span> <span class="k">in</span> <span class="n">tile</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="nf">setValue</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="s">"color"</span><span class="p">,</span> <span class="s">"#308CC6"</span><span class="p">)</span> <span class="p">}</span>
+
+        <span class="k">case</span> <span class="s">"walls"</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span> <span class="p">(</span><span class="n">tile</span><span class="p">)</span> <span class="k">in</span> <span class="n">tile</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="nf">setValue</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="s">"color"</span><span class="p">,</span> <span class="s">"#8E6214"</span><span class="p">)</span> <span class="p">}</span>
+
+        <span class="k">default</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">nil</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>The <a href="TiledEventHandler.html#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:button:"><code>tileClickedHandler</code></a> allows you to set a custom click handler for tiles &amp; objects:</p>
+<pre class="highlight swift"><code><span class="kd">@objc</span> <span class="kd">func</span> <span class="nf">tileClickedHandler</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">button</span><span class="p">:</span> <span class="kt">UInt8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">((</span><span class="kt">SKTile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())?</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="n">globalID</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span> <span class="p">(</span><span class="n">tile</span><span class="p">)</span> <span class="k">in</span>
+                <span class="n">tile</span><span class="o">.</span><span class="n">tileData</span><span class="o">.</span><span class="nf">setValue</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="s">"wasVisited"</span><span class="p">,</span> <span class="s">"true"</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">default</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">nil</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+          </div>
+        </section>
+
+        <section class='section'>
+          <div class='section-content'>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledEventHandler(im)onCreateWithGlobalID:ofType:"></a> -->
+                    <a name="/onCreate(globalID:ofType:).c:@M@SKTiled@objc(pl)TiledEventHandler(im)onCreateWithGlobalID:ofType:"></a>
+                    <a name="//apple_ref/swift/Method/onCreate(globalID:ofType:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)onCreateWithGlobalID:ofType:">onCreate(globalID:<wbr>ofType:<wbr>)</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)onCreateWithGlobalID:ofType:">onCreate(globalID:<wbr>ofType:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Custom handler for tiles at creation time.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">onCreate</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">((</span><span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>globalID</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>tile global id.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>ofType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>optional tile type.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledEventHandler.swift#L102">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledEventHandler(im)onCreateOfType:"></a> -->
+                    <a name="/onCreate(ofType:).c:@M@SKTiled@objc(pl)TiledEventHandler(im)onCreateOfType:"></a>
+                    <a name="//apple_ref/swift/Method/onCreate(ofType:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)onCreateOfType:">onCreate(ofType:<wbr>)</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)onCreateOfType:">onCreate(ofType:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Custom mouse over handler for objects matching the given type <strong>(macOS only)</strong>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">onCreate</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">((</span><span class="kt"><a href="../Classes/SKTileObject.html">SKTileObject</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>ofType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>optional object type.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledEventHandler.swift#L108">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledEventHandler(im)mouseOverTileHandlerWithGlobalID:ofType:"></a> -->
+                    <a name="/mouseOverTileHandler(globalID:ofType:).c:@M@SKTiled@objc(pl)TiledEventHandler(im)mouseOverTileHandlerWithGlobalID:ofType:"></a>
+                    <a name="//apple_ref/swift/Method/mouseOverTileHandler(globalID:ofType:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)mouseOverTileHandlerWithGlobalID:ofType:">mouseOverTileHandler(globalID:<wbr>ofType:<wbr>)</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)mouseOverTileHandlerWithGlobalID:ofType:">mouseOverTileHandler(globalID:<wbr>ofType:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Custom mouse over handler for tiles matching the given properties <strong>(macOS only)</strong>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">mouseOverTileHandler</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">((</span><span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>globalID</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>tile global id.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>ofType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>optional tile type.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledEventHandler.swift#L117">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:button:"></a> -->
+                    <a name="/tileClickedHandler(globalID:ofType:button:).c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:button:"></a>
+                    <a name="//apple_ref/swift/Method/tileClickedHandler(globalID:ofType:button:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:button:">tileClickedHandler(globalID:<wbr>ofType:<wbr>button:<wbr>)</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:button:">tileClickedHandler(globalID:<wbr>ofType:<wbr>button:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Custom mouse click handler for tiles matching the given properties <strong>(macOS only)</strong>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">tileClickedHandler</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">button</span><span class="p">:</span> <span class="kt">UInt8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">((</span><span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>clicks</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>number of mouse clicks required.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>globalID</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>tile global id.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>ofType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>optional tile type.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>button</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>mouse button.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledEventHandler.swift#L127">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledEventHandler(im)mouseOverObjectHandlerWithID:ofType:"></a> -->
+                    <a name="/mouseOverObjectHandler(withID:ofType:).c:@M@SKTiled@objc(pl)TiledEventHandler(im)mouseOverObjectHandlerWithID:ofType:"></a>
+                    <a name="//apple_ref/swift/Method/mouseOverObjectHandler(withID:ofType:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)mouseOverObjectHandlerWithID:ofType:">mouseOverObjectHandler(withID:<wbr>ofType:<wbr>)</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)mouseOverObjectHandlerWithID:ofType:">mouseOverObjectHandler(withID:<wbr>ofType:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Custom mouse over handler for objects matching the given properties <strong>(macOS only)</strong>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">mouseOverObjectHandler</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">((</span><span class="kt"><a href="../Classes/SKTileObject.html">SKTileObject</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>withID</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>object id.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>ofType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>optional object type.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledEventHandler.swift#L135">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledEventHandler(im)objectClickedHandlerWithID:ofType:button:"></a> -->
+                    <a name="/objectClickedHandler(withID:ofType:button:).c:@M@SKTiled@objc(pl)TiledEventHandler(im)objectClickedHandlerWithID:ofType:button:"></a>
+                    <a name="//apple_ref/swift/Method/objectClickedHandler(withID:ofType:button:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)objectClickedHandlerWithID:ofType:button:">objectClickedHandler(withID:<wbr>ofType:<wbr>button:<wbr>)</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)objectClickedHandlerWithID:ofType:button:">objectClickedHandler(withID:<wbr>ofType:<wbr>button:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Custom mouse click handler for objects matching the given properties <strong>(macOS only)</strong>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">objectClickedHandler</span><span class="p">(</span><span class="nv">withID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">button</span><span class="p">:</span> <span class="kt">UInt8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">((</span><span class="kt"><a href="../Classes/SKTileObject.html">SKTileObject</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>withID</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>object id.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>ofType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>optional object type.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>button</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>mouse button.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledEventHandler.swift#L144">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/"></a> -->
+                    <a name="/tileTouchedHandler(globalID:ofType:userData:)."></a>
+                    <a name="//apple_ref/swift/Method/tileTouchedHandler(globalID:ofType:userData:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/">tileTouchedHandler(globalID:<wbr>ofType:<wbr>userData:<wbr>)</a> -->
+                    <a class="token" href="#/">tileTouchedHandler(globalID:<wbr>ofType:<wbr>userData:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Custom touch handler for tiles matching the given properties <strong>(iOS only)</strong>.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/"></a> -->
+                    <a name="/objectTouchedHandler(withID:ofType:userData:)."></a>
+                    <a name="//apple_ref/swift/Method/objectTouchedHandler(withID:ofType:userData:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/">objectTouchedHandler(withID:<wbr>ofType:<wbr>userData:<wbr>)</a> -->
+                    <a class="token" href="#/">objectTouchedHandler(withID:<wbr>ofType:<wbr>userData:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Custom touch handler for objects matching the given properties <strong>(iOS only)</strong>.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledEventHandler(py)coordinateChangeHandler"></a> -->
+                    <a name="/coordinateChangeHandler.c:@M@SKTiled@objc(pl)TiledEventHandler(py)coordinateChangeHandler"></a>
+                    <a name="//apple_ref/swift/Property/coordinateChangeHandler" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(py)coordinateChangeHandler">coordinateChangeHandler</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledEventHandler(py)coordinateChangeHandler">coordinateChangeHandler</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Custom handler for when the <code><a href="../Classes/SKTilemap.html#/c:@M@SKTiled@objc(cs)SKTilemap(py)currentCoordinate">SKTilemap.currentCoordinate</a></code> value changes. The resulting closure contains a tuple of values:</p>
+
+<ul>
+<li>old: old coordinate.</li>
+<li>new: new coordinate.</li>
+<li>isValid: coordinate is a valid map coordinate.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">optional</span> <span class="k">var</span> <span class="nv">coordinateChangeHandler</span><span class="p">:</span> <span class="p">((</span><span class="n">simd_int2</span><span class="p">,</span> <span class="n">simd_int2</span><span class="p">,</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>coordinate change handler.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledEventHandler.swift#L174">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class='footer'>
+      <p>© 2020 <a class="link" href="https://github.com/mfessenden" target="_blank" rel="external"><b>Michael Fessenden</b></a>. All rights reserved. Generated by <a class='link' href='https://github.com/realm/jazzy' target='_blank' rel='external'>jazzy v0.13.2</a></p>
+    </section>
+  </body>
+</div>
+</html>

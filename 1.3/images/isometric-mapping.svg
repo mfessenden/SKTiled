@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="203px" height="103px" viewBox="0 0 203 103" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>isometric-mapping</title>
+    <g id="isometric-mapping" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#000000" x="0" y="0" width="203" height="103"></rect>
+        <g id="Lines" transform="translate(21.669933, 11.805826)" stroke="#FF0F0F" stroke-dasharray="4,2">
+            <line x1="64.1895844" y1="-7.12086018e-15" x2="159.330067" y2="47.1827175" id="VLine0"></line>
+            <line x1="49.1895844" y1="8" x2="144.330067" y2="55.1827175" id="VLine1"></line>
+            <line x1="33.1895844" y1="16" x2="128.330067" y2="63.1827175" id="VLine2"></line>
+            <line x1="16.1895844" y1="24" x2="111.330067" y2="71.1827175" id="VLine3"></line>
+            <line x1="0.189584353" y1="32" x2="95.3300672" y2="79.1827175" id="VLine4"></line>
+            <line x1="-2.84217094e-14" y1="47.1827175" x2="95.5676914" y2="0" id="HLine0"></line>
+            <line x1="16" y1="55.1827175" x2="111.567691" y2="8" id="HLine1"></line>
+            <line x1="32" y1="63.1827175" x2="127.567691" y2="16" id="HLine2"></line>
+            <line x1="48" y1="71.1827175" x2="143.567691" y2="24" id="HLine3"></line>
+            <line x1="64" y1="79.1827175" x2="159.567691" y2="32" id="HLine4"></line>
+        </g>
+        <path d="M102,3.25016022 L198,51.2501602 L102,99.2501602 L6,51.2501602 L102,3.25016022 Z" id="Frame" stroke="#FF0F0F" stroke-dasharray="4,2"></path>
+    </g>
+</svg>

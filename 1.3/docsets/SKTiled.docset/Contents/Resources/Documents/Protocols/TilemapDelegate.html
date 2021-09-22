@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -253,6 +251,30 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
               </li>
             </ul>
           </li>
@@ -266,118 +288,45 @@
               <div class='declaration'>
                 <div class='language'>
                   <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TilemapDelegate</span> <span class="p">:</span> <span class="kt">TiledEventHandler</span></code></pre>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TilemapDelegate</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/TiledEventHandler.html">TiledEventHandler</a></span></code></pre>
 
                 </div>
               </div>
-            <h2 id='overview' class='heading'>Overview</h2>
-
-<p>An interface to a tilemap object that allows the user to interact with it as it is being created as well as customizing its properties &amp; behaviors.</p>
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>An interface to a tilemap object that allows the user to interact with it as it is being created as well as customizing its properties &amp; behaviors.</p>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code>zDeltaForLayers</code></td>
-<td style="text-align: left">Default z-distance between layers.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>zDeltaForLayers</code>:  Default z-distance between layers.</li>
+</ul>
 <h3 id='instance-methods' class='heading'>Instance Methods</h3>
 
 <p>Delegate callbacks are called asynchronously as the map is being read from disk and rendered:</p>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Method</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code>didBeginParsing</code></td>
-<td style="text-align: left">Called when the tilemap is instantiated.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>didAddTileset</code></td>
-<td style="text-align: left">Called when a tileset is added to a map.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>didAddLayer</code></td>
-<td style="text-align: left">Called when a layer is added to a tilemap.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>didReadMap</code></td>
-<td style="text-align: left">Called when the tilemap is finished parsing.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>didRenderMap</code></td>
-<td style="text-align: left">Called when the tilemap layers are finished rendering.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>didAddNavigationGraph</code></td>
-<td style="text-align: left">Called when the a navigation graph is built for a layer.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>objectForTileType</code></td>
-<td style="text-align: left">Specify a custom tile object for use in tile layers.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>objectForVectorType</code></td>
-<td style="text-align: left">Specify a custom object for use in object groups.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>objectForGraphType</code></td>
-<td style="text-align: left">Specify a custom graph node object for use in navigation graphs.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>willAddTile</code></td>
-<td style="text-align: left">Called when a tile is about to be built.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>didAddTile</code></td>
-<td style="text-align: left">Called when a tile has just been built.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>attributesForNodes</code></td>
-<td style="text-align: left">Add custom attributes for Tiled nodes of the given type</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>didBeginParsing</code>:  called when the tilemap is instantiated.</li>
+<li><code>didAddTileset</code>:  called when a tileset is added to a map.</li>
+<li><code>didAddLayer</code>:  called when a layer is added to a tilemap.</li>
+<li><code>didReadMap</code>:  called when the tilemap is finished parsing.</li>
+<li><code>didRenderMap</code>:  called when the tilemap layers are finished rendering.</li>
+<li><code>didAddNavigationGraph</code>:  called when the a navigation graph is built for a layer.</li>
+<li><code>objectForTileType</code>:  specify a custom tile object for use in tile layers.</li>
+<li><code>objectForVectorType</code>:  specify a custom object for use in object groups.</li>
+<li><code>objectForGraphType</code>:  specify a custom graph node object for use in navigation graphs.</li>
+<li><code>willAddTile</code>:  called when a tile is about to be built.</li>
+<li><code>didAddTile</code>:  called when a tile has just been built.</li>
+<li><code>attributesForNodes</code>:  Add custom attributes for Tiled nodes of the given type</li>
+</ul>
 <h3 id='event-handlers' class='heading'>Event Handlers</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Method</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code>mouseOverTileHandler</code></td>
-<td style="text-align: left">Custom tile mouse event handler (macOS only).</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>mouseOverObjectHandler</code></td>
-<td style="text-align: left">Custom object mouse event handler (macOS only).</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>tileClickedHandler</code></td>
-<td style="text-align: left">Custom tile mouse event handler (macOS only).</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>objectClickedHandler</code></td>
-<td style="text-align: left">Custom object mouse event handler (macOS only).</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>tileTouchedHandler</code></td>
-<td style="text-align: left">Custom tile touch event handler (iOS only).</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>objectTouchedHandler</code></td>
-<td style="text-align: left">Custom object touch event handler (iOS only).</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>mouseOverTileHandler</code>:  custom tile mouse event handler <strong>(macOS only)</strong>.</li>
+<li><code>mouseOverObjectHandler</code>:  custom object mouse event handler <strong>(macOS only)</strong>.</li>
+<li><code>tileClickedHandler</code>:  custom tile mouse event handler <strong>(macOS only)</strong>.</li>
+<li><code>objectClickedHandler</code>:  custom object mouse event handler <strong>(macOS only)</strong>.</li>
+<li><code>tileTouchedHandler</code>:  custom tile touch event handler <strong>(iOS only)</strong>.</li>
+<li><code>objectTouchedHandler</code>:  custom object touch event handler <strong>(iOS only)</strong>.</li>
+</ul>
 <h3 id='usage' class='heading'>Usage</h3>
 <h3 id='custom-objects' class='heading'>Custom Objects</h3>
 
@@ -391,7 +340,7 @@
 </code></pre>
 <h3 id='attribute-overrides' class='heading'>Attribute Overrides</h3>
 
-<p>The delegate method <a href="TilemapDelegate.html#attributesForNodes(ofType:named:globalIDs:)"><code>attributesForNodes</code></a> allows custom attributes to be added to an object based on global id, node type or name:</p>
+<p>The delegate method <a href="TilemapDelegate.html#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)attributesForNodesOfType:named:globalIDs:"><code>attributesForNodes</code></a> allows custom attributes to be added to an object based on global id, node type or name:</p>
 <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">attributesForNodes</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">named</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">globalIDs</span><span class="p">:</span> <span class="p">[</span><span class="kt">UInt32</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">]?</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">ofType</span> <span class="o">==</span> <span class="s">"barrel"</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">globalIDs</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="p">{</span>
@@ -405,7 +354,7 @@
 </code></pre>
 <h3 id='mouse-amp-touch-handlers' class='heading'>Mouse &amp; Touch Handlers</h3>
 
-<p>The optional delegate method <a href="TilemapDelegate.html#/s:7SKTiled17TilemapDelegateP18attributesForNodes6ofType5named9globalIDsSDyS2SGSgSSSg_AJSays6UInt32VGtF"><code>mouseOverTileHandler</code></a> allows mouse and touch event handlers to be added to tiles and vector objects:</p>
+<p>The optional delegate method <a href="TiledEventHandler.html#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)mouseOverTileHandlerWithGlobalID:ofType:"><code>mouseOverTileHandler</code></a> allows mouse and touch event handlers to be added to tiles and vector objects:</p>
 <pre class="highlight swift"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">mouseOverTileHandler</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">((</span><span class="kt">SKTile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())?</span> <span class="p">{</span>
     <span class="k">guard</span> <span class="k">let</span> <span class="nv">tileType</span> <span class="o">=</span> <span class="n">ofType</span> <span class="k">else</span> <span class="p">{</span>
         <span class="k">return</span> <span class="kc">nil</span>
@@ -426,7 +375,7 @@
 
 <p>This method allows a developer to filter tiles by global id or type, or simply return a closure for all objects globally (regardless of global ID or type).</p>
 
-<p>The <a href="TiledEventHandler.html#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:"><code>tileClickedHandler</code></a> allows you to set a custom click handler for tiles &amp; objects:</p>
+<p>The <a href="TiledEventHandler.html#/c:@M@SKTiled@objc(pl)TiledEventHandler(im)tileClickedHandlerWithGlobalID:ofType:button:"><code>tileClickedHandler</code></a> allows you to set a custom click handler for tiles &amp; objects:</p>
 <pre class="highlight swift"><code><span class="kd">@objc</span> <span class="kd">func</span> <span class="nf">tileClickedHandler</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">button</span><span class="p">:</span> <span class="kt">UInt8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">((</span><span class="kt">SKTile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())?</span> <span class="p">{</span>
     <span class="k">switch</span> <span class="n">globalID</span> <span class="p">{</span>
         <span class="k">case</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">:</span>
@@ -455,12 +404,23 @@
         <section class='section'>
           <div class='section-content'>
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Tilemap%20Properties"></a>
+                <a name="//apple_ref/swift/Section/Tilemap Properties" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Tilemap%20Properties"></a>
+                  <h3 class="section-name"><p>Tilemap Properties</p>
+</h3>
+                </div>
+              </div>
               <ul class="item-container">
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(py)zDeltaForLayers"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(py)zDeltaForLayers"></a> -->
+                    <a name="/zDeltaForLayers.c:@M@SKTiled@objc(pl)TilemapDelegate(py)zDeltaForLayers"></a>
                     <a name="//apple_ref/swift/Property/zDeltaForLayers" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(py)zDeltaForLayers">zDeltaForLayers</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(py)zDeltaForLayers">zDeltaForLayers</a>
                     </code>
                   </div>
@@ -482,16 +442,31 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TilemapDelegate.swift#L169">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TilemapDelegate.swift#L161">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Creation%20&amp;%20Rendering"></a>
+                <a name="//apple_ref/swift/Section/Creation &amp; Rendering" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Creation%20&amp;%20Rendering"></a>
+                  <h3 class="section-name"><p>Creation &amp; Rendering</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didBeginParsing:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didBeginParsing:"></a> -->
+                    <a name="/didBeginParsing(_:).c:@M@SKTiled@objc(pl)TilemapDelegate(im)didBeginParsing:"></a>
                     <a name="//apple_ref/swift/Method/didBeginParsing(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didBeginParsing:">didBeginParsing(_:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didBeginParsing:">didBeginParsing(_:<wbr>)</a>
                     </code>
                   </div>
@@ -532,7 +507,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TilemapDelegate.swift#L174">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TilemapDelegate.swift#L168">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -540,8 +515,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTileset:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTileset:"></a> -->
+                    <a name="/didAddTileset(_:).c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTileset:"></a>
                     <a name="//apple_ref/swift/Method/didAddTileset(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTileset:">didAddTileset(_:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTileset:">didAddTileset(_:<wbr>)</a>
                     </code>
                   </div>
@@ -582,7 +559,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TilemapDelegate.swift#L179">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TilemapDelegate.swift#L173">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -590,8 +567,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddLayer:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddLayer:"></a> -->
+                    <a name="/didAddLayer(_:).c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddLayer:"></a>
                     <a name="//apple_ref/swift/Method/didAddLayer(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddLayer:">didAddLayer(_:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddLayer:">didAddLayer(_:<wbr>)</a>
                     </code>
                   </div>
@@ -632,7 +611,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TilemapDelegate.swift#L184">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TilemapDelegate.swift#L178">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -640,8 +619,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didReadMap:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didReadMap:"></a> -->
+                    <a name="/didReadMap(_:).c:@M@SKTiled@objc(pl)TilemapDelegate(im)didReadMap:"></a>
                     <a name="//apple_ref/swift/Method/didReadMap(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didReadMap:">didReadMap(_:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didReadMap:">didReadMap(_:<wbr>)</a>
                     </code>
                   </div>
@@ -682,7 +663,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TilemapDelegate.swift#L189">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TilemapDelegate.swift#L183">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -690,8 +671,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didRenderMap:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didRenderMap:"></a> -->
+                    <a name="/didRenderMap(_:).c:@M@SKTiled@objc(pl)TilemapDelegate(im)didRenderMap:"></a>
                     <a name="//apple_ref/swift/Method/didRenderMap(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didRenderMap:">didRenderMap(_:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didRenderMap:">didRenderMap(_:<wbr>)</a>
                     </code>
                   </div>
@@ -732,7 +715,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TilemapDelegate.swift#L194">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TilemapDelegate.swift#L188">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -740,8 +723,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddNavigationGraph:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddNavigationGraph:"></a> -->
+                    <a name="/didAddNavigationGraph(_:).c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddNavigationGraph:"></a>
                     <a name="//apple_ref/swift/Method/didAddNavigationGraph(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddNavigationGraph:">didAddNavigationGraph(_:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddNavigationGraph:">didAddNavigationGraph(_:<wbr>)</a>
                     </code>
                   </div>
@@ -782,16 +767,31 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TilemapDelegate.swift#L199">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TilemapDelegate.swift#L193">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Custom%20Object%20Types"></a>
+                <a name="//apple_ref/swift/Section/Custom Object Types" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Custom%20Object%20Types"></a>
+                  <h3 class="section-name"><p>Custom Object Types</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForTileTypeWithNamed:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForTileTypeWithNamed:"></a> -->
+                    <a name="/objectForTileType(named:).c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForTileTypeWithNamed:"></a>
                     <a name="//apple_ref/swift/Method/objectForTileType(named:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForTileTypeWithNamed:">objectForTileType(named:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForTileTypeWithNamed:">objectForTileType(named:<wbr>)</a>
                     </code>
                   </div>
@@ -836,7 +836,7 @@
                         <p>tile object type.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TilemapDelegate.swift#L205">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TilemapDelegate.swift#L201">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -844,8 +844,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForVectorTypeWithNamed:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForVectorTypeWithNamed:"></a> -->
+                    <a name="/objectForVectorType(named:).c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForVectorTypeWithNamed:"></a>
                     <a name="//apple_ref/swift/Method/objectForVectorType(named:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForVectorTypeWithNamed:">objectForVectorType(named:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForVectorTypeWithNamed:">objectForVectorType(named:<wbr>)</a>
                     </code>
                   </div>
@@ -890,7 +892,7 @@
                         <p>vector object type.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TilemapDelegate.swift#L211">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TilemapDelegate.swift#L207">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -898,8 +900,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForGraphTypeWithNamed:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForGraphTypeWithNamed:"></a> -->
+                    <a name="/objectForGraphType(named:).c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForGraphTypeWithNamed:"></a>
                     <a name="//apple_ref/swift/Method/objectForGraphType(named:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForGraphTypeWithNamed:">objectForGraphType(named:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForGraphTypeWithNamed:">objectForGraphType(named:<wbr>)</a>
                     </code>
                   </div>
@@ -944,16 +948,31 @@
                         <p>pathfinding graph node type.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TilemapDelegate.swift#L217">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TilemapDelegate.swift#L213">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/User%20Customization"></a>
+                <a name="//apple_ref/swift/Section/User Customization" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/User%20Customization"></a>
+                  <h3 class="section-name"><p>User Customization</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)willAddTileWithGlobalID:coord:in:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)willAddTileWithGlobalID:coord:in:"></a> -->
+                    <a name="/willAddTile(globalID:coord:in:).c:@M@SKTiled@objc(pl)TilemapDelegate(im)willAddTileWithGlobalID:coord:in:"></a>
                     <a name="//apple_ref/swift/Method/willAddTile(globalID:coord:in:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)willAddTileWithGlobalID:coord:in:">willAddTile(globalID:<wbr>coord:<wbr>in:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)willAddTileWithGlobalID:coord:in:">willAddTile(globalID:<wbr>coord:<wbr>in:<wbr>)</a>
                     </code>
                   </div>
@@ -1010,7 +1029,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>layer name (optional).</p>
+                                  <p>optional parent layer name.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1022,7 +1041,7 @@
                         <p>tile global id.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TilemapDelegate.swift#L226">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TilemapDelegate.swift#L224">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1030,8 +1049,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)willAddTileWithGlobalID:in:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)willAddTileWithGlobalID:in:"></a> -->
+                    <a name="/willAddTile(globalID:in:).c:@M@SKTiled@objc(pl)TilemapDelegate(im)willAddTileWithGlobalID:in:"></a>
                     <a name="//apple_ref/swift/Method/willAddTile(globalID:in:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)willAddTileWithGlobalID:in:">willAddTile(globalID:<wbr>in:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)willAddTileWithGlobalID:in:">willAddTile(globalID:<wbr>in:<wbr>)</a>
                     </code>
                   </div>
@@ -1076,7 +1097,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>layer name (optional).</p>
+                                  <p>optional parent layer name.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1088,7 +1109,7 @@
                         <p>tile global id.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TilemapDelegate.swift#L234">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TilemapDelegate.swift#L232">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1096,9 +1117,11 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTile:coord:in:"></a>
-                    <a name="//apple_ref/swift/Method/didAddTile(_:coord:in:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTile:coord:in:">didAddTile(_:<wbr>coord:<wbr>in:<wbr>)</a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTile:coord:in::"></a> -->
+                    <a name="/didAddTile(_:coord:in:_:).c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTile:coord:in::"></a>
+                    <a name="//apple_ref/swift/Method/didAddTile(_:coord:in:_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTile:coord:in::">didAddTile(_:<wbr>coord:<wbr>in:<wbr>_:<wbr>)</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTile:coord:in::">didAddTile(_:<wbr>coord:<wbr>in:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1106,7 +1129,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Called whem a tile has just been built in a layer.</p>
+                        <p>Called whem a tile has just been built in a layer. This method allows for the creation of custom object types at a given coordinate.</p>
 
                       </div>
                       <div class="declaration">
@@ -1114,7 +1137,7 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">didAddTile</span><span class="p">(</span><span class="n">_</span> <span class="nv">tile</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="p">,</span> <span class="nv">coord</span><span class="p">:</span> <span class="n">simd_int2</span><span class="p">,</span> <span class="nv">in</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span></code></pre>
+<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">didAddTile</span><span class="p">(</span><span class="n">_</span> <span class="nv">tile</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="p">,</span> <span class="nv">coord</span><span class="p">:</span> <span class="n">simd_int2</span><span class="p">,</span> <span class="nv">in</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="n">_</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">((</span><span class="n">_</span> <span class="nv">tile</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?)</span></code></pre>
 
                         </div>
                       </div>
@@ -1154,7 +1177,19 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>layer name.</p>
+                                  <p>optional parent layer name.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>optional completion block.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1162,7 +1197,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TilemapDelegate.swift#L242">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TilemapDelegate.swift#L241">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1170,9 +1205,11 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTile:in:"></a>
-                    <a name="//apple_ref/swift/Method/didAddTile(_:in:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTile:in:">didAddTile(_:<wbr>in:<wbr>)</a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTile:in::"></a> -->
+                    <a name="/didAddTile(_:in:_:).c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTile:in::"></a>
+                    <a name="//apple_ref/swift/Method/didAddTile(_:in:_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTile:in::">didAddTile(_:<wbr>in:<wbr>_:<wbr>)</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)didAddTile:in::">didAddTile(_:<wbr>in:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1188,7 +1225,7 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">didAddTile</span><span class="p">(</span><span class="n">_</span> <span class="nv">tile</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="p">,</span> <span class="nv">in</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span></code></pre>
+<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">didAddTile</span><span class="p">(</span><span class="n">_</span> <span class="nv">tile</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="p">,</span> <span class="nv">in</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="n">_</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">((</span><span class="n">_</span> <span class="nv">tile</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTile.html">SKTile</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?)</span></code></pre>
 
                         </div>
                       </div>
@@ -1216,7 +1253,19 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>layer name.</p>
+                                  <p>optional parent layer name.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>optional completion block.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1224,7 +1273,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TilemapDelegate.swift#L249">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TilemapDelegate.swift#L249">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1232,8 +1281,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)attributesForNodesOfType:named:globalIDs:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)attributesForNodesOfType:named:globalIDs:"></a> -->
+                    <a name="/attributesForNodes(ofType:named:globalIDs:).c:@M@SKTiled@objc(pl)TilemapDelegate(im)attributesForNodesOfType:named:globalIDs:"></a>
                     <a name="//apple_ref/swift/Method/attributesForNodes(ofType:named:globalIDs:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)attributesForNodesOfType:named:globalIDs:">attributesForNodes(ofType:<wbr>named:<wbr>globalIDs:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)attributesForNodesOfType:named:globalIDs:">attributesForNodes(ofType:<wbr>named:<wbr>globalIDs:<wbr>)</a>
                     </code>
                   </div>
@@ -1242,7 +1293,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Provides custom attributes for objects of a certain <em>Tiled type</em>.</p>
+                        <p>Provides custom attributes for objects for given <em>Tiled types</em>.</p>
 
                       </div>
                       <div class="declaration">
@@ -1290,7 +1341,83 @@
                         <p>custom attributes dictionary.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TilemapDelegate.swift#L257">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TilemapDelegate.swift#L257">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TilemapDelegate(im)customNodeForPointObjectOfType:attributes:inLayer:"></a> -->
+                    <a name="/customNodeForPointObject(ofType:attributes:inLayer:).c:@M@SKTiled@objc(pl)TilemapDelegate(im)customNodeForPointObjectOfType:attributes:inLayer:"></a>
+                    <a name="//apple_ref/swift/Method/customNodeForPointObject(ofType:attributes:inLayer:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)customNodeForPointObjectOfType:attributes:inLayer:">customNodeForPointObject(ofType:<wbr>attributes:<wbr>inLayer:<wbr>)</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)customNodeForPointObjectOfType:attributes:inLayer:">customNodeForPointObject(ofType:<wbr>attributes:<wbr>inLayer:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Provides a mechanism for substitute custom SpriteKit node types in place of <strong>Tiled</strong> point objects.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">customNodeForPointObject</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">attributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">],</span> <span class="nv">inLayer</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">SKNode</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>ofType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>point object type.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>attributes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>attributes parsed from <strong>Tiled</strong> reference.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>inLayer</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>optional parent layer name.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TilemapDelegate.swift#L265">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

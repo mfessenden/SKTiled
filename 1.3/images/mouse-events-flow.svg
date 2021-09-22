@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200px" height="300px" viewBox="0 0 1200 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>mouse-events-flow</title>
+    <defs>
+        <filter x="-1.3%" y="-4.0%" width="102.6%" height="107.7%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.341877371   0 0 0 0 0.341877371   0 0 0 0 0.341877371  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-0.9%" y="-4.3%" width="101.8%" height="108.6%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="mouse-events-flow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#FFFFFF" x="0" y="0" width="1200" height="300"></rect>
+        <g id="Group" transform="translate(11.000000, 28.000000)">
+            <g id="Connectors" filter="url(#filter-1)" transform="translate(269.500000, 26.000000)" fill="#979797" fill-rule="nonzero">
+                <path id="Connection3" d="M380.040663,95.0585168 L380.131749,95.1044245 L531.876,184.836 L534.072212,181.122412 C534.247521,180.825948 534.620637,180.715327 534.942692,180.848846 L535.037528,180.896285 C535.133182,180.952848 535.214901,181.029977 535.276215,181.121564 L535.276215,181.121564 L541.795454,190.859644 C542.013578,191.185465 541.92721,191.613099 541.602547,191.814791 C541.475353,191.893809 541.323874,191.929294 541.170845,191.915919 L541.170845,191.915919 L529.496532,190.895583 C529.105928,190.861444 528.805736,190.524362 528.826034,190.14269 C528.83174,190.035403 528.862932,189.931824 528.917138,189.840156 L528.917138,189.840156 L531.113,186.126 L379.368251,96.3955755 C379.01171,96.1847414 378.89359,95.7247925 379.104425,95.368251 C379.297689,95.0414213 379.700279,94.9149326 380.040663,95.0585168 Z"></path>
+                <path id="Connection2" d="M530.13248,90 C530.243606,90 530.353207,90.0247951 530.452601,90.0724216 L530.452601,90.0724216 L541.020818,95.1363589 C541.374414,95.3057905 541.517738,95.7178447 541.340939,96.0567079 C541.271675,96.1894653 541.159348,96.2971121 541.020818,96.3634908 L541.020818,96.3634908 L530.452601,101.427428 C530.099005,101.59686 529.669035,101.459508 529.492237,101.120645 C529.44254,101.025392 529.416667,100.920358 529.416667,100.813862 L529.416667,100.813862 L529.416,96.5 L379.75,96.5 C379.335786,96.5 379,96.1642136 379,95.75 C379,95.3703042 379.282154,95.056509 379.648229,95.0068466 L379.75,95 L529.416,95 L529.416667,90.6859876 C529.416667,90.3386988 529.685959,90.051686 530.035348,90.0062623 Z"></path>
+                <path id="Connection1" d="M541.170769,-0.41604825 C541.561373,-0.450187134 541.894476,-0.16845561 541.914775,0.213216721 C541.922728,0.362745607 541.880832,0.512578913 541.795377,0.640226837 L541.795377,0.640226837 L535.276139,10.3783065 C535.058015,10.7041277 534.617999,10.8047541 534.293337,10.6030618 C534.202075,10.5463669 534.126342,10.4691267 534.072136,10.3774583 L534.072136,10.3774583 L531.876,6.663 L380.131749,96.3955755 C379.775207,96.6064096 379.315259,96.4882905 379.104425,96.131749 C378.91116,95.8049193 378.994307,95.3911987 379.284135,95.1621189 L379.368251,95.1044245 L531.113,5.373 L528.917062,1.6597148 C528.741753,1.36325049 528.824602,0.983002411 529.096779,0.765134093 L529.184043,0.704891155 C529.279697,0.648327927 529.386659,0.613884299 529.496456,0.604287991 L529.496456,0.604287991 Z"></path>
+                <path id="Connection0" d="M99.1324798,90 C99.2436063,90 99.3532067,90.0247951 99.4526012,90.0724216 L99.4526012,90.0724216 L110.020818,95.1363589 C110.374414,95.3057905 110.517738,95.7178447 110.340939,96.0567079 C110.271675,96.1894653 110.159348,96.2971121 110.020818,96.3634908 L110.020818,96.3634908 L99.4526012,101.427428 C99.0990049,101.59686 98.6690352,101.459508 98.4922371,101.120645 C98.4425398,101.025392 98.4166667,100.920358 98.4166667,100.813862 L98.4166667,100.813862 L98.416,96.5 L0.25,96.5 C-0.164213562,96.5 -0.5,96.1642136 -0.5,95.75 C-0.5,95.3703042 -0.217846118,95.056509 0.148229443,95.0068466 L0.25,95 L98.416,95 L98.4166667,90.6859876 C98.4166667,90.3386988 98.6859593,90.051686 99.0353482,90.0062623 Z"></path>
+            </g>
+            <g id="Classes" filter="url(#filter-2)">
+                <g id="SKTiledScene" transform="translate(0.000000, 95.500000)">
+                    <rect id="Background" stroke="#646363" stroke-width="1.5" fill="#D8D8D8" x="0.75" y="0.75" width="268.5" height="51.5" rx="9"></rect>
+                    <text id="Title" font-family="SFMono-Medium, SF Mono" font-size="10.5" font-style="italic" font-weight="400" fill="#5E5E5E">
+                        <tspan x="37.6391602" y="30.1857143">SKTiledScene.mouseMoved(with:)</tspan>
+                    </text>
+                </g>
+                <g id="SKTiledSceneCamera" transform="translate(379.500000, 95.500000)">
+                    <rect id="Background" stroke="#646363" stroke-width="1.5" fill="#D8D8D8" x="0.75" y="0.75" width="268.5" height="51.5" rx="9"></rect>
+                    <text id="Title" font-family="SFMono-Medium, SF Mono" font-size="10.5" font-style="italic" font-weight="400" fill="#5E5E5E">
+                        <tspan x="18.1669922" y="30.1857143">SKTiledSceneCamera.mouseMoved(with:)</tspan>
+                    </text>
+                </g>
+                <g id="SKTiledSceneCameraDelegate3" transform="translate(810.500000, 191.000000)">
+                    <rect id="Background" stroke="#646363" stroke-width="1.5" fill="#D8D8D8" x="0.75" y="0.75" width="366" height="51.5" rx="9"></rect>
+                    <text id="Title" font-family="SFMono-Medium, SF Mono" font-size="10.5" font-style="italic" font-weight="400" fill="#5E5E5E">
+                        <tspan x="11.7458496" y="30.1857143">TiledSceneCameraDelegate.mousePositionChanged(event:)</tspan>
+                    </text>
+                </g>
+                <g id="SKTiledSceneCameraDelegate3" transform="translate(810.500000, 95.500000)">
+                    <rect id="Background" stroke="#646363" stroke-width="1.5" fill="#D8D8D8" x="0.75" y="0.75" width="366" height="51.5" rx="9"></rect>
+                    <text id="Title" font-family="SFMono-Medium, SF Mono" font-size="10.5" font-style="italic" font-weight="400" fill="#5E5E5E">
+                        <tspan x="11.7458496" y="30.1857143">TiledSceneCameraDelegate.mousePositionChanged(event:)</tspan>
+                    </text>
+                </g>
+                <g id="SKTiledSceneCameraDelegate3" transform="translate(810.500000, 0.000000)">
+                    <rect id="Background" stroke="#646363" stroke-width="1.5" fill="#D8D8D8" x="0.75" y="0.75" width="366" height="51.5" rx="9"></rect>
+                    <text id="Title" font-family="SFMono-Medium, SF Mono" font-size="10.5" font-style="italic" font-weight="400" fill="#5E5E5E">
+                        <tspan x="11.7458496" y="30.1857143">TiledSceneCameraDelegate.mousePositionChanged(event:)</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

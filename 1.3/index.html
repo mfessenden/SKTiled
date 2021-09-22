@@ -19,9 +19,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -30,14 +30,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -109,7 +107,7 @@
                 <a class='nav-group-task-link' href='Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -119,6 +117,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -157,9 +158,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -236,13 +234,13 @@
                 <a class='nav-group-task-link' href='Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -255,6 +253,30 @@
               </li>
             </ul>
           </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -262,10 +284,11 @@
         <section class='section'>
           <div class='section-content'>
             
+            <!-- <div><h1>Overview</h1></div> -->
             <p align="center">
 <img src="images/doc-banner-centered.svg" alt="SKTiled" title="SKTiled" width="881" height="81"/>
 <p align="center">
-<a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-5.2-brightgreen.svg"></a>
+<a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-5.3-brightgreen.svg"></a>
 <a href="https://developer.apple.com/download/more/"><img src="https://img.shields.io/badge/Xcode-11.0-orange.svg"></a>
 <a href="https://travis-ci.org/mfessenden/SKTiled"><img src="https://travis-ci.org/mfessenden/SKTiled.svg?branch=master"></a>
 <a href="https://github.com/mfessenden/SKTiled/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a>

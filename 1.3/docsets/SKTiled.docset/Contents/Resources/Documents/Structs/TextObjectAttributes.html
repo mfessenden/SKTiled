@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -253,6 +251,30 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
               </li>
             </ul>
           </li>
@@ -269,54 +291,21 @@
 
                 </div>
               </div>
-            <h2 id='overview' class='heading'>Overview</h2>
-
-<p>Structure for managing basic font rendering attributes for <a href="https://doc.mapeditor.org/en/stable/manual/objects/#insert-text"><strong>text objects</strong></a>.</p>
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>The <code>TextObjectAttributes</code> structure is used for managing basic font rendering attributes for <strong><a href="https://doc.mapeditor.org/en/stable/manual/objects/#insert-text">text objects</a></strong>.</p>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th>Property</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>fontName</td>
-<td>Font name.</td>
-</tr>
-<tr>
-<td>fontSize</td>
-<td>Font size.</td>
-</tr>
-<tr>
-<td>fontColor</td>
-<td>Font color.</td>
-</tr>
-<tr>
-<td>alignment</td>
-<td>Horizontal/vertical text alignment.</td>
-</tr>
-<tr>
-<td>wrap</td>
-<td>Text wraps.</td>
-</tr>
-<tr>
-<td>isBold</td>
-<td>Text is bold.</td>
-</tr>
-<tr>
-<td>isItalic</td>
-<td>Text is italicized.</td>
-</tr>
-<tr>
-<td>isunderline</td>
-<td>Text is underlined.</td>
-</tr>
-<tr>
-<td>renderQuality</td>
-<td>Font scaling attribute.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>fontName</code>: font name.</li>
+<li><code>fontSize</code>: font size.</li>
+<li><code>fontColor</code>: font color.</li>
+<li><code>alignment</code>: horizontal/vertical text alignment.</li>
+<li><code>wrap</code>: text wraps.</li>
+<li><code>isBold</code>: text is <strong>bold</strong>.</li>
+<li><code>isItalic</code>: text is <em>italicized</em>.</li>
+<li><code>isUnderline</code>: text is <u>underlined</u>.</li>
+<li><code>renderQuality</code>: font scaling attribute.</li>
+</ul>
 
           </div>
         </section>
@@ -328,8 +317,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled20TextObjectAttributesV8fontNameSSvp"></a>
+                    <!-- <a name="/s:7SKTiled20TextObjectAttributesV8fontNameSSvp"></a> -->
+                    <a name="/fontName.s:7SKTiled20TextObjectAttributesV8fontNameSSvp"></a>
                     <a name="//apple_ref/swift/Property/fontName" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled20TextObjectAttributesV8fontNameSSvp">fontName</a> -->
                     <a class="token" href="#/s:7SKTiled20TextObjectAttributesV8fontNameSSvp">fontName</a>
                     </code>
                   </div>
@@ -350,7 +341,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TextObjectAttributes.swift#L52">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TextObjectAttributes.swift#L48">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -358,8 +349,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled20TextObjectAttributesV8fontSize12CoreGraphics7CGFloatVvp"></a>
+                    <!-- <a name="/s:7SKTiled20TextObjectAttributesV8fontSize12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/fontSize.s:7SKTiled20TextObjectAttributesV8fontSize12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/fontSize" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled20TextObjectAttributesV8fontSize12CoreGraphics7CGFloatVvp">fontSize</a> -->
                     <a class="token" href="#/s:7SKTiled20TextObjectAttributesV8fontSize12CoreGraphics7CGFloatVvp">fontSize</a>
                     </code>
                   </div>
@@ -380,7 +373,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TextObjectAttributes.swift#L55">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TextObjectAttributes.swift#L51">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -388,8 +381,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled20TextObjectAttributesV9fontColorSo7NSColorCvp"></a>
+                    <!-- <a name="/s:7SKTiled20TextObjectAttributesV9fontColorSo7NSColorCvp"></a> -->
+                    <a name="/fontColor.s:7SKTiled20TextObjectAttributesV9fontColorSo7NSColorCvp"></a>
                     <a name="//apple_ref/swift/Property/fontColor" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled20TextObjectAttributesV9fontColorSo7NSColorCvp">fontColor</a> -->
                     <a class="token" href="#/s:7SKTiled20TextObjectAttributesV9fontColorSo7NSColorCvp">fontColor</a>
                     </code>
                   </div>
@@ -410,7 +405,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TextObjectAttributes.swift#L58">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TextObjectAttributes.swift#L54">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -418,8 +413,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled20TextObjectAttributesV0B9AlignmentV"></a>
+                    <!-- <a name="/s:7SKTiled20TextObjectAttributesV0B9AlignmentV"></a> -->
+                    <a name="/TextAlignment.s:7SKTiled20TextObjectAttributesV0B9AlignmentV"></a>
                     <a name="//apple_ref/swift/Struct/TextAlignment" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV">TextAlignment</a> -->
                     <a class="token" href="#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV">TextAlignment</a>
                     </code>
                   </div>
@@ -428,26 +425,13 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <h2 id='overview' class='heading'>Overview</h2>
-
-<p>Structure describing text alignment.</p>
+                        <p>Structure describing text alignment.</p>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th>Property</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>horizontal</td>
-<td>Horizontal text alignment.</td>
-</tr>
-<tr>
-<td>vertical</td>
-<td>Vertical text alignment.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>horizontal</code>: Horizontal text alignment.</li>
+<li><code>vertical</code>: Vertical text alignment.</li>
+</ul>
 
                       </div>
                       <div class="declaration">
@@ -459,7 +443,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TextObjectAttributes.swift#L71-L89">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TextObjectAttributes.swift#L63-L81">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -467,8 +451,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled20TextObjectAttributesV9alignmentAC0B9AlignmentVvp"></a>
+                    <!-- <a name="/s:7SKTiled20TextObjectAttributesV9alignmentAC0B9AlignmentVvp"></a> -->
+                    <a name="/alignment.s:7SKTiled20TextObjectAttributesV9alignmentAC0B9AlignmentVvp"></a>
                     <a name="//apple_ref/swift/Property/alignment" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled20TextObjectAttributesV9alignmentAC0B9AlignmentVvp">alignment</a> -->
                     <a class="token" href="#/s:7SKTiled20TextObjectAttributesV9alignmentAC0B9AlignmentVvp">alignment</a>
                     </code>
                   </div>
@@ -489,7 +475,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TextObjectAttributes.swift#L92">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TextObjectAttributes.swift#L84">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -497,8 +483,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled20TextObjectAttributesV4wrapSbvp"></a>
+                    <!-- <a name="/s:7SKTiled20TextObjectAttributesV4wrapSbvp"></a> -->
+                    <a name="/wrap.s:7SKTiled20TextObjectAttributesV4wrapSbvp"></a>
                     <a name="//apple_ref/swift/Property/wrap" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled20TextObjectAttributesV4wrapSbvp">wrap</a> -->
                     <a class="token" href="#/s:7SKTiled20TextObjectAttributesV4wrapSbvp">wrap</a>
                     </code>
                   </div>
@@ -519,7 +507,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TextObjectAttributes.swift#L95">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TextObjectAttributes.swift#L87">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -527,8 +515,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled20TextObjectAttributesV6isBoldSbvp"></a>
+                    <!-- <a name="/s:7SKTiled20TextObjectAttributesV6isBoldSbvp"></a> -->
+                    <a name="/isBold.s:7SKTiled20TextObjectAttributesV6isBoldSbvp"></a>
                     <a name="//apple_ref/swift/Property/isBold" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled20TextObjectAttributesV6isBoldSbvp">isBold</a> -->
                     <a class="token" href="#/s:7SKTiled20TextObjectAttributesV6isBoldSbvp">isBold</a>
                     </code>
                   </div>
@@ -549,7 +539,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TextObjectAttributes.swift#L98">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TextObjectAttributes.swift#L90">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -557,8 +547,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled20TextObjectAttributesV8isItalicSbvp"></a>
+                    <!-- <a name="/s:7SKTiled20TextObjectAttributesV8isItalicSbvp"></a> -->
+                    <a name="/isItalic.s:7SKTiled20TextObjectAttributesV8isItalicSbvp"></a>
                     <a name="//apple_ref/swift/Property/isItalic" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled20TextObjectAttributesV8isItalicSbvp">isItalic</a> -->
                     <a class="token" href="#/s:7SKTiled20TextObjectAttributesV8isItalicSbvp">isItalic</a>
                     </code>
                   </div>
@@ -579,7 +571,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TextObjectAttributes.swift#L101">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TextObjectAttributes.swift#L93">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -587,8 +579,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled20TextObjectAttributesV11isUnderlineSbvp"></a>
+                    <!-- <a name="/s:7SKTiled20TextObjectAttributesV11isUnderlineSbvp"></a> -->
+                    <a name="/isUnderline.s:7SKTiled20TextObjectAttributesV11isUnderlineSbvp"></a>
                     <a name="//apple_ref/swift/Property/isUnderline" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled20TextObjectAttributesV11isUnderlineSbvp">isUnderline</a> -->
                     <a class="token" href="#/s:7SKTiled20TextObjectAttributesV11isUnderlineSbvp">isUnderline</a>
                     </code>
                   </div>
@@ -609,7 +603,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TextObjectAttributes.swift#L104">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TextObjectAttributes.swift#L96">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -617,8 +611,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled20TextObjectAttributesV11isStrikeoutSbvp"></a>
+                    <!-- <a name="/s:7SKTiled20TextObjectAttributesV11isStrikeoutSbvp"></a> -->
+                    <a name="/isStrikeout.s:7SKTiled20TextObjectAttributesV11isStrikeoutSbvp"></a>
                     <a name="//apple_ref/swift/Property/isStrikeout" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled20TextObjectAttributesV11isStrikeoutSbvp">isStrikeout</a> -->
                     <a class="token" href="#/s:7SKTiled20TextObjectAttributesV11isStrikeoutSbvp">isStrikeout</a>
                     </code>
                   </div>
@@ -639,7 +635,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TextObjectAttributes.swift#L107">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TextObjectAttributes.swift#L99">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -647,8 +643,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled20TextObjectAttributesV13renderQuality12CoreGraphics7CGFloatVvp"></a>
+                    <!-- <a name="/s:7SKTiled20TextObjectAttributesV13renderQuality12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/renderQuality.s:7SKTiled20TextObjectAttributesV13renderQuality12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/renderQuality" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled20TextObjectAttributesV13renderQuality12CoreGraphics7CGFloatVvp">renderQuality</a> -->
                     <a class="token" href="#/s:7SKTiled20TextObjectAttributesV13renderQuality12CoreGraphics7CGFloatVvp">renderQuality</a>
                     </code>
                   </div>
@@ -669,7 +667,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TextObjectAttributes.swift#L110">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TextObjectAttributes.swift#L102">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -677,8 +675,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled20TextObjectAttributesVACycfc"></a>
+                    <!-- <a name="/s:7SKTiled20TextObjectAttributesVACycfc"></a> -->
+                    <a name="/init().s:7SKTiled20TextObjectAttributesVACycfc"></a>
                     <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled20TextObjectAttributesVACycfc">init()</a> -->
                     <a class="token" href="#/s:7SKTiled20TextObjectAttributesVACycfc">init()</a>
                     </code>
                   </div>
@@ -699,7 +699,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TextObjectAttributes.swift#L113">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TextObjectAttributes.swift#L105">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -707,8 +707,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled20TextObjectAttributesV4font4size5colorACSS_12CoreGraphics7CGFloatVSo7NSColorCtcfc"></a>
+                    <!-- <a name="/s:7SKTiled20TextObjectAttributesV4font4size5colorACSS_12CoreGraphics7CGFloatVSo7NSColorCtcfc"></a> -->
+                    <a name="/init(font:size:color:).s:7SKTiled20TextObjectAttributesV4font4size5colorACSS_12CoreGraphics7CGFloatVSo7NSColorCtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(font:size:color:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled20TextObjectAttributesV4font4size5colorACSS_12CoreGraphics7CGFloatVSo7NSColorCtcfc">init(font:<wbr>size:<wbr>color:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled20TextObjectAttributesV4font4size5colorACSS_12CoreGraphics7CGFloatVSo7NSColorCtcfc">init(font:<wbr>size:<wbr>color:<wbr>)</a>
                     </code>
                   </div>
@@ -772,7 +774,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TextObjectAttributes.swift#L121-L125">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TextObjectAttributes.swift#L113-L117">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -793,8 +795,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/"></a>
+                    <!-- <a name="/"></a> -->
+                    <a name="/font."></a>
                     <a name="//apple_ref/swift/Property/font" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/">font</a> -->
                     <a class="token" href="#/">font</a>
                     </code>
                   </div>
@@ -812,8 +816,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled20TextObjectAttributesV4fontSo6NSFontCvp"></a>
+                    <!-- <a name="/s:7SKTiled20TextObjectAttributesV4fontSo6NSFontCvp"></a> -->
+                    <a name="/font.s:7SKTiled20TextObjectAttributesV4fontSo6NSFontCvp"></a>
                     <a name="//apple_ref/swift/Property/font" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled20TextObjectAttributesV4fontSo6NSFontCvp">font</a> -->
                     <a class="token" href="#/s:7SKTiled20TextObjectAttributesV4fontSo6NSFontCvp">font</a>
                     </code>
                   </div>
@@ -834,7 +840,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TextObjectAttributes.swift#L146-L151">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TextObjectAttributes.swift#L138-L143">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

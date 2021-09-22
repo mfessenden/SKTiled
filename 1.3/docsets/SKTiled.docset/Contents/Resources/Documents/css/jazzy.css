@@ -1,6 +1,11 @@
-@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap");
-*, *:before, *:after {
+/*
+.item .token ->
+
+*/
+*,
+*:before,
+*:after {
   box-sizing: inherit; }
 
 body {
@@ -8,7 +13,7 @@ body {
   background: #fff;
   color: #333;
   font: 16px/1.7 "Nunito", sans-serif;
-  letter-spacing: .2px;
+  letter-spacing: 0.2px;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box; }
 
@@ -16,13 +21,13 @@ h1 {
   font-size: 2rem;
   font-weight: 700;
   margin: 1.275em 0 0.6em;
-  border-bottom: 1px solid #B9B9B9; }
+  border-bottom: 1px solid #b9b9b9; }
 
 h2 {
   font-size: 1.75rem;
   font-weight: 700;
   margin: 1.275em 0 0.3em;
-  border-bottom: 1px solid #D3D3D3; }
+  border-bottom: 1px solid #d3d3d3; }
 
 h3 {
   font-size: 1.25rem;
@@ -34,8 +39,8 @@ h4 {
   font-weight: 700;
   margin: 1.275em 0 0.85em; }
   h4:before {
-    content: "‣";
-    margin: 0 5px; }
+    content: "";
+    margin: 0 0px; }
 
 h5 {
   font-size: 1rem;
@@ -50,8 +55,11 @@ h6 {
 
 p {
   margin: 0 0 1em; }
+  p a {
+    font-weight: 700; }
 
-ul, ol {
+ul,
+ol {
   padding: 0 0 0 2em;
   margin: 0 0 0.85em; }
 
@@ -61,11 +69,12 @@ blockquote {
   color: #858585;
   border-left: 4px solid #e5e5e5; }
 
-svg, img {
+svg,
+img {
   max-width: 100%; }
 
 a {
-  color: #ff6A6a;
+  color: #ff6a6a;
   text-decoration: none; }
   a:hover, a:focus {
     outline: 0;
@@ -82,26 +91,30 @@ table {
 tr:nth-child(2n) {
   background-color: #fbfbfb; }
 
-th, td {
+th,
+td {
   padding: 6px 13px;
   border: 1px solid #ddd; }
 
 pre {
   margin: 0 0 1.275em;
-  padding: .85em 1em;
+  padding: 0.85em 1em;
   overflow: auto;
   background: #f7f7f7;
-  font-size: .85em;
+  font-size: 0.85em;
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace; }
 
 code {
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+  font-family: 16px/1.7 "Nunito", sans-serif; }
 
-p > code, li > code {
+p > code,
+li > code {
   background: #f7f7f7;
-  padding: .2em; }
-  p > code:before, p > code:after, li > code:before, li > code:after {
-    letter-spacing: -.2em;
+  padding: 0.2em; }
+  p > code:before, p > code:after,
+  li > code:before,
+  li > code:after {
+    letter-spacing: -0.2em;
     content: "\00a0"; }
 
 ul li code {
@@ -188,7 +201,7 @@ pre code {
   color: #808080; }
 
 .current-page {
-  color: #ff6A6a; }
+  color: #ff6a6a; }
 
 .main-content {
   order: 1; }
@@ -241,9 +254,9 @@ pre code {
   .item .token {
     padding-left: 3px;
     margin-left: -3px;
-    font-size: 1.6rem; }
+    font-size: 1.2rem; }
   .item .declaration-note {
-    font-size: .85em;
+    font-size: 0.85em;
     color: #808080;
     font-style: italic; }
 
@@ -253,7 +266,7 @@ pre code {
   position: relative; }
   .item-heading:before {
     position: absolute;
-    content: '';
+    content: "";
     width: 20px;
     height: 20px;
     left: -47px;
@@ -277,12 +290,14 @@ pre code {
   margin: 8px 4px 32px;
   padding: 8px 0; }
 
-.aside, .language {
+.aside,
+.language {
   padding: 6px 12px;
   margin: 12px 0;
   border-left: 4px solid #dddddd;
   overflow-y: hidden; }
-  .aside .aside-title, .language .aside-title {
+  .aside .aside-title,
+  .language .aside-title {
     font-size: 9px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -290,17 +305,25 @@ pre code {
     margin: 0;
     color: #aaa;
     -webkit-user-select: none; }
-  .aside p:last-child, .language p:last-child {
+  .aside p:last-child,
+  .language p:last-child {
     margin-bottom: 0; }
 
 .language {
-  border-left: 4px solid #ff6A6a; }
+  border-left: #f2f4f7; }
   .language .aside-title {
-    color: #ff6A6a; }
+    color: #ff6a6a; }
 
-.aside-warning, .aside-deprecated, .aside-unavailable {
+.aside-important {
+  background-color: #f2f4f7; }
+
+.aside-warning,
+.aside-deprecated,
+.aside-unavailable {
   border-left: 4px solid #ff6666; }
-  .aside-warning .aside-title, .aside-deprecated .aside-title, .aside-unavailable .aside-title {
+  .aside-warning .aside-title,
+  .aside-deprecated .aside-title,
+  .aside-unavailable .aside-title {
     color: #ff0000; }
 
 .graybox {
@@ -325,7 +348,7 @@ pre code {
   font-size: 0.9em; }
 
 .button {
-  border: 1px solid #FF6A6A;
+  border: 1px solid #ff6a6a;
   display: inline-block;
   padding: 2px 10px;
   margin-right: 4px;
@@ -343,26 +366,35 @@ pre code {
   .footer p {
     margin: 8px 0; }
   .footer a {
-    color: #D95151; }
+    color: #d95151; }
 
-html.dash .header, html.dash .breadcrumbs, html.dash .navigation, html.dash .footer {
+html.dash .header,
+html.dash .breadcrumbs,
+html.dash .navigation,
+html.dash .footer {
   display: none; }
 
 html.dash .height-container {
   display: block; }
 
 section-content h2 a {
-  color: #ff6A6a;
+  color: #ff6a6a;
   text-decoration: none; }
 
 h2 a {
   color: #de6363; }
 
+h3.section-name p {
+  font-size: 1.8rem;
+  border-bottom: 1px solid #b9b9b9;
+  margin: 1.275em 0 0.6em; }
+
 div.task-header {
   border-bottom: 1px solid #ddd;
-  margin-top: 4rem; }
-  div.task-header code {
-    filter: drop-shadow(0px 1px 1px #999999ab); }
+  margin-top: 1rem; }
 
 code a.token {
   color: #505050; }
+
+div.abstract h2#overview {
+  font-size: 1.15rem; }

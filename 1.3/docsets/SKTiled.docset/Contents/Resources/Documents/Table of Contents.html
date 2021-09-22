@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -256,6 +254,30 @@
               </li>
             </ul>
           </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -263,6 +285,7 @@
         <section class='section'>
           <div class='section-content'>
             <h1>Table of Contents</h1>
+            <!-- <div><h1>Overview</h1></div> -->
             <h2 id='a-href-whats-new-html-what-39-s-new-a' class='heading'><a href="whats-new.html">What&rsquo;s New</a></h2>
 
 <ul>
@@ -304,7 +327,12 @@
 
 <ul>
 <li><a href="getting-started.html#framework-installation">Framework Installation</a></li>
-<li><a href="getting-started.html#carthage-installation">Carthage Installation</a></li>
+<li><a href="getting-started.html#swift-package-manager">Swift Package Manager</a></li>
+<li><a href="getting-started.html#carthage-installation">Carthage Installation</a>
+
+<ul>
+<li><a href="getting-started.html#binary-frameworks">Binary Frameworks</a></li>
+</ul></li>
 <li><a href="getting-started.html#cocoapods-installation">CocoaPods Installation</a></li>
 <li><a href="getting-started.html#building-the-demo-projects">Building the Demo Projects</a></li>
 <li><a href="getting-started.html#building-the-documentation">Building the Documentation</a></li>
@@ -314,17 +342,18 @@
 <ul>
 <li><a href="getting-started.html#a-note-about-4k">A Note About 4K</a></li>
 </ul></li>
-<li><a href="getting-started.html#using-tiled-assets-with-xcode">Using Tiled Assets with Xcode</a>
-
-<ul>
-<li><a href="getting-started.html#referenced-assets">Referenced Assets</a></li>
-</ul></li>
+<li><a href="getting-started.html#using-tiled-assets-with-xcode">Using Tiled Assets with Xcode</a></li>
 </ul>
 <h2 id='a-href-migration-guide-html-migration-guide-a' class='heading'><a href="migration-guide.html">Migration Guide</a></h2>
 
 <ul>
-<li><a href="migration-guide.html#tile-coordinates">Tile Coordinates</a></li>
-<li><a href="migration-guide.html#tile-global-ids">Tile Global IDs</a></li>
+<li><a href="migration-guide.html#renamed-objects">Renamed Objects</a>
+
+<ul>
+<li><a href="migration-guide.html#symbols">Symbols</a></li>
+<li><a href="migration-guide.html#properties-&-Methods">Properties &amp; Methods</a></li>
+</ul></li>
+<li><a href="migration-guide.html#type-changes">Type Changes</a></li>
 <li><a href="migration-guide.html#tile-iflip-flags">Tile Flip Flags</a></li>
 </ul>
 <h2 id='a-href-scene-setup-html-setting-up-your-scenes-a' class='heading'><a href="scene-setup.html">Setting Up Your Scenes</a></h2>
@@ -397,22 +426,32 @@
 <h2 id='a-href-working-with-tiles-html-working-with-tiles-a' class='heading'><a href="working-with-tiles.html">Working with Tiles</a></h2>
 
 <ul>
-<li><a href="working-with-tiles.html#tile-render-mode">Tile Render Mode</a></li>
-<li><a href="working-with-tiles.html#querying-tiles-at-location">Querying Tiles at Location</a></li>
-<li><a href="working-with-tiles.html#querying-tiles-with-id">Querying Tiles with ID</a>
+<li><a href="working-with-tiles.html#tile-render-mode">Tile IDs</a>
+
+<ul>
+<li><a href="working-with-tiles.html#find-tiles-with-tile-id">Querying Tiles with ID</a>
 
 <ul>
 <li><a href="working-with-tiles.html#global-id">Global ID</a></li>
 <li><a href="working-with-tiles.html#local-id">Local ID</a></li>
 </ul></li>
+</ul></li>
+<li><a href="working-with-tiles.html#tile-render-mode">Tile Render Mode</a></li>
+<li><a href="working-with-tiles.html#querying-tiles-at-location">Querying Tiles at Location</a></li>
 <li><a href="working-with-tiles.html#tile-flags">Tile Flags</a></li>
+<li><a href="working-with-tiles.html#tile-alignment">Tile Alignment</a></li>
 <li><a href="working-with-tiles.html#find-tiles-of-type">Find Tiles of Type</a></li>
 <li><a href="working-with-tiles.html#find-tiles-with-property">Find Tiles with Property</a></li>
 <li><a href="working-with-tiles.html#adding-and-removing-tiles">Adding and Removing Tiles</a></li>
+<li><a href="working-with-tiles.html#refreshing-tile-content">Refreshing Tile Content</a></li>
+<li><a href="working-with-tiles.html#creating-new-tiles">Creating New Tiles</a></li>
 <li><a href="working-with-tiles.html#copying-tiles">Copying Tiles</a></li>
 <li><a href="working-with-tiles.html#tile-shapes">Tile Shapes</a></li>
-<li><a href="working-with-tiles.html#refreshing-tile-content">Refreshing Tile Content</a></li>
-<li><a href="working-with-tiles.html#copying-tiles">Copying Tiles</a></li>
+<li><a href="working-with-tiles.html#tile-colors">Tile Colors</a>
+
+<ul>
+<li><a href="working-with-tiles.html#tint-color">Tint Color</a></li>
+</ul></li>
 <li><a href="working-with-tiles.html#animated-tiles">Animated Tiles</a>
 
 <ul>
@@ -438,6 +477,11 @@
 
 <ul>
 <li><a href="working-with-objects.html#text-object-attributes">Text Object Attributes</a></li>
+</ul></li>
+<li><a href="working-with-objects.html#point-objects">Point Objects</a>
+
+<ul>
+<li><a href="working-with-objects.html#custom-point-objects">Custom Point Objects</a></li>
 </ul></li>
 <li><a href="working-with-objects.html#dynamics">Dynamics</a></li>
 </ul>
@@ -480,7 +524,8 @@
 <li><a href="debugging.html#debug-draw-options">Debug Draw Options</a></li>
 <li><a href="debugging.html#visualizing-objects">Visualizing Objects</a></li>
 <li><a href="debugging.html#highlighting-tiles">Highlighting Tiles</a></li>
-<li><a href="debugging.html#map-statistics">Map Statistics</a></li>
+<li><a href="debugging.html#layer-statistics">Layer Statistics</a></li>
+<li><a href="debugging.html#tile-layer-statistics">Tile Layer Statistics</a></li>
 </ul>
 <h2 id='a-href-troubleshooting-html-troubleshooting-a' class='heading'><a href="troubleshooting.html">Troubleshooting</a></h2>
 
@@ -512,7 +557,8 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/documentation.What&#39;s New"></a>
+                    <!-- <a name="/documentation.What&#39;s New"></a> -->
+                    <a name="/What&#39;s New.documentation.What&#39;s New"></a>
                     <a name="//apple_ref/swift/Guide/What&#39;s New" class="dashAnchor"></a>
                     <a class="direct-link" href="whats-new.html">What&#39;s New</a>
                     </code>
@@ -521,7 +567,8 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/documentation.Getting Started"></a>
+                    <!-- <a name="/documentation.Getting Started"></a> -->
+                    <a name="/Getting Started.documentation.Getting Started"></a>
                     <a name="//apple_ref/swift/Guide/Getting Started" class="dashAnchor"></a>
                     <a class="direct-link" href="getting-started.html">Getting Started</a>
                     </code>
@@ -530,7 +577,8 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/documentation.Migration Guide"></a>
+                    <!-- <a name="/documentation.Migration Guide"></a> -->
+                    <a name="/Migration Guide.documentation.Migration Guide"></a>
                     <a name="//apple_ref/swift/Guide/Migration Guide" class="dashAnchor"></a>
                     <a class="direct-link" href="migration-guide.html">Migration Guide</a>
                     </code>
@@ -539,7 +587,8 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/documentation.Scene Setup"></a>
+                    <!-- <a name="/documentation.Scene Setup"></a> -->
+                    <a name="/Scene Setup.documentation.Scene Setup"></a>
                     <a name="//apple_ref/swift/Guide/Scene Setup" class="dashAnchor"></a>
                     <a class="direct-link" href="scene-setup.html">Scene Setup</a>
                     </code>
@@ -548,7 +597,8 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/documentation.Working with Maps"></a>
+                    <!-- <a name="/documentation.Working with Maps"></a> -->
+                    <a name="/Working with Maps.documentation.Working with Maps"></a>
                     <a name="//apple_ref/swift/Guide/Working with Maps" class="dashAnchor"></a>
                     <a class="direct-link" href="working-with-maps.html">Working with Maps</a>
                     </code>
@@ -557,7 +607,8 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/documentation.Working with Tilesets"></a>
+                    <!-- <a name="/documentation.Working with Tilesets"></a> -->
+                    <a name="/Working with Tilesets.documentation.Working with Tilesets"></a>
                     <a name="//apple_ref/swift/Guide/Working with Tilesets" class="dashAnchor"></a>
                     <a class="direct-link" href="working-with-tilesets.html">Working with Tilesets</a>
                     </code>
@@ -566,7 +617,8 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/documentation.Working with Layers"></a>
+                    <!-- <a name="/documentation.Working with Layers"></a> -->
+                    <a name="/Working with Layers.documentation.Working with Layers"></a>
                     <a name="//apple_ref/swift/Guide/Working with Layers" class="dashAnchor"></a>
                     <a class="direct-link" href="working-with-layers.html">Working with Layers</a>
                     </code>
@@ -575,7 +627,8 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/documentation.Working with Tiles"></a>
+                    <!-- <a name="/documentation.Working with Tiles"></a> -->
+                    <a name="/Working with Tiles.documentation.Working with Tiles"></a>
                     <a name="//apple_ref/swift/Guide/Working with Tiles" class="dashAnchor"></a>
                     <a class="direct-link" href="working-with-tiles.html">Working with Tiles</a>
                     </code>
@@ -584,7 +637,8 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/documentation.Coordinates"></a>
+                    <!-- <a name="/documentation.Coordinates"></a> -->
+                    <a name="/Coordinates.documentation.Coordinates"></a>
                     <a name="//apple_ref/swift/Guide/Coordinates" class="dashAnchor"></a>
                     <a class="direct-link" href="coordinates.html">Coordinates</a>
                     </code>
@@ -593,7 +647,8 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/documentation.Working with Objects"></a>
+                    <!-- <a name="/documentation.Working with Objects"></a> -->
+                    <a name="/Working with Objects.documentation.Working with Objects"></a>
                     <a name="//apple_ref/swift/Guide/Working with Objects" class="dashAnchor"></a>
                     <a class="direct-link" href="working-with-objects.html">Working with Objects</a>
                     </code>
@@ -602,7 +657,8 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/documentation.Tiled Properties"></a>
+                    <!-- <a name="/documentation.Tiled Properties"></a> -->
+                    <a name="/Tiled Properties.documentation.Tiled Properties"></a>
                     <a name="//apple_ref/swift/Guide/Tiled Properties" class="dashAnchor"></a>
                     <a class="direct-link" href="tiled-properties.html">Tiled Properties</a>
                     </code>
@@ -611,7 +667,8 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/documentation.GameplayKit"></a>
+                    <!-- <a name="/documentation.GameplayKit"></a> -->
+                    <a name="/GameplayKit.documentation.GameplayKit"></a>
                     <a name="//apple_ref/swift/Guide/GameplayKit" class="dashAnchor"></a>
                     <a class="direct-link" href="gameplaykit.html">GameplayKit</a>
                     </code>
@@ -620,7 +677,8 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/documentation.Extending SKTiled"></a>
+                    <!-- <a name="/documentation.Extending SKTiled"></a> -->
+                    <a name="/Extending SKTiled.documentation.Extending SKTiled"></a>
                     <a name="//apple_ref/swift/Guide/Extending SKTiled" class="dashAnchor"></a>
                     <a class="direct-link" href="extending-sktiled.html">Extending SKTiled</a>
                     </code>
@@ -629,7 +687,8 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/documentation.Other API Features"></a>
+                    <!-- <a name="/documentation.Other API Features"></a> -->
+                    <a name="/Other API Features.documentation.Other API Features"></a>
                     <a name="//apple_ref/swift/Guide/Other API Features" class="dashAnchor"></a>
                     <a class="direct-link" href="other-api-features.html">Other API Features</a>
                     </code>
@@ -638,7 +697,8 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/documentation.Debugging"></a>
+                    <!-- <a name="/documentation.Debugging"></a> -->
+                    <a name="/Debugging.documentation.Debugging"></a>
                     <a name="//apple_ref/swift/Guide/Debugging" class="dashAnchor"></a>
                     <a class="direct-link" href="debugging.html">Debugging</a>
                     </code>
@@ -647,7 +707,8 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/documentation.Troubleshooting"></a>
+                    <!-- <a name="/documentation.Troubleshooting"></a> -->
+                    <a name="/Troubleshooting.documentation.Troubleshooting"></a>
                     <a name="//apple_ref/swift/Guide/Troubleshooting" class="dashAnchor"></a>
                     <a class="direct-link" href="troubleshooting.html">Troubleshooting</a>
                     </code>

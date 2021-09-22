@@ -19,9 +19,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -30,14 +30,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -109,7 +107,7 @@
                 <a class='nav-group-task-link' href='Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -119,6 +117,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -157,9 +158,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -236,13 +234,13 @@
                 <a class='nav-group-task-link' href='Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -255,6 +253,30 @@
               </li>
             </ul>
           </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -262,24 +284,36 @@
         <section class='section'>
           <div class='section-content'>
             
+            <!-- <div><h1>Overview</h1></div> -->
             <h1 id='working-with-tiles' class='heading'>Working with Tiles</h1>
 
 <ul>
-<li><a href="#tile-render-mode">Tile Render Mode</a></li>
-<li><a href="#querying-tiles-at-location">Querying Tiles at Location</a></li>
+<li><a href="#tile-render-mode">Tile IDs</a>
+
+<ul>
 <li><a href="#find-tiles-with-tile-id">Querying Tiles with ID</a>
 
 <ul>
 <li><a href="#global-id">Global ID</a></li>
 <li><a href="#local-id">Local ID</a></li>
 </ul></li>
+</ul></li>
+<li><a href="#tile-render-mode">Tile Render Mode</a></li>
+<li><a href="#querying-tiles-at-location">Querying Tiles at Location</a></li>
 <li><a href="#tile-flags">Tile Flags</a></li>
+<li><a href="#tile-alignment">Tile Alignment</a></li>
 <li><a href="#find-tiles-of-type">Find Tiles of Type</a></li>
 <li><a href="#find-tiles-with-property">Find Tiles with Property</a></li>
 <li><a href="#adding-and-removing-tiles">Adding and Removing Tiles</a></li>
 <li><a href="#refreshing-tile-content">Refreshing Tile Content</a></li>
+<li><a href="#creating-new-tiles">Creating New Tiles</a></li>
 <li><a href="#copying-tiles">Copying Tiles</a></li>
 <li><a href="#tile-shapes">Tile Shapes</a></li>
+<li><a href="#tile-colors">Tile Colors</a>
+
+<ul>
+<li><a href="#tint-color">Tint Color</a></li>
+</ul></li>
 <li><a href="#animated-tiles">Animated Tiles</a>
 
 <ul>
@@ -291,64 +325,22 @@
 </ul>
 
 <p><strong>SKTiled</strong> provides several ways to work with tiles in your tilemap. Most of the methods for accessing tiles from a tile layer instances have corresponding methods in the parent <code><a href="Classes/SKTilemap.html">SKTilemap</a></code> node, which will aggregate the results from <em>all</em> tile layers.</p>
-<h2 id='tile-render-mode' class='heading'>Tile Render Mode</h2>
+<h2 id='tile-ids' class='heading'>Tile IDs</h2>
 
-<p>Once your tilemap is loaded, you may tweak the way tiles are rendered individually via the <code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC10renderModeAA010TileRenderD0Ovp">SKTile.renderMode</a></code> property:</p>
-
-<table><thead>
-<tr>
-<th style="text-align: center">Mode</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: center">default</td>
-<td style="text-align: left">Tile renders at default settings.</td>
-</tr>
-<tr>
-<td style="text-align: center">static</td>
-<td style="text-align: left">Tile ignores any animation data.</td>
-</tr>
-<tr>
-<td style="text-align: center">ignore</td>
-<td style="text-align: left">Tile does not take into account its tile data.</td>
-</tr>
-<tr>
-<td style="text-align: center">animated</td>
-<td style="text-align: left">Animate with a global id value.</td>
-</tr>
-</tbody></table>
-<pre class="highlight swift"><code><span class="c1">// instruct tile to ignore animation</span>
-<span class="n">tile</span><span class="o">.</span><span class="n">renderMode</span> <span class="o">=</span> <span class="kt">TileRenderMode</span><span class="o">.</span><span class="kd">static</span>
-
-<span class="c1">// tile will animate with a global id of 129</span>
-<span class="n">tile</span><span class="o">.</span><span class="n">renderMode</span> <span class="o">=</span> <span class="kt">TileRenderMode</span><span class="o">.</span><span class="nf">animated</span><span class="p">(</span><span class="mi">129</span><span class="p">)</span>
+<p>The <code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC8globalIds6UInt32Vvp">SKTile.globalId</a></code> property determines how each tile is rendered.</p>
+<pre class="highlight swift"><code><span class="n">tiles</span><span class="o">.</span><span class="n">globalId</span> <span class="o">=</span> <span class="mi">13</span>
 </code></pre>
-
-<p>The <code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC10renderModeAA010TileRenderD0Ovp">SKTile.renderMode</a></code> flag allows you to quickly manipulate the appearance of a tile. While the <code>animated</code> case implies that the tile should be animated, setting this value with any global id effectively makes the tile take the appearance of another. Be aware, however, peoperties in the new tile data are not carried over to this tile&hellip; the original data still exists.</p>
-<h2 id='querying-tiles-at-location' class='heading'>Querying Tiles at Location</h2>
-
-<p>Accessing tiles is simple: simply query a tile layer or the tile map node for tiles at a given coordinate:</p>
-<pre class="highlight swift"><code><span class="c1">// return tile(s) at a given location</span>
-<span class="k">let</span> <span class="nv">coord</span> <span class="o">=</span> <span class="nf">simd_int2</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-
-<span class="c1">// query tiles from a layer at the given coordinate</span>
-<span class="k">let</span> <span class="nv">tilesForCoord</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">tileAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="n">coord</span><span class="p">)</span>
-
-<span class="c1">// query tiles from tilemap at the given coordinate</span>
-<span class="k">let</span> <span class="nv">allTilesForCoord</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">tilesAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="n">coord</span><span class="p">)</span>
-</code></pre>
-<h2 id='querying-tiles-with-id' class='heading'>Querying Tiles with ID</h2>
-<h3 id='global-id' class='heading'>Global ID</h3>
+<h3 id='querying-tiles-with-id' class='heading'>Querying Tiles with ID</h3>
+<h4 id='global-id' class='heading'>Global ID</h4>
 
 <p>To query tiles with a global ID, pass the value to either the <code><a href="Classes/SKTilemap.html">SKTilemap</a></code> node, or an individual <code><a href="Classes/SKTileLayer.html">SKTileLayer</a></code> node:</p>
-<pre class="highlight swift"><code><span class="c1">// query tiles from the tile map node</span>
+<pre class="highlight swift"><code><span class="c1">// query tiles from the tilemap node</span>
 <span class="k">let</span> <span class="nv">tiles</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
 
 <span class="c1">// query tiles from the parent layer</span>
 <span class="k">let</span> <span class="nv">tiles</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
 </code></pre>
-<h3 id='local-id' class='heading'>Local ID</h3>
+<h4 id='local-id' class='heading'>Local ID</h4>
 
 <p>If you have a reference to a tileset object and want to query tile data with a local id, use the <code><a href="Classes/SKTileset.html#/s:7SKTiled9SKTilesetC11getTileData7localIDAA0bE0CSgs6UInt32V_tF">SKTileset.getTileData(localID:)</a></code> method. Here&rsquo;s a reference to an external tileset with a <strong>firstgid</strong> value of <strong>1</strong>. So if we want to access tile data with a local id of <strong>79</strong>, we can query the tileset instance directly:</p>
 
@@ -360,18 +352,66 @@
 </code></pre>
 
 <p>As you can see, the tile data is correctly returned. The local ID is the sum of the tileset&rsquo;s <strong>firstgid</strong> value plus the tile&rsquo;s internal ID: <code>(1 + 78 = 79)</code>.</p>
+<h2 id='tile-render-mode' class='heading'>Tile Render Mode</h2>
+
+<p>Once your tilemap is loaded, you may tweak the way tiles are rendered individually via the <code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC10renderModeAA010TileRenderD0Ovp">SKTile.renderMode</a></code> property:</p>
+
+<table><thead>
+<tr>
+<th style="text-align: center">Mode</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: center"><code>default</code></td>
+<td style="text-align: left">Tile renders at default settings.</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>static</code></td>
+<td style="text-align: left">Tile ignores any animation data.</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>ignore</code></td>
+<td style="text-align: left">Tile does not take into account its tile data.</td>
+</tr>
+<tr>
+<td style="text-align: center"><code>animated</code></td>
+<td style="text-align: left">Animate with a global id value.</td>
+</tr>
+</tbody></table>
+<pre class="highlight swift"><code><span class="c1">// instruct tile to ignore animation</span>
+<span class="n">tile</span><span class="o">.</span><span class="n">renderMode</span> <span class="o">=</span> <span class="kt">TileRenderMode</span><span class="o">.</span><span class="kd">static</span>
+
+<span class="c1">// tile will animate with a global id of 129</span>
+<span class="n">tile</span><span class="o">.</span><span class="n">renderMode</span> <span class="o">=</span> <span class="kt">TileRenderMode</span><span class="o">.</span><span class="nf">animated</span><span class="p">(</span><span class="nv">gid</span><span class="p">:</span> <span class="mi">129</span><span class="p">)</span>
+</code></pre>
+
+<p>The <code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC10renderModeAA010TileRenderD0Ovp">SKTile.renderMode</a></code> flag allows you to quickly manipulate the appearance of a tile. While the <code>animated</code> case implies that the tile should be animated, setting this value with any global id effectively makes the tile take the appearance of another. Be aware, however, peoperties in the new tile data are not carried over to this tile&hellip; the original data still exists.</p>
+<h2 id='querying-tiles-at-location' class='heading'>Querying Tiles at Location</h2>
+
+<p>Accessing tiles is simple: simply query a tile layer or the tile map node for tiles at a given coordinate:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">coord</span> <span class="o">=</span> <span class="nf">simd_int2</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+
+<span class="c1">// return a tile from a layer at the given coordinate</span>
+<span class="k">let</span> <span class="nv">tilesForCoord</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">tileAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="n">coord</span><span class="p">)</span>
+
+<span class="c1">// query all tiles from a tilemap at the given coordinate</span>
+<span class="k">let</span> <span class="nv">allTilesForCoord</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">tilesAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="n">coord</span><span class="p">)</span>
+</code></pre>
 <h2 id='tile-flags' class='heading'>Tile Flags</h2>
 
 <p>Each tile instance has a <code>tileID</code> property which accepts a <code>UInt32</code> value and applies tile flip flags accordingly.</p>
 <pre class="highlight swift"><code><span class="c1">// a global id of 2147483659 translates to 11, with horizontal &amp; diagonal flip flags</span>
 <span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">getTiles</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="mi">11</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="o">!</span>
+
+<span class="c1">// get the `TileID` object</span>
 <span class="k">let</span> <span class="nv">globalId</span> <span class="o">=</span> <span class="n">tile</span><span class="o">.</span><span class="n">tileID</span>
 
 <span class="n">tile</span><span class="o">.</span><span class="n">isFlippedHorizontally</span> <span class="o">=</span> <span class="kc">true</span>
 </code></pre>
 <h2 id='tile-alignment' class='heading'>Tile Alignment</h2>
 
-<p>[put gif here showing alignment/anchorpoint changing}</p>
+<p>{ gif here showing alignment/anchorpoint changing }</p>
 <h2 id='find-tiles-of-type' class='heading'>Find Tiles of Type</h2>
 
 <p>The string property <strong>type</strong> can be used to label or group tiles in <strong>SKTiled</strong>. Adding a string property to a tile ID will allow it to be accessed from SpriteKit:</p>
@@ -390,16 +430,22 @@
 </code></pre>
 <h2 id='adding-and-removing-tiles' class='heading'>Adding and Removing Tiles</h2>
 
-<p>To add a new tile using a GID, use the <a href="Classes/SKTileLayer.html#/s:7SKTiled11SKTileLayerC9addTileAt5coord8globalID8tileTypeAA0B0CSgs5SIMD2Vys5Int32VG_s6UInt32VSgSSSgtF"><code>SKTileLayer.addTileAt</code></a> method to add it to the current layer:</p>
-<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">addTileAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="nf">simd_int2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="nv">globalID</span><span class="p">:</span> <span class="mi">32</span><span class="p">)</span> <span class="p">{</span>
+<p>To add a new tile using a GID, use the <a href="Classes/SKTileLayer.html#addTile(at:)"><code>SKTileLayer.addTile(at:)</code></a> method to add it to the current layer:</p>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">addTile</span><span class="p">(</span><span class="nv">at</span><span class="p">:</span> <span class="nf">simd_int2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="nv">globalID</span><span class="p">:</span> <span class="mi">32</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">tile</span><span class="o">.</span><span class="nf">setupPhysics</span><span class="p">(</span><span class="nv">withSize</span><span class="p">:</span> <span class="mi">8</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
 
 <p>You may also specify a <em>tile type</em> with this method, for use with the <a href="Protocols/TilemapDelegate.html#/c:@M@SKTiled@objc(pl)TilemapDelegate(im)objectForTileTypeWithNamed:"><code>TilemapDelegate.objectForTileType</code></a> protocol method:</p>
-<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">wallTile</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">addTileAt</span><span class="p">(</span><span class="nv">coord</span><span class="p">:</span> <span class="nf">simd_int2</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span> <span class="nv">globalID</span><span class="p">:</span> <span class="mi">145</span><span class="p">,</span> <span class="nv">tileType</span><span class="p">:</span> <span class="s">"Wall"</span><span class="p">)</span> <span class="p">{</span>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">wallTile</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">addTile</span><span class="p">(</span><span class="nv">at</span><span class="p">:</span> <span class="nf">simd_int2</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span> <span class="nv">globalID</span><span class="p">:</span> <span class="mi">145</span><span class="p">,</span> <span class="nv">tileType</span><span class="p">:</span> <span class="s">"Wall"</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// set the custom tile property</span>
     <span class="n">wallTile</span><span class="o">.</span><span class="n">hitMaxCount</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>To remove a tile, simply call one of the <a href="Classes/SKTileLayer.html#removeTile"><code>SKTileLayer.removeTile</code></a> methods:</p>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">removedTile</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">removeTile</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// do something with tile</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -411,20 +457,37 @@
 <span class="n">tileLayer</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tile</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="nv">dx</span><span class="p">:</span> <span class="mi">4</span><span class="p">)</span>
 </code></pre>
 
-<p>To remove a tile, simply call one of the <a href="Classes/SKTileLayer.html#/s:7SKTiled11SKTileLayerC12removeTileAt5coordAA0B0CSgs5SIMD2Vys5Int32VG_tF"><code>SKTileLayer.removeTileAt</code></a> methods:</p>
-<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">removedTile</span> <span class="o">=</span> <span class="n">tileLayer</span><span class="o">.</span><span class="nf">removeTileAt</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// do something with tile</span>
-<span class="p">}</span>
-</code></pre>
+<p>It&rsquo;s important to note that adding an object (or another tile) at a coordinate <strong>does not add the object to a tile layer&rsquo;s array of tiles</strong> - the node is simply positioned at the location of the coordinate in the given layer.</p>
 <h2 id='refreshing-tile-content' class='heading'>Refreshing Tile Content</h2>
 
 <p>At any time, if you need to update a tile, use the <code><a href="Classes/SKTile.html#/c:@M@SKTiled@objc(cs)SKTile(im)draw">SKTile.draw()</a></code> method.</p>
+<h2 id='creating-new-tiles' class='heading'>Creating New Tiles</h2>
+
+<p>Creating a new tile is very simple. You can create one with a tile data instance:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">tiledata</span> <span class="o">=</span> <span class="n">tileset</span><span class="o">.</span><span class="nf">getTileData</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="mi">11</span><span class="p">)</span><span class="o">!</span>
+<span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="kt">SKTile</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="n">tiledata</span><span class="p">)</span><span class="o">!</span>
+</code></pre>
+
+<p>You can also create tiles from with a <code><a href="Classes/SKTileset.html">SKTileset</a></code> or <code><a href="Classes/SKTilemap.html">SKTilemap</a></code> instance with a global id or local id:</p>
+<pre class="highlight swift"><code><span class="c1">// create tiles from a tileset instance, with an option to specify tile type</span>
+<span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="n">tileset</span><span class="o">.</span><span class="nf">newTile</span><span class="p">(</span><span class="nv">localID</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="n">tileset</span><span class="o">.</span><span class="nf">newTile</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">MyTileType</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+
+
+<span class="c1">// create tiles from a tilemap instance, with an option to specify tile type</span>
+<span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">newTile</span><span class="p">(</span><span class="nv">localID</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">tile</span> <span class="o">=</span> <span class="n">tilemap</span><span class="o">.</span><span class="nf">newTile</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">MyTileType</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+</code></pre>
 <h2 id='copying-tiles' class='heading'>Copying Tiles</h2>
 
 <p>Tiles can be copied for use as regular sprites, simply use the <code>SKTile.spriteCopy</code> method to copy a tile to a regular <a href="https://developer.apple.com/documentation/spritekit/skspritenode"><code>SKSpriteNode</code></a> instance.</p>
 <h2 id='tile-shapes' class='heading'>Tile Shapes</h2>
 
 <p>It is also possible to create shapes from individual tiles. All <strong>SKTiled</strong> geometry types have a <code>getVertices()</code> method which will return an array of points that constitute the object&rsquo;s shape.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">tileVerts</span> <span class="o">=</span> <span class="n">tile</span><span class="o">.</span><span class="nf">getVertices</span><span class="p">()</span>
+</code></pre>
+<h2 id='tile-colors' class='heading'>Tile Colors</h2>
+<h3 id='tint-color' class='heading'>Tint Color</h3>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">tileVerts</span> <span class="o">=</span> <span class="n">tile</span><span class="o">.</span><span class="nf">getVertices</span><span class="p">()</span>
 </code></pre>
 <h2 id='animated-tiles' class='heading'>Animated Tiles</h2>

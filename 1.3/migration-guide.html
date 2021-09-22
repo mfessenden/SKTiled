@@ -19,9 +19,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -30,14 +30,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -109,7 +107,7 @@
                 <a class='nav-group-task-link' href='Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -119,6 +117,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -157,9 +158,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -236,13 +234,13 @@
                 <a class='nav-group-task-link' href='Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -255,6 +253,30 @@
               </li>
             </ul>
           </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -262,26 +284,216 @@
         <section class='section'>
           <div class='section-content'>
             
+            <!-- <div><h1>Overview</h1></div> -->
             <h1 id='migration-guide' class='heading'>Migration Guide</h1>
 
 <ul>
-<li><a href="#tile-coordinates">Tile Coordinates</a></li>
-<li><a href="#tile-global-ids">Tile Global IDs</a></li>
+<li><a href="#renamed-objects">Renamed Objects</a>
+
+<ul>
+<li><a href="#symbols">Symbols</a></li>
+<li><a href="#properties-&-Methods">Properties &amp; Methods</a></li>
+</ul></li>
+<li><a href="#type-changes">Type Changes</a></li>
 <li><a href="#tile-iflip-flags">Tile Flip Flags</a></li>
 </ul>
 
-<p>Moving from the <strong>v1.2</strong> -&gt; <strong>v1.3</strong> API should be fairly straightforward; here are the highlights of what&rsquo;s changed.</p>
-<h2 id='tile-coordinates' class='heading'>Tile Coordinates</h2>
+<p>Moving from the <strong>v1.2</strong> API should be fairly straightforward. Here are the highlights of what&rsquo;s changed:</p>
+<h2 id='renamed-objects' class='heading'>Renamed Objects</h2>
+<h3 id='symbols' class='heading'>Symbols</h3>
 
-<p><strong>Coming Soon</strong></p>
-<h2 id='tile-global-ids' class='heading'>Tile Global IDs</h2>
+<table><thead>
+<tr>
+<th style="text-align: left">Old</th>
+<th style="text-align: left">New</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code>SKTiledObject</code></td>
+<td style="text-align: left"><code><a href="Protocols/TiledObjectType.html">TiledObjectType</a></code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code>SKTiledSceneDelegate</code></td>
+<td style="text-align: left"><code><a href="Protocols/TiledSceneDelegate.html">TiledSceneDelegate</a></code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code>SKTiledSceneCameraDelegate</code></td>
+<td style="text-align: left"><code><a href="Protocols/TiledSceneCameraDelegate.html">TiledSceneCameraDelegate</a></code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code>SKTilemapDelegate</code></td>
+<td style="text-align: left"><code><a href="Protocols/TilemapDelegate.html">TilemapDelegate</a></code></td>
+</tr>
+</tbody></table>
+<h3 id='properties-amp-methods' class='heading'>Properties &amp; Methods</h3>
 
-<p><strong>Coming Soon</strong></p>
+<table><thead>
+<tr>
+<th style="text-align: left">Old</th>
+<th style="text-align: left">New</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left"><code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC4sizeSo6CGSizeVvp">SKTilemap.size</a></code></td>
+<td style="text-align: left"><code><a href="Classes/SKTilemap.html#/c:@M@SKTiled@objc(cs)SKTilemap(py)mapSize">SKTilemap.mapSize</a></code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code><a href="Classes/TiledLayerObject.html#/s:7SKTiled16TiledLayerObjectC4sizeSo6CGSizeVvp">TiledLayerObject.size</a></code></td>
+<td style="text-align: left"><code><a href="Classes/TiledLayerObject.html#/c:@M@SKTiled@objc(cs)TiledLayerObject(py)mapSize">TiledLayerObject.mapSize</a></code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC10getTileset7forTileAA9SKTilesetCSgSi_tF">SKTilemap.getTileset(forTile:)</a></code></td>
+<td style="text-align: left"><code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC13getTilesetFor8globalIDAA9SKTilesetCSgs6UInt32V_tF">SKTilemap.getTilesetFor(globalID:)</a></code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC22coordinateAtMouseEvent5eventSo7CGPointVSo7NSEventC_tF">SKTilemap.coordinateAtMouseEvent(event:)</a></code></td>
+<td style="text-align: left"><code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC17coordinateAtMouse5events5SIMD2Vys5Int32VGSo7NSEventC_tF">SKTilemap.coordinateAtMouse(event:)</a></code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code><a href="Classes/TiledLayerObject.html#/s:7SKTiled16TiledLayerObjectC22coordinateAtMouseEvent5eventSo7CGPointVSo7NSEventC_tF">TiledLayerObject.coordinateAtMouseEvent(event:)</a></code></td>
+<td style="text-align: left"><code><a href="Classes/TiledLayerObject.html#/s:7SKTiled16TiledLayerObjectC17coordinateAtMouse5events5SIMD2Vys5Int32VGSo7NSEventC_tF">TiledLayerObject.coordinateAtMouse(event:)</a></code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code>SKTiledObject.setValue(forKey:)</code></td>
+<td style="text-align: left"><code>TiledObjectType.setValue(for:)</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code>SKTiledObject.removeProperty(forKey:)</code></td>
+<td style="text-align: left"><code>TiledObjectType.removeProperty(for:)</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code>SKTileset.setDataTexture(_:imageNamed:)</code></td>
+<td style="text-align: left"><code><a href="Classes/SKTileset.html#/s:7SKTiled9SKTilesetC14setDataTexture6tileID10imageNamedSo9SKTextureCSgs6UInt32V_SStF">SKTileset.setDataTexture(tileID:imageNamed:)</a></code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code><a href="Classes/SKTileset.html#/s:7SKTiled9SKTilesetC14setDataTexture_7textureSo9SKTextureCSgSi_AGtF">SKTileset.setDataTexture(_:texture:)</a></code></td>
+<td style="text-align: left"><code><a href="Classes/SKTileset.html#/s:7SKTiled9SKTilesetC14setDataTexture6tileID7textureSo9SKTextureCSgs6UInt32V_AHtF">SKTileset.setDataTexture(tileID:texture:)</a></code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code><a href="Classes/SKTileset.html#/s:7SKTiled9SKTilesetC14addTilesetTile_7textureAA0B4DataCSgSi_So9SKTextureCtF">SKTileset.addTilesetTile(_:texture:)</a></code></td>
+<td style="text-align: left"><code><a href="Classes/SKTileset.html#/s:7SKTiled9SKTilesetC14addTilesetTile6tileID7textureAA0B4DataCSgs6UInt32V_So9SKTextureCtF">SKTileset.addTilesetTile(tileID:texture:)</a></code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code><a href="Classes/SKTileset.html#/s:7SKTiled9SKTilesetC14addTilesetTile_6sourceAA0B4DataCSgSi_SStF">SKTileset.addTilesetTile(_:source:)</a></code></td>
+<td style="text-align: left"><code><a href="Classes/SKTileset.html#/s:7SKTiled9SKTilesetC14addTilesetTile6tileID6sourceAA0B4DataCSgs6UInt32V_SStF">SKTileset.addTilesetTile(tileID:source:)</a></code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code>SKTileObject.setObjectAttributes</code></td>
+<td style="text-align: left"><code>SKTileObject.overrideObjectAttributes(attributes:)</code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code><a href="Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC5debugAC19DebugDisplayOptionsVvp">TiledGlobals.debug</a></code></td>
+<td style="text-align: left"><code><a href="Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC19debugDisplayOptionsAC05DebugeF0Vvp">TiledGlobals.debugDisplayOptions</a></code></td>
+</tr>
+<tr>
+<td style="text-align: left"><code>DebugDrawOptions.drawBounds</code></td>
+<td style="text-align: left"><code>DebugDrawOptions.drawFrame</code></td>
+</tr>
+</tbody></table>
+<h2 id='type-changes' class='heading'>Type Changes</h2>
+
+<table><thead>
+<tr>
+<th style="text-align: left">Property</th>
+<th style="text-align: center">Old Type</th>
+<th style="text-align: center">New Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">Global ID</td>
+<td style="text-align: center"><code>Int</code></td>
+<td style="text-align: center"><code>UInt32</code></td>
+</tr>
+<tr>
+<td style="text-align: left">Map Coordinates</td>
+<td style="text-align: center"><code>int2</code></td>
+<td style="text-align: center"><code>simd_int2</code></td>
+</tr>
+</tbody></table>
 <h2 id='tile-flip-flags' class='heading'>Tile Flip Flags</h2>
 
-<p><strong>Coming Soon</strong></p>
+<p>Prior to <strong>v1.3</strong>, tile flip flags were stored in the <code><a href="Classes/SKTilesetData.html">SKTilesetData</a></code> structure which actually served no purpose because a masked tile global id would have its orientation parsed when the tile is initially created.</p>
+
+<p>Now, all <code><a href="Classes/SKTile.html">SKTile</a></code> nodes have a <a href="Structs/TileID.html"><code>globalId</code></a> property that handles id translation. The <code><a href="Structs/TileID.html">TileID</a></code> struct wraps the global id &amp; orientation functions and translates values accordingly:</p>
+<pre class="highlight swift"><code><span class="c1">// This tile has a global id value of '285' and no flip flags</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">tile</span><span class="o">.</span><span class="n">globalId</span><span class="p">,</span> <span class="n">tile</span><span class="o">.</span><span class="n">flipFlags</span><span class="p">)</span>
+<span class="c1">// 285 [  ]</span>
+
+<span class="c1">// A masked(raw) value of 2684354845 translates to 285, flipped horizontally &amp; diagonally</span>
+<span class="n">tile</span><span class="o">.</span><span class="n">globalId</span> <span class="o">=</span> <span class="mi">2684354845</span>
+
+<span class="c1">// The unmasked, "real" global id is unchanged, only the orientation flags have changed:</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">tile</span><span class="o">.</span><span class="n">globalId</span><span class="p">,</span> <span class="n">tile</span><span class="o">.</span><span class="n">flipFlags</span><span class="p">)</span>
+<span class="c1">// 285 [ hFlip, dFlip ]</span>
+
+<span class="c1">// get the masked value:</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">tile</span><span class="o">.</span><span class="n">maskedTileId</span><span class="p">)</span>
+<span class="c1">// 2684354845</span>
+</code></pre>
+
+<p>Alternately, you can orient the tile by setting the <code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC21isFlippedHorizontallySbvp">SKTile.isFlippedHorizontally</a></code>, <code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC19isFlippedVerticallySbvp">SKTile.isFlippedVertically</a></code> and <code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC19isFlippedDiagonallySbvp">SKTile.isFlippedDiagonally</a></code> attributes:</p>
+<pre class="highlight swift"><code><span class="c1">// Reset the flip flags by assigning an empty value</span>
+<span class="n">tile</span><span class="o">.</span><span class="n">flipFlags</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">tile</span><span class="o">.</span><span class="n">flipFlags</span><span class="p">)</span>
+<span class="c1">// []</span>
+
+<span class="c1">// Set the tile flip flags manually</span>
+<span class="n">tile</span><span class="o">.</span><span class="n">isFlippedHorizontally</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="n">tile</span><span class="o">.</span><span class="n">isFlippedDiagonally</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">tile</span><span class="o">.</span><span class="n">globalId</span><span class="p">,</span> <span class="n">tile</span><span class="o">.</span><span class="n">flipFlags</span><span class="p">)</span>
+<span class="c1">// 285 [ hFlip, dFlip ]</span>
+
+<span class="c1">// get the masked value:</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">tile</span><span class="o">.</span><span class="n">maskedTileId</span><span class="p">)</span>
+<span class="c1">// 2684354845</span>
+</code></pre>
+
+<p>The <strong>v1.3</strong> API  now includes the following attributes for dealing with tile orientation &amp; global id.</p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+<th>Notes</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC8globalIds6UInt32Vvp">SKTile.globalId</a></code></td>
+<td>the tile global id value</td>
+<td></td>
+</tr>
+<tr>
+<td><code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC12maskedTileIds6UInt32Vvp">SKTile.maskedTileId</a></code></td>
+<td>masked tile global id value</td>
+<td>get-only</td>
+</tr>
+<tr>
+<td><code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC9flipFlagsAA04TileD0Vvp">SKTile.flipFlags</a></code></td>
+<td>current tile transformation flags</td>
+<td></td>
+</tr>
+<tr>
+<td><code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC21isFlippedHorizontallySbvp">SKTile.isFlippedHorizontally</a></code></td>
+<td>tile is flipped horizontally</td>
+<td></td>
+</tr>
+<tr>
+<td><code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC19isFlippedVerticallySbvp">SKTile.isFlippedVertically</a></code></td>
+<td>tile is flipped vertically</td>
+<td></td>
+</tr>
+<tr>
+<td><code><a href="Classes/SKTile.html#/s:7SKTiled6SKTileC19isFlippedDiagonallySbvp">SKTile.isFlippedDiagonally</a></code></td>
+<td>tile is flipped diagonally</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<p>See the <a href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#tile-flipping"><strong>Tile Flipping</strong></a> section of the <a href="https://doc.mapeditor.org"><strong>Tiled documentation</strong></a> for more details.</p>
 
 <p>Next: <a href="scene-setup.html">Scene Setup</a> - <a href="Documentation.html">Index</a></p>
+
+<!--- SKTiled --->
 
 <!--- Tiled --->
 

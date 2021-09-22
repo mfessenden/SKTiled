@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../../index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='../../img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='../../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='../../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../../Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='../../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../../Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='../../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../../Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='../../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -253,6 +251,30 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
               </li>
             </ul>
           </li>
@@ -269,54 +291,21 @@
 
                 </div>
               </div>
-            <h2 id='overview' class='heading'>Overview</h2>
-
-<p>Tile offset hint for coordinate conversion.</p>
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>The <code>TiledLayerType</code> enumeration determines tile offset hints for coordinate conversion.</p>
 <h3 id='constants' class='heading'>Constants</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">center</td>
-<td style="text-align: left">Tile is centered.</td>
-</tr>
-<tr>
-<td style="text-align: left">top</td>
-<td style="text-align: left">Tile is offset at the top.</td>
-</tr>
-<tr>
-<td style="text-align: left">topLeft</td>
-<td style="text-align: left">Tile is offset at the upper left.</td>
-</tr>
-<tr>
-<td style="text-align: left">topRight</td>
-<td style="text-align: left">Tile is offset at the upper right.</td>
-</tr>
-<tr>
-<td style="text-align: left">bottom</td>
-<td style="text-align: left">Tile is offset at the bottom.</td>
-</tr>
-<tr>
-<td style="text-align: left">bottomLeft</td>
-<td style="text-align: left">Tile is offset at the bottom left.</td>
-</tr>
-<tr>
-<td style="text-align: left">bottomRight</td>
-<td style="text-align: left">Tile is offset at the bottom right.</td>
-</tr>
-<tr>
-<td style="text-align: left">left</td>
-<td style="text-align: left">Tile is offset at the left side.</td>
-</tr>
-<tr>
-<td style="text-align: left">right</td>
-<td style="text-align: left">Tile is offset at the right side.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code><a href="../../Classes/TiledLayerObject.html#/s:7SKTiled16TiledLayerObjectC6centerSo7CGPointVvp">center</a></code>: tile is centered.</li>
+<li><code>top</code>: tile is offset at the top.</li>
+<li><code>topLeft</code>: tile is offset at the upper left.</li>
+<li><code>topRight</code>: tile is offset at the upper right.</li>
+<li><code>bottom</code>: tile is offset at the bottom.</li>
+<li><code>bottomLeft</code>: tile is offset at the bottom left.</li>
+<li><code>bottomRight</code>: tile is offset at the bottom right.</li>
+<li><code>left</code>: tile is offset at the left side.</li>
+<li><code>right</code>: tile is offset at the right side.</li>
+</ul>
 
           </div>
         </section>
@@ -325,11 +314,11 @@
           <div class='section-content'>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Extensions"></a>
-                <a name="//apple_ref/swift/Section/Extensions" class="dashAnchor"></a>
+                <a name="/Debug%20Descriptions"></a>
+                <a name="//apple_ref/swift/Section/Debug Descriptions" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/Extensions"></a>
-                  <h3 class="section-name"><p>Extensions</p>
+                  <a class="section-name-link" href="#/Debug%20Descriptions"></a>
+                  <h3 class="section-name"><p>Debug Descriptions</p>
 </h3>
                 </div>
               </div>
@@ -337,8 +326,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled16TiledLayerObjectC10TileOffsetO11anchorPointSo7CGPointVvp"></a>
+                    <!-- <a name="/s:7SKTiled16TiledLayerObjectC10TileOffsetO11anchorPointSo7CGPointVvp"></a> -->
+                    <a name="/anchorPoint.s:7SKTiled16TiledLayerObjectC10TileOffsetO11anchorPointSo7CGPointVvp"></a>
                     <a name="//apple_ref/swift/Property/anchorPoint" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled16TiledLayerObjectC10TileOffsetO11anchorPointSo7CGPointVvp">anchorPoint</a> -->
                     <a class="token" href="#/s:7SKTiled16TiledLayerObjectC10TileOffsetO11anchorPointSo7CGPointVvp">anchorPoint</a>
                     </code>
                   </div>
@@ -359,7 +350,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledLayerObject.swift#L1221-L1242">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledLayerObject.swift#L1421-L1442">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

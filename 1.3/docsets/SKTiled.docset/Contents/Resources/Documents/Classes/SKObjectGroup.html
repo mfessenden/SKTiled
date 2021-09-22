@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -253,6 +251,30 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
               </li>
             </ul>
           </li>
@@ -269,55 +291,23 @@
 
                 </div>
               </div>
-            <h2 id='overview' class='heading'>Overview</h2>
-
-<p>The <code>SKObjectGroup</code> class is a container for vector object types. Most object properties can be set on the parent <code>SKObjectGroup</code> which is then applied to all child objects.</p>
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>The <code>SKObjectGroup</code> class is a container for vector object types. Most object properties can be set on the parent <code>SKObjectGroup</code> which is then applied to all child objects.</p>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th>Property</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>count</td>
-<td>Returns the number of objects in the layer.</td>
-</tr>
-<tr>
-<td>showObjects</td>
-<td>Toggle visibility for all of the objects in the layer.</td>
-</tr>
-<tr>
-<td>lineWidth</td>
-<td>Governs object line width for each object.</td>
-</tr>
-<tr>
-<td>debugDrawOptions</td>
-<td>Debugging display flags.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>count</code>: returns the number of objects in the layer.</li>
+<li><code>showObjects</code>: toggle visibility for all of the objects in the layer.</li>
+<li><code>lineWidth</code>: governs object line width for each object.</li>
+<li><code>debugDrawOptions</code>: debugging display flags.</li>
+</ul>
 <h3 id='methods' class='heading'>Methods</h3>
 
-<table><thead>
-<tr>
-<th>Method</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>addObject</td>
-<td>Add an object to the object group.</td>
-</tr>
-<tr>
-<td>removeObject</td>
-<td>Remove an object from the object group.</td>
-</tr>
-<tr>
-<td>getObject(withID:)</td>
-<td>Returns an object with the given id, if it exists.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>addObject</code>: add an object to the object group.</li>
+<li><code>removeObject</code>: remove an object from the object group.</li>
+<li><code>getObject(withID:)</code>: returns an object with the given id, if it exists.</li>
+</ul>
 <h3 id='usage' class='heading'>Usage</h3>
 
 <p>Adding a child object with optional color override:</p>
@@ -342,8 +332,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC5countSivp"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC5countSivp"></a> -->
+                    <a name="/count.s:7SKTiled13SKObjectGroupC5countSivp"></a>
                     <a name="//apple_ref/swift/Property/count" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC5countSivp">count</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC5countSivp">count</a>
                     </code>
                   </div>
@@ -352,7 +344,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns the number of objects in this layer.</p>
+                        <p>Returns the number of child objects contained in this layer.</p>
 
                       </div>
                       <div class="declaration">
@@ -364,7 +356,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L96">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L90">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -372,8 +364,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC11antialiasedSbvp"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC11antialiasedSbvp"></a> -->
+                    <a name="/antialiased.s:7SKTiled13SKObjectGroupC11antialiasedSbvp"></a>
                     <a name="//apple_ref/swift/Property/antialiased" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC11antialiasedSbvp">antialiased</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC11antialiasedSbvp">antialiased</a>
                     </code>
                   </div>
@@ -382,7 +376,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Controls antialiasing for each object</p>
+                        <p>Layer-based control for antialiasing child objects.</p>
 
                       </div>
                       <div class="declaration">
@@ -394,7 +388,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L99-L103">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L93-L97">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -402,8 +396,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC9lineWidth12CoreGraphics7CGFloatVvp"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC9lineWidth12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/lineWidth.s:7SKTiled13SKObjectGroupC9lineWidth12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/lineWidth" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC9lineWidth12CoreGraphics7CGFloatVvp">lineWidth</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC9lineWidth12CoreGraphics7CGFloatVvp">lineWidth</a>
                     </code>
                   </div>
@@ -424,7 +420,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L108-L116">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L102-L110">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -432,8 +428,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKObjectGroup(py)renderQuality"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKObjectGroup(py)renderQuality"></a> -->
+                    <a name="/renderQuality.c:@M@SKTiled@objc(cs)SKObjectGroup(py)renderQuality"></a>
                     <a name="//apple_ref/swift/Property/renderQuality" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKObjectGroup(py)renderQuality">renderQuality</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKObjectGroup(py)renderQuality">renderQuality</a>
                     </code>
                   </div>
@@ -454,7 +452,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L143-L150">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L120-L127">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -462,39 +460,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKObjectGroup(py)debugDrawOptions"></a>
-                    <a name="//apple_ref/swift/Property/debugDrawOptions" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKObjectGroup(py)debugDrawOptions">debugDrawOptions</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Debug visualization options.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">debugDrawOptions</span><span class="p">:</span> <span class="kt">DebugDrawOptions</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L153-L159">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div class="task-header">
-                    <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKObjectGroup(py)speed"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKObjectGroup(py)speed"></a> -->
+                    <a name="/speed.c:@M@SKTiled@objc(cs)SKObjectGroup(py)speed"></a>
                     <a name="//apple_ref/swift/Property/speed" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKObjectGroup(py)speed">speed</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKObjectGroup(py)speed">speed</a>
                     </code>
                   </div>
@@ -515,7 +484,39 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L162-L167">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L130-L135">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC9tintColorSo7NSColorCSgvp"></a> -->
+                    <a name="/tintColor.s:7SKTiled13SKObjectGroupC9tintColorSo7NSColorCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/tintColor" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC9tintColorSo7NSColorCSgvp">tintColor</a> -->
+                    <a class="token" href="#/s:7SKTiled13SKObjectGroupC9tintColorSo7NSColorCSgvp">tintColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Layer tint color.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">tintColor</span><span class="p">:</span> <span class="kt">SKColor</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L138-L162">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -524,11 +525,11 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Init"></a>
-                <a name="//apple_ref/swift/Section/Init" class="dashAnchor"></a>
+                <a name="/Initialization"></a>
+                <a name="//apple_ref/swift/Section/Initialization" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/Init"></a>
-                  <h3 class="section-name"><p>Init</p>
+                  <a class="section-name-link" href="#/Initialization"></a>
+                  <h3 class="section-name"><p>Initialization</p>
 </h3>
                 </div>
               </div>
@@ -536,8 +537,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC9layerName7tilemapACSS_AA9SKTilemapCtcfc"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC9layerName7tilemapACSS_AA9SKTilemapCtcfc"></a> -->
+                    <a name="/init(layerName:tilemap:).s:7SKTiled13SKObjectGroupC9layerName7tilemapACSS_AA9SKTilemapCtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(layerName:tilemap:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC9layerName7tilemapACSS_AA9SKTilemapCtcfc">init(layerName:<wbr>tilemap:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC9layerName7tilemapACSS_AA9SKTilemapCtcfc">init(layerName:<wbr>tilemap:<wbr>)</a>
                     </code>
                   </div>
@@ -589,7 +592,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L175-L179">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L170-L174">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -597,8 +600,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC7tilemap10attributesACSgAA9SKTilemapC_SDyS2SGtcfc"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC7tilemap10attributesACSgAA9SKTilemapC_SDyS2SGtcfc"></a> -->
+                    <a name="/init(tilemap:attributes:).s:7SKTiled13SKObjectGroupC7tilemap10attributesACSgAA9SKTilemapC_SDyS2SGtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(tilemap:attributes:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC7tilemap10attributesACSgAA9SKTilemapC_SDyS2SGtcfc">init(tilemap:<wbr>attributes:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC7tilemap10attributesACSgAA9SKTilemapC_SDyS2SGtcfc">init(tilemap:<wbr>attributes:<wbr>)</a>
                     </code>
                   </div>
@@ -651,7 +656,58 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L187-L198">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L182-L193">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKObjectGroup(im)initWithCoder:"></a> -->
+                    <a name="/init(coder:).c:@M@SKTiled@objc(cs)SKObjectGroup(im)initWithCoder:"></a>
+                    <a name="//apple_ref/swift/Method/init(coder:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKObjectGroup(im)initWithCoder:">init(coder:<wbr>)</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKObjectGroup(im)initWithCoder:">init(coder:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instantiate the node with a decoder instance.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>aDecoder</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>decoder.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L198-L200">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -672,8 +728,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC9addObject_9withColorAA06SKTileE0CSgAG_So7NSColorCSgtF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC9addObject_9withColorAA06SKTileE0CSgAG_So7NSColorCSgtF"></a> -->
+                    <a name="/addObject(_:withColor:).s:7SKTiled13SKObjectGroupC9addObject_9withColorAA06SKTileE0CSgAG_So7NSColorCSgtF"></a>
                     <a name="//apple_ref/swift/Method/addObject(_:withColor:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC9addObject_9withColorAA06SKTileE0CSgAG_So7NSColorCSgtF">addObject(_:<wbr>withColor:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC9addObject_9withColorAA06SKTileE0CSgAG_So7NSColorCSgtF">addObject(_:<wbr>withColor:<wbr>)</a>
                     </code>
                   </div>
@@ -729,7 +787,7 @@
                         <p>added object.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L212-L245">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L210-L242">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -737,8 +795,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC12removeObjectyAA06SKTileE0CSgAFF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC12removeObjectyAA06SKTileE0CSgAFF"></a> -->
+                    <a name="/removeObject(_:).s:7SKTiled13SKObjectGroupC12removeObjectyAA06SKTileE0CSgAFF"></a>
                     <a name="//apple_ref/swift/Method/removeObject(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC12removeObjectyAA06SKTileE0CSgAFF">removeObject(_:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC12removeObjectyAA06SKTileE0CSgAFF">removeObject(_:<wbr>)</a>
                     </code>
                   </div>
@@ -782,7 +842,7 @@
                         <p>removed object.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L251-L258">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L248-L254">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -790,8 +850,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKObjectGroup(im)draw"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKObjectGroup(im)draw"></a> -->
+                    <a name="/draw().c:@M@SKTiled@objc(cs)SKObjectGroup(im)draw"></a>
                     <a name="//apple_ref/swift/Method/draw()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKObjectGroup(im)draw">draw()</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKObjectGroup(im)draw">draw()</a>
                     </code>
                   </div>
@@ -812,7 +874,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L261-L263">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L257-L259">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -820,8 +882,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC8setColor5colorySo7NSColorC_tF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC8setColor5colorySo7NSColorC_tF"></a> -->
+                    <a name="/setColor(color:).s:7SKTiled13SKObjectGroupC8setColor5colorySo7NSColorC_tF"></a>
                     <a name="//apple_ref/swift/Method/setColor(color:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC8setColor5colorySo7NSColorC_tF">setColor(color:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC8setColor5colorySo7NSColorC_tF">setColor(color:<wbr>)</a>
                     </code>
                   </div>
@@ -861,7 +925,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L268-L275">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L264-L271">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -869,8 +933,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC8setColor9hexStringySS_tF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC8setColor9hexStringySS_tF"></a> -->
+                    <a name="/setColor(hexString:).s:7SKTiled13SKObjectGroupC8setColor9hexStringySS_tF"></a>
                     <a name="//apple_ref/swift/Method/setColor(hexString:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC8setColor9hexStringySS_tF">setColor(hexString:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC8setColor9hexStringySS_tF">setColor(hexString:<wbr>)</a>
                     </code>
                   </div>
@@ -910,7 +976,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L280-L287">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L276-L283">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -918,8 +984,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC11objectNamesSaySSGyF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC11objectNamesSaySSGyF"></a> -->
+                    <a name="/objectNames().s:7SKTiled13SKObjectGroupC11objectNamesSaySSGyF"></a>
                     <a name="//apple_ref/swift/Method/objectNames()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC11objectNamesSaySSGyF">objectNames()</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC11objectNamesSaySSGyF">objectNames()</a>
                     </code>
                   </div>
@@ -944,7 +1012,7 @@
                         <p>object names in the layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L292-L294">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L288-L290">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -952,8 +1020,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC9getObject6withIDAA06SKTileE0CSgs6UInt32V_tF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC9getObject6withIDAA06SKTileE0CSgs6UInt32V_tF"></a> -->
+                    <a name="/getObject(withID:).s:7SKTiled13SKObjectGroupC9getObject6withIDAA06SKTileE0CSgs6UInt32V_tF"></a>
                     <a name="//apple_ref/swift/Method/getObject(withID:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC9getObject6withIDAA06SKTileE0CSgs6UInt32V_tF">getObject(withID:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC9getObject6withIDAA06SKTileE0CSgs6UInt32V_tF">getObject(withID:<wbr>)</a>
                     </code>
                   </div>
@@ -997,7 +1067,7 @@
                         <p>vector object.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L300-L305">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L296-L301">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1005,8 +1075,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC10getObjects8withTextSayAA12SKTileObjectCGSS_tF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC10getObjects8withTextSayAA12SKTileObjectCGSS_tF"></a> -->
+                    <a name="/getObjects(withText:).s:7SKTiled13SKObjectGroupC10getObjects8withTextSayAA12SKTileObjectCGSS_tF"></a>
                     <a name="//apple_ref/swift/Method/getObjects(withText:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC10getObjects8withTextSayAA12SKTileObjectCGSS_tF">getObjects(withText:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC10getObjects8withTextSayAA12SKTileObjectCGSS_tF">getObjects(withText:<wbr>)</a>
                     </code>
                   </div>
@@ -1015,7 +1087,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Return text objects with matching text.</p>
+                        <p>Returns text objects with matching text.</p>
 
                       </div>
                       <div class="declaration">
@@ -1050,7 +1122,7 @@
                         <p>array of matching objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L311-L313">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L307-L309">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1058,8 +1130,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC10getObjects5namedSayAA12SKTileObjectCGSS_tF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC10getObjects5namedSayAA12SKTileObjectCGSS_tF"></a> -->
+                    <a name="/getObjects(named:).s:7SKTiled13SKObjectGroupC10getObjects5namedSayAA12SKTileObjectCGSS_tF"></a>
                     <a name="//apple_ref/swift/Method/getObjects(named:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC10getObjects5namedSayAA12SKTileObjectCGSS_tF">getObjects(named:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC10getObjects5namedSayAA12SKTileObjectCGSS_tF">getObjects(named:<wbr>)</a>
                     </code>
                   </div>
@@ -1068,7 +1142,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Return objects with the given name.</p>
+                        <p>Returns objects with the given name.</p>
 
                       </div>
                       <div class="declaration">
@@ -1103,7 +1177,7 @@
                         <p>array of matching objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L319-L321">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L315-L317">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1111,8 +1185,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC10getObjectsSayAA12SKTileObjectCGyF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC10getObjectsSayAA12SKTileObjectCGyF"></a> -->
+                    <a name="/getObjects().s:7SKTiled13SKObjectGroupC10getObjectsSayAA12SKTileObjectCGyF"></a>
                     <a name="//apple_ref/swift/Method/getObjects()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC10getObjectsSayAA12SKTileObjectCGyF">getObjects()</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC10getObjectsSayAA12SKTileObjectCGyF">getObjects()</a>
                     </code>
                   </div>
@@ -1121,7 +1197,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Return all child objects contained in the layer.</p>
+                        <p>Returns all child objects contained in the layer.</p>
 
                       </div>
                       <div class="declaration">
@@ -1137,7 +1213,7 @@
                         <p>array of child objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L326-L328">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L322-L324">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1145,8 +1221,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC10getObjects6ofTypeSayAA12SKTileObjectCGSS_tF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC10getObjects6ofTypeSayAA12SKTileObjectCGSS_tF"></a> -->
+                    <a name="/getObjects(ofType:).s:7SKTiled13SKObjectGroupC10getObjects6ofTypeSayAA12SKTileObjectCGSS_tF"></a>
                     <a name="//apple_ref/swift/Method/getObjects(ofType:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC10getObjects6ofTypeSayAA12SKTileObjectCGSS_tF">getObjects(ofType:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC10getObjects6ofTypeSayAA12SKTileObjectCGSS_tF">getObjects(ofType:<wbr>)</a>
                     </code>
                   </div>
@@ -1155,7 +1233,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Return objects of a given type.</p>
+                        <p>Returns objects of a given type.</p>
 
                       </div>
                       <div class="declaration">
@@ -1190,7 +1268,7 @@
                         <p>array of matching objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L334-L336">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L330-L332">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1198,8 +1276,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC9objectsAt5pointSayAA12SKTileObjectCGSo7CGPointV_tF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC9objectsAt5pointSayAA12SKTileObjectCGSo7CGPointV_tF"></a> -->
+                    <a name="/objectsAt(point:).s:7SKTiled13SKObjectGroupC9objectsAt5pointSayAA12SKTileObjectCGSo7CGPointV_tF"></a>
                     <a name="//apple_ref/swift/Method/objectsAt(point:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC9objectsAt5pointSayAA12SKTileObjectCGSo7CGPointV_tF">objectsAt(point:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC9objectsAt5pointSayAA12SKTileObjectCGSo7CGPointV_tF">objectsAt(point:<wbr>)</a>
                     </code>
                   </div>
@@ -1243,7 +1323,7 @@
                         <p>objects at the given point.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L349-L355">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L345-L351">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1251,8 +1331,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC9objectsAt5coordSayAA12SKTileObjectCGs5SIMD2Vys5Int32VG_tF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC9objectsAt5coordSayAA12SKTileObjectCGs5SIMD2Vys5Int32VG_tF"></a> -->
+                    <a name="/objectsAt(coord:).s:7SKTiled13SKObjectGroupC9objectsAt5coordSayAA12SKTileObjectCGs5SIMD2Vys5Int32VG_tF"></a>
                     <a name="//apple_ref/swift/Method/objectsAt(coord:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC9objectsAt5coordSayAA12SKTileObjectCGs5SIMD2Vys5Int32VG_tF">objectsAt(coord:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC9objectsAt5coordSayAA12SKTileObjectCGs5SIMD2Vys5Int32VG_tF">objectsAt(coord:<wbr>)</a>
                     </code>
                   </div>
@@ -1296,7 +1378,7 @@
                         <p>objects at the given point.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L361-L365">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L357-L361">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1317,8 +1399,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC11tileObjectsSayAA12SKTileObjectCGyF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC11tileObjectsSayAA12SKTileObjectCGyF"></a> -->
+                    <a name="/tileObjects().s:7SKTiled13SKObjectGroupC11tileObjectsSayAA12SKTileObjectCGyF"></a>
                     <a name="//apple_ref/swift/Method/tileObjects()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC11tileObjectsSayAA12SKTileObjectCGyF">tileObjects()</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC11tileObjectsSayAA12SKTileObjectCGyF">tileObjects()</a>
                     </code>
                   </div>
@@ -1343,7 +1427,7 @@
                         <p>objects with a tile gid.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L372-L374">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L368-L370">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1351,8 +1435,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC11tileObjects8globalIDSayAA12SKTileObjectCGs6UInt32V_tF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC11tileObjects8globalIDSayAA12SKTileObjectCGs6UInt32V_tF"></a> -->
+                    <a name="/tileObjects(globalID:).s:7SKTiled13SKObjectGroupC11tileObjects8globalIDSayAA12SKTileObjectCGs6UInt32V_tF"></a>
                     <a name="//apple_ref/swift/Method/tileObjects(globalID:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC11tileObjects8globalIDSayAA12SKTileObjectCGs6UInt32V_tF">tileObjects(globalID:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC11tileObjects8globalIDSayAA12SKTileObjectCGs6UInt32V_tF">tileObjects(globalID:<wbr>)</a>
                     </code>
                   </div>
@@ -1396,7 +1482,7 @@
                         <p>array of matching tile objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L380-L382">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L376-L378">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1404,8 +1490,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC13newTileObject4dataAA06SKTileF0CAA13SKTilesetDataC_tF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC13newTileObject4dataAA06SKTileF0CAA13SKTilesetDataC_tF"></a> -->
+                    <a name="/newTileObject(data:).s:7SKTiled13SKObjectGroupC13newTileObject4dataAA06SKTileF0CAA13SKTilesetDataC_tF"></a>
                     <a name="//apple_ref/swift/Method/newTileObject(data:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC13newTileObject4dataAA06SKTileF0CAA13SKTilesetDataC_tF">newTileObject(data:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC13newTileObject4dataAA06SKTileF0CAA13SKTilesetDataC_tF">newTileObject(data:<wbr>)</a>
                     </code>
                   </div>
@@ -1449,7 +1537,7 @@
                         <p>created tile object.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L388-L398">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L384-L394">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1470,8 +1558,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC11textObjectsSayAA12SKTileObjectCGyF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC11textObjectsSayAA12SKTileObjectCGyF"></a> -->
+                    <a name="/textObjects().s:7SKTiled13SKObjectGroupC11textObjectsSayAA12SKTileObjectCGyF"></a>
                     <a name="//apple_ref/swift/Method/textObjects()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC11textObjectsSayAA12SKTileObjectCGyF">textObjects()</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC11textObjectsSayAA12SKTileObjectCGyF">textObjects()</a>
                     </code>
                   </div>
@@ -1496,7 +1586,7 @@
                         <p>text objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L405-L407">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L401-L403">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1517,8 +1607,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC19setupTileCollisionsyyF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC19setupTileCollisionsyyF"></a> -->
+                    <a name="/setupTileCollisions().s:7SKTiled13SKObjectGroupC19setupTileCollisionsyyF"></a>
                     <a name="//apple_ref/swift/Method/setupTileCollisions()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC19setupTileCollisionsyyF">setupTileCollisions()</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC19setupTileCollisionsyyF">setupTileCollisions()</a>
                     </code>
                   </div>
@@ -1539,7 +1631,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L412-L416">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L408-L412">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1560,8 +1652,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC18didFinishRendering8durationySd_tF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC18didFinishRendering8durationySd_tF"></a> -->
+                    <a name="/didFinishRendering(duration:).s:7SKTiled13SKObjectGroupC18didFinishRendering8durationySd_tF"></a>
                     <a name="//apple_ref/swift/Method/didFinishRendering(duration:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC18didFinishRendering8durationySd_tF">didFinishRendering(duration:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC18didFinishRendering8durationySd_tF">didFinishRendering(duration:<wbr>)</a>
                     </code>
                   </div>
@@ -1601,7 +1695,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L423-L432">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L419-L428">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1622,8 +1716,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC21runAnimationAsActionsyyF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC21runAnimationAsActionsyyF"></a> -->
+                    <a name="/runAnimationAsActions().s:7SKTiled13SKObjectGroupC21runAnimationAsActionsyyF"></a>
                     <a name="//apple_ref/swift/Method/runAnimationAsActions()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC21runAnimationAsActionsyyF">runAnimationAsActions()</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC21runAnimationAsActionsyyF">runAnimationAsActions()</a>
                     </code>
                   </div>
@@ -1644,7 +1740,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L437-L441">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L433-L437">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1652,8 +1748,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC22removeAnimationActions7restoreySb_tF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC22removeAnimationActions7restoreySb_tF"></a> -->
+                    <a name="/removeAnimationActions(restore:).s:7SKTiled13SKObjectGroupC22removeAnimationActions7restoreySb_tF"></a>
                     <a name="//apple_ref/swift/Method/removeAnimationActions(restore:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC22removeAnimationActions7restoreySb_tF">removeAnimationActions(restore:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC22removeAnimationActions7restoreySb_tF">removeAnimationActions(restore:<wbr>)</a>
                     </code>
                   </div>
@@ -1693,7 +1791,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L446-L459">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L442-L455">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1714,8 +1812,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC6updateyySdF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC6updateyySdF"></a> -->
+                    <a name="/update(_:).s:7SKTiled13SKObjectGroupC6updateyySdF"></a>
                     <a name="//apple_ref/swift/Method/update(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC6updateyySdF">update(_:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC6updateyySdF">update(_:<wbr>)</a>
                     </code>
                   </div>
@@ -1755,7 +1855,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L466-L469">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L462-L465">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1776,8 +1876,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC12customMirrors0E0Vvp"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC12customMirrors0E0Vvp"></a> -->
+                    <a name="/customMirror.s:7SKTiled13SKObjectGroupC12customMirrors0E0Vvp"></a>
                     <a name="//apple_ref/swift/Property/customMirror" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC12customMirrors0E0Vvp">customMirror</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC12customMirrors0E0Vvp">customMirror</a>
                     </code>
                   </div>
@@ -1798,17 +1900,32 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L474-L481">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L472-L502">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Debug%20Descriptions"></a>
+                <a name="//apple_ref/swift/Section/Debug Descriptions" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Debug%20Descriptions"></a>
+                  <h3 class="section-name"><p>Debug Descriptions</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKObjectGroup(py)tiledNodeName"></a>
-                    <a name="//apple_ref/swift/Property/tiledNodeName" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKObjectGroup(py)tiledNodeName">tiledNodeName</a>
+                    <!-- <a name="/c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledElementName"></a> -->
+                    <a name="/tiledElementName.c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledElementName"></a>
+                    <a name="//apple_ref/swift/Property/tiledElementName" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledElementName">tiledElementName</a> -->
+                    <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledElementName">tiledElementName</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1824,12 +1941,12 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">tiledNodeName</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">tiledElementName</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L484-L486">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L532-L534">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1837,9 +1954,11 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKObjectGroup(py)tiledNodeNiceName"></a>
+                    <!-- <a name="/c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledNodeNiceName"></a> -->
+                    <a name="/tiledNodeNiceName.c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledNodeNiceName"></a>
                     <a name="//apple_ref/swift/Property/tiledNodeNiceName" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKObjectGroup(py)tiledNodeNiceName">tiledNodeNiceName</a>
+                    <!-- <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledNodeNiceName">tiledNodeNiceName</a> -->
+                    <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledNodeNiceName">tiledNodeNiceName</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1860,7 +1979,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L489-L491">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L537-L539">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1868,9 +1987,11 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKObjectGroup(py)tiledIconName"></a>
+                    <!-- <a name="/c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledIconName"></a> -->
+                    <a name="/tiledIconName.c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledIconName"></a>
                     <a name="//apple_ref/swift/Property/tiledIconName" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKObjectGroup(py)tiledIconName">tiledIconName</a>
+                    <!-- <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledIconName">tiledIconName</a> -->
+                    <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledIconName">tiledIconName</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1891,7 +2012,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L494-L496">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L542-L544">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1899,9 +2020,11 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKObjectGroup(py)tiledListDescription"></a>
+                    <!-- <a name="/c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledListDescription"></a> -->
+                    <a name="/tiledListDescription.c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledListDescription"></a>
                     <a name="//apple_ref/swift/Property/tiledListDescription" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKObjectGroup(py)tiledListDescription">tiledListDescription</a>
+                    <!-- <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledListDescription">tiledListDescription</a> -->
+                    <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledListDescription">tiledListDescription</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1909,7 +2032,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A description of the node.</p>
+                        <p>A description of the node used in list or outline views.</p>
 
                       </div>
                       <div class="declaration">
@@ -1922,7 +2045,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L499-L502">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L547-L551">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1930,9 +2053,11 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKObjectGroup(py)tiledDescription"></a>
-                    <a name="//apple_ref/swift/Property/tiledDescription" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKObjectGroup(py)tiledDescription">tiledDescription</a>
+                    <!-- <a name="/c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledHelpDescription"></a> -->
+                    <a name="/tiledHelpDescription.c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledHelpDescription"></a>
+                    <a name="//apple_ref/swift/Property/tiledHelpDescription" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledHelpDescription">tiledHelpDescription</a> -->
+                    <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKObjectGroup(py)tiledHelpDescription">tiledHelpDescription</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1940,7 +2065,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A description of the node.</p>
+                        <p>Returns a string representation for use with a dropdown menu.</p>
 
                       </div>
                       <div class="declaration">
@@ -1948,12 +2073,12 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">tiledDescription</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+<span class="kd">public</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">tiledHelpDescription</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L505-L507">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L554-L556">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1974,8 +2099,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC9getObject5namedAA06SKTileE0CSgSS_tF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC9getObject5namedAA06SKTileE0CSgSS_tF"></a> -->
+                    <a name="/getObject(named:).s:7SKTiled13SKObjectGroupC9getObject5namedAA06SKTileE0CSgSS_tF"></a>
                     <a name="//apple_ref/swift/Method/getObject(named:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC9getObject5namedAA06SKTileE0CSgSS_tF">getObject(named:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC9getObject5namedAA06SKTileE0CSgSS_tF">getObject(named:<wbr>)</a>
                     </code>
                   </div>
@@ -2020,7 +2147,7 @@
                         <p>object matching the given name.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L541-L547">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L570-L576">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2028,8 +2155,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC11drawObjectsyyF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC11drawObjectsyyF"></a> -->
+                    <a name="/drawObjects().s:7SKTiled13SKObjectGroupC11drawObjectsyyF"></a>
                     <a name="//apple_ref/swift/Method/drawObjects()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC11drawObjectsyyF">drawObjects()</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC11drawObjectsyyF">drawObjects()</a>
                     </code>
                   </div>
@@ -2051,7 +2180,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L551-L553">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L580-L582">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2059,8 +2188,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC11tileObjects8globalIDSayAA12SKTileObjectCGSi_tF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC11tileObjects8globalIDSayAA12SKTileObjectCGSi_tF"></a> -->
+                    <a name="/tileObjects(globalID:).s:7SKTiled13SKObjectGroupC11tileObjects8globalIDSayAA12SKTileObjectCGSi_tF"></a>
                     <a name="//apple_ref/swift/Method/tileObjects(globalID:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC11tileObjects8globalIDSayAA12SKTileObjectCGSi_tF">tileObjects(globalID:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC11tileObjects8globalIDSayAA12SKTileObjectCGSi_tF">tileObjects(globalID:<wbr>)</a>
                     </code>
                   </div>
@@ -2105,7 +2236,7 @@
                         <p>array of matching tile objects.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L560-L562">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L589-L591">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2113,8 +2244,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled13SKObjectGroupC9getObject6withIDAA06SKTileE0CSgSi_tF"></a>
+                    <!-- <a name="/s:7SKTiled13SKObjectGroupC9getObject6withIDAA06SKTileE0CSgSi_tF"></a> -->
+                    <a name="/getObject(withID:).s:7SKTiled13SKObjectGroupC9getObject6withIDAA06SKTileE0CSgSi_tF"></a>
                     <a name="//apple_ref/swift/Method/getObject(withID:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled13SKObjectGroupC9getObject6withIDAA06SKTileE0CSgSi_tF">getObject(withID:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled13SKObjectGroupC9getObject6withIDAA06SKTileE0CSgSi_tF">getObject(withID:<wbr>)</a>
                     </code>
                   </div>
@@ -2159,7 +2292,7 @@
                         <p>vector object.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKObjectGroup.swift#L569-L571">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKObjectGroup.swift#L598-L600">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2180,8 +2313,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@CM@SKTiled@objc(cs)SKObjectGroup(im)parsePropertiesWithCompletion:"></a>
+                    <!-- <a name="/c:@CM@SKTiled@objc(cs)SKObjectGroup(im)parsePropertiesWithCompletion:"></a> -->
+                    <a name="/parseProperties(completion:).c:@CM@SKTiled@objc(cs)SKObjectGroup(im)parsePropertiesWithCompletion:"></a>
                     <a name="//apple_ref/swift/Method/parseProperties(completion:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKObjectGroup(im)parsePropertiesWithCompletion:">parseProperties(completion:<wbr>)</a> -->
                     <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKObjectGroup(im)parsePropertiesWithCompletion:">parseProperties(completion:<wbr>)</a>
                     </code>
                   </div>
@@ -2221,7 +2356,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+Properties.swift#L337-L348">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTiled+Properties.swift#L355-L366">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

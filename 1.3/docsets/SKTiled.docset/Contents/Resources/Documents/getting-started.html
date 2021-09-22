@@ -19,9 +19,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -30,14 +30,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -109,7 +107,7 @@
                 <a class='nav-group-task-link' href='Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -119,6 +117,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -157,9 +158,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -236,13 +234,13 @@
                 <a class='nav-group-task-link' href='Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -255,6 +253,30 @@
               </li>
             </ul>
           </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -262,6 +284,7 @@
         <section class='section'>
           <div class='section-content'>
             
+            <!-- <div><h1>Overview</h1></div> -->
             <h1 id='getting-started' class='heading'>Getting Started</h1>
 
 <ul>
@@ -270,7 +293,12 @@
 
 <ul>
 <li><a href="#framework-installation">Framework Installation</a></li>
-<li><a href="#carthage-installation">Carthage Installation</a></li>
+<li><a href="#swift-package-manager">Swift Package Manager</a></li>
+<li><a href="#carthage-installation">Carthage Installation</a>
+
+<ul>
+<li><a href="#binary-frameworks">Binary Frameworks</a></li>
+</ul></li>
 <li><a href="#cocoapods-installation">CocoaPods Installation</a></li>
 <li><a href="#building-the-demo-projects">Building the Demo Projects</a></li>
 <li><a href="#building-the-documentation">Building the Documentation</a></li>
@@ -280,11 +308,7 @@
 <ul>
 <li><a href="#a-note-about-4k">A Note About 4K</a></li>
 </ul></li>
-<li><a href="#using-tiled-assets-with-xcode">Using Tiled Assets with Xcode</a>
-
-<ul>
-<li><a href="#referenced-assets">Referenced Assets</a></li>
-</ul></li>
+<li><a href="#using-tiled-assets-with-xcode">Using Tiled Assets with Xcode</a></li>
 </ul>
 
 <p><strong>SKTiled</strong> was designed to be flexible and easy to use. To get started, simply build the framework and add your assets to your Xcode project. If you have any problems or requests, please open an issue at the <a href="https://github.com/mfessenden/SKTiled/issues"><strong>Github page</strong></a>.</p>
@@ -293,7 +317,7 @@
 <ul>
 <li>iOS 12</li>
 <li>tvOS 12</li>
-<li>macOS 10.14</li>
+<li>macOS 11</li>
 <li>Xcode 11/Swift 5</li>
 </ul>
 <h2 id='installation' class='heading'>Installation</h2>
@@ -303,17 +327,20 @@
 <p><img src="images/project-schemes.png" alt="Project Schemes"></p>
 <h3 id='framework-installation' class='heading'>Framework Installation</h3>
 
-<p>To use the frameworks, build the appropriate framework target and add to your project. Make sure the <strong>Minimum Deployment Target</strong> is set correctly for your project (iOS11+/macOS 10.12+/tvOS12+).</p>
+<p>To use the frameworks, build the appropriate framework target and add to your project. Make sure the <strong>Minimum Deployment Target</strong> is set correctly for your project (iOS11+/macOS 11+/tvOS12+).</p>
 
 <p><img src="images/framework.png" alt="adding framework"></p>
 
-<p>After building the framework(s), you&rsquo;ll need to add them to your project. Select your target, and add the framework to the <strong>Embedded Binaries</strong> and <strong>Linked Frameworks and Libraries</strong> sections of the <strong>General</strong> tab. You&rsquo;ll also need to make sure it is linked in the <strong>Build Phases &gt; Embed Frameworks</strong> section.</p>
+<p>After building the framework(s), you&rsquo;ll need to link them with your project. Select your target, and add the framework to the <strong>Frameworks, Libraries and Embedded Content</strong> section.</p>
 
 <p><img src="images/links.png" alt="framework embed"></p>
+<h3 id='swift-package-manager' class='heading'>Swift Package Manager</h3>
+
+<p>To add the SKTiled framework dependency to your Xcode project, select <strong>File &gt; Swift Packages &gt; Add Package Dependency</strong> and enter the repository URL. Once the dependency is resolved, you can add it to your targets by clicking the <strong><code>+</code></strong> button in the <strong>Frameworks, Libraries and Embedded Content</strong> area of the target&rsquo;s <strong>General</strong> tab.</p>
 <h3 id='carthage-installation' class='heading'>Carthage Installation</h3>
 
-<p>To build with <a href="https://github.com/Carthage/Carthage">Carthage</a>, create a Cartfile in your project root and add a reference to <strong>SKTiled</strong> (be sure to check the current version number):</p>
-<pre class="highlight plaintext"><code>github "mfessenden/SKTiled" ~&gt; 1.30b1
+<p>To build with <a href="https://github.com/Carthage/Carthage">Carthage</a>, create a Cartfile in your project root and add a reference to <strong>SKTiled</strong>:</p>
+<pre class="highlight plaintext"><code>github "mfessenden/SKTiled"
 </code></pre>
 
 <p>Close the file and run Carthage from the terminal to build the framework(s):</p>
@@ -329,6 +356,17 @@
 <p><img src="images/carthage_directories.png" alt="Carthage Directories"></p>
 
 <p>See the <a href="https://github.com/Carthage/Carthage">Carthage</a> home page for help and additional build instructions.</p>
+<h4 id='binary-frameworks' class='heading'>Binary Frameworks</h4>
+
+<p>It&rsquo;s also possible to build the new binary <strong>xcframework</strong> framework for use with multiple platforms/architectures. Pass the <code>--use-xcframeworks</code> argument to the update command:</p>
+<pre class="highlight plaintext"><code>carthage update --use-xcframeworks
+</code></pre>
+
+<p>The resulting framework file <strong><code>SKTiled.xcframework</code></strong> can be added to your project via dragging it into the <strong>General &gt; Frameworks, Libraries, and Embedded Content</strong> section of each target. Unlike normal frameworks, this framework can be used with <em>any</em> platform. If your project will be build for multiple processor architectures (x86, Apple ARM), this is the preferred method.</p>
+
+<p><img src="images/embed-xcframeworks.svg" alt="xcframework embed"></p>
+
+<p>You&rsquo;ll need <strong>Carthage v0.37.0</strong> to build binary frameworks. See <a href="https://github.com/Carthage/Carthage/issues/3097"><strong>this issue</strong></a> for more information.</p>
 <h3 id='cocoapods-installation' class='heading'>CocoaPods Installation</h3>
 
 <p>Installation with <a href="https://cocoapods.org">CocoaPods</a> is similar to Carthage. Create a <strong>podfile</strong> in your project root with the command:</p>
@@ -378,7 +416,7 @@ end
 <h3 id='building-the-documentation' class='heading'>Building the Documentation</h3>
 
 <p>To build the documentation, you&rsquo;ll need to install <a href="https://github.com/realm/jazzy"><strong>jazzy</strong></a>. To build the html content, simply run the included script in a shell:</p>
-<pre class="highlight plaintext"><code>./scripts/build-docs.sh
+<pre class="highlight plaintext"><code>./scripts/build-documentation.sh
 </code></pre>
 <h2 id='tvos-support' class='heading'>tvOS Support</h2>
 
@@ -401,17 +439,6 @@ end
 </code></pre>
 
 <p>On your hard drive, a map&rsquo;s dependencies (images, tilesets) <em>should</em> be in the same directory as the map to avoid read errors.</p>
-<h3 id='referenced-assets' class='heading'>Referenced Assets</h3>
-
-<p><img src="images/xcode-assets-referenced.png" alt="Referenced Assets"></p>
-
-<p>If you add assets as <em>folder references</em>, you can supply a directory name with the <code>inDirectory</code> argument of <code><a href="Classes/SKTilemap.html#/s:7SKTiled9SKTilemapC4load7tmxFileACSgSS_tFZ">SKTilemap.load(tmxFile:)</a></code> method:</p>
-<pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"MyTilemap.tmx"</span><span class="p">,</span> <span class="nv">inDirectory</span><span class="p">:</span> <span class="s">"Tiled"</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">scene</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre>
-
-<p>This will allow you more flexibility organizing your project, but be careful that your maps don&rsquo;t reference files above the referenced folder. For more information, see the <a href="working-with-maps.html#loading-a-tilemap"><strong>Working with Maps</strong></a> section.</p>
 
 <p>Next: <a href="migration-guide.html">Migration Guide</a> - <a href="Documentation.html">Index</a></p>
 

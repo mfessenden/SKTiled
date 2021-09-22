@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../../index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='../../img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='../../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='../../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../../Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='../../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../../Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='../../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../../Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='../../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -253,6 +251,30 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
               </li>
             </ul>
           </li>
@@ -269,34 +291,16 @@
 
                 </div>
               </div>
-            <h3 id='overview' class='heading'>Overview</h3>
-
-<p>Represents the render scaling factor when dealing with higher resolutions &amp; retina screen scale factors.</p>
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>The <code>RenderQuality</code> structure represents the render scaling factor used when dealing with higher resolutions &amp; retina screen scale factors.</p>
 <h4 id='properties' class='heading'>Properties</h4>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">default</td>
-<td style="text-align: left">Global render quality.</td>
-</tr>
-<tr>
-<td style="text-align: left">object</td>
-<td style="text-align: left">Object render quality.</td>
-</tr>
-<tr>
-<td style="text-align: left">text</td>
-<td style="text-align: left">Text object render quality</td>
-</tr>
-<tr>
-<td style="text-align: left">override</td>
-<td style="text-align: left">Override value.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code><a href="../../Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC7defaultACvpZ">default</a></code>: global render quality.</li>
+<li><code>object</code>: object render quality.</li>
+<li><code>text</code>: text object render quality</li>
+<li><code>override</code>: override value.</li>
+</ul>
 
           </div>
         </section>
@@ -308,8 +312,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC13RenderQualityV7default12CoreGraphics7CGFloatVvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC13RenderQualityV7default12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/default.s:7SKTiled12TiledGlobalsC13RenderQualityV7default12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/default" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC13RenderQualityV7default12CoreGraphics7CGFloatVvp">default</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC13RenderQualityV7default12CoreGraphics7CGFloatVvp">default</a>
                     </code>
                   </div>
@@ -330,7 +336,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L368">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L452">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -338,8 +344,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC13RenderQualityV6object12CoreGraphics7CGFloatVvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC13RenderQualityV6object12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/object.s:7SKTiled12TiledGlobalsC13RenderQualityV6object12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/object" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC13RenderQualityV6object12CoreGraphics7CGFloatVvp">object</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC13RenderQualityV6object12CoreGraphics7CGFloatVvp">object</a>
                     </code>
                   </div>
@@ -360,7 +368,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L371">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L455">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -368,8 +376,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC13RenderQualityV4text12CoreGraphics7CGFloatVvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC13RenderQualityV4text12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/text.s:7SKTiled12TiledGlobalsC13RenderQualityV4text12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/text" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC13RenderQualityV4text12CoreGraphics7CGFloatVvp">text</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC13RenderQualityV4text12CoreGraphics7CGFloatVvp">text</a>
                     </code>
                   </div>
@@ -390,7 +400,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L374">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L458">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -398,8 +408,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC13RenderQualityV8override12CoreGraphics7CGFloatVvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC13RenderQualityV8override12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/override.s:7SKTiled12TiledGlobalsC13RenderQualityV8override12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/override" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC13RenderQualityV8override12CoreGraphics7CGFloatVvp">override</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC13RenderQualityV8override12CoreGraphics7CGFloatVvp">override</a>
                     </code>
                   </div>
@@ -420,7 +432,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L377">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L461">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../../index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='../../img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='../../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='../../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../../Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='../../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../../Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='../../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../../Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='../../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -253,6 +251,30 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
               </li>
             </ul>
           </li>
@@ -269,34 +291,15 @@
 
                 </div>
               </div>
-            <h3 id='overview' class='heading'>Overview</h3>
-
-<p>This structure represents global debugging visualization attributes.</p>
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>The <code>DebugDisplayOptions</code> structure represents global debugging visualization attributes.</p>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-<th style="text-align: center">Render Speed</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">dynamic</td>
-<td style="text-align: left">Dynamically update tiles as needed.</td>
-<td style="text-align: center">normal</td>
-</tr>
-<tr>
-<td style="text-align: left">full</td>
-<td style="text-align: left">All tiles are updated each frame.</td>
-<td style="text-align: center">slower</td>
-</tr>
-<tr>
-<td style="text-align: left">actions</td>
-<td style="text-align: left">Tiles are not updated, SpriteKit actions are used instead.</td>
-<td style="text-align: center">fastest</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>mouseFilters</code>: mouse interaction options.</li>
+<li><code>mousePointerSize</code>: mouse pointer font size.</li>
+<li><code>highlightDuration</code>: global highlight duration for selectable objects.</li>
+</ul>
 
           </div>
         </section>
@@ -308,8 +311,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV12mouseFiltersAE05MouseH0Vvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV12mouseFiltersAE05MouseH0Vvp"></a> -->
+                    <a name="/mouseFilters.s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV12mouseFiltersAE05MouseH0Vvp"></a>
                     <a name="//apple_ref/swift/Property/mouseFilters" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV12mouseFiltersAE05MouseH0Vvp">mouseFilters</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV12mouseFiltersAE05MouseH0Vvp">mouseFilters</a>
                     </code>
                   </div>
@@ -330,7 +335,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L395">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L475">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -338,8 +343,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV16mousePointerSize12CoreGraphics7CGFloatVvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV16mousePointerSize12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/mousePointerSize.s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV16mousePointerSize12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/mousePointerSize" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV16mousePointerSize12CoreGraphics7CGFloatVvp">mousePointerSize</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV16mousePointerSize12CoreGraphics7CGFloatVvp">mousePointerSize</a>
                     </code>
                   </div>
@@ -360,7 +367,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L398">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L478">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -368,8 +375,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV17highlightDurationSdvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV17highlightDurationSdvp"></a> -->
+                    <a name="/highlightDuration.s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV17highlightDurationSdvp"></a>
                     <a name="//apple_ref/swift/Property/highlightDuration" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV17highlightDurationSdvp">highlightDuration</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV17highlightDurationSdvp">highlightDuration</a>
                     </code>
                   </div>
@@ -378,7 +387,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Debug display properties.</p>
+                        <p>Default highlight duration for nodes.</p>
 
                       </div>
                       <div class="declaration">
@@ -390,7 +399,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L401">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L481">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -398,9 +407,11 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV12gridOpactity12CoreGraphics7CGFloatVvp"></a>
-                    <a name="//apple_ref/swift/Property/gridOpactity" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV12gridOpactity12CoreGraphics7CGFloatVvp">gridOpactity</a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV11gridOpacity12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/gridOpacity.s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV11gridOpacity12CoreGraphics7CGFloatVvp"></a>
+                    <a name="//apple_ref/swift/Property/gridOpacity" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV11gridOpacity12CoreGraphics7CGFloatVvp">gridOpacity</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV11gridOpacity12CoreGraphics7CGFloatVvp">gridOpacity</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -408,19 +419,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Debug grid drawing opacity.</p>
+                        <p>Debug grid visualization opacity.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">gridOpactity</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">gridOpacity</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L404">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L484">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -428,8 +439,42 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV9gridColorSo7NSColorCvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV23tileHighlighBlendFactor12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/tileHighlighBlendFactor.s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV23tileHighlighBlendFactor12CoreGraphics7CGFloatVvp"></a>
+                    <a name="//apple_ref/swift/Property/tileHighlighBlendFactor" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV23tileHighlighBlendFactor12CoreGraphics7CGFloatVvp">tileHighlighBlendFactor</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV23tileHighlighBlendFactor12CoreGraphics7CGFloatVvp">tileHighlighBlendFactor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tile color blend opacity.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">tileHighlighBlendFactor</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L487">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV9gridColorSo7NSColorCvp"></a> -->
+                    <a name="/gridColor.s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV9gridColorSo7NSColorCvp"></a>
                     <a name="//apple_ref/swift/Property/gridColor" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV9gridColorSo7NSColorCvp">gridColor</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV9gridColorSo7NSColorCvp">gridColor</a>
                     </code>
                   </div>
@@ -438,7 +483,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Debug grid drawing color.</p>
+                        <p>Debug grid visualization color.</p>
 
                       </div>
                       <div class="declaration">
@@ -450,7 +495,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L407">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L490">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -458,8 +503,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV10frameColorSo7NSColorCvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV10frameColorSo7NSColorCvp"></a> -->
+                    <a name="/frameColor.s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV10frameColorSo7NSColorCvp"></a>
                     <a name="//apple_ref/swift/Property/frameColor" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV10frameColorSo7NSColorCvp">frameColor</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV10frameColorSo7NSColorCvp">frameColor</a>
                     </code>
                   </div>
@@ -468,7 +515,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Debug frame drawing color.</p>
+                        <p>Debug frame visualization color.</p>
 
                       </div>
                       <div class="declaration">
@@ -480,7 +527,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L410">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L493">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -488,8 +535,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV9lineWidth12CoreGraphics7CGFloatVvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV9lineWidth12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/lineWidth.s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV9lineWidth12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/lineWidth" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV9lineWidth12CoreGraphics7CGFloatVvp">lineWidth</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV9lineWidth12CoreGraphics7CGFloatVvp">lineWidth</a>
                     </code>
                   </div>
@@ -510,7 +559,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L413">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L496">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -518,8 +567,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV18tileHighlightColorSo7NSColorCvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV18tileHighlightColorSo7NSColorCvp"></a> -->
+                    <a name="/tileHighlightColor.s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV18tileHighlightColorSo7NSColorCvp"></a>
                     <a name="//apple_ref/swift/Property/tileHighlightColor" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV18tileHighlightColorSo7NSColorCvp">tileHighlightColor</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV18tileHighlightColorSo7NSColorCvp">tileHighlightColor</a>
                     </code>
                   </div>
@@ -540,7 +591,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L416">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L499">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -548,38 +599,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV17objectFillOpacity12CoreGraphics7CGFloatVvp"></a>
-                    <a name="//apple_ref/swift/Property/objectFillOpacity" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV17objectFillOpacity12CoreGraphics7CGFloatVvp">objectFillOpacity</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Debug object fill opacity.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">objectFillOpacity</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L419">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div class="task-header">
-                    <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV20objectHighlightColorSo7NSColorCvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV20objectHighlightColorSo7NSColorCvp"></a> -->
+                    <a name="/objectHighlightColor.s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV20objectHighlightColorSo7NSColorCvp"></a>
                     <a name="//apple_ref/swift/Property/objectHighlightColor" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV20objectHighlightColorSo7NSColorCvp">objectHighlightColor</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV20objectHighlightColorSo7NSColorCvp">objectHighlightColor</a>
                     </code>
                   </div>
@@ -588,7 +611,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Debug object highlight color.</p>
+                        <p>Debug vector object highlight color.</p>
 
                       </div>
                       <div class="declaration">
@@ -600,7 +623,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L422">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L502">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -608,8 +631,42 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV15navigationColorSo7NSColorCvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV19layerHighlightColorSo7NSColorCvp"></a> -->
+                    <a name="/layerHighlightColor.s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV19layerHighlightColorSo7NSColorCvp"></a>
+                    <a name="//apple_ref/swift/Property/layerHighlightColor" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV19layerHighlightColorSo7NSColorCvp">layerHighlightColor</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV19layerHighlightColorSo7NSColorCvp">layerHighlightColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Debug highlight color for mappable types.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">layerHighlightColor</span><span class="p">:</span> <span class="kt">SKColor</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L505">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV15navigationColorSo7NSColorCvp"></a> -->
+                    <a name="/navigationColor.s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV15navigationColorSo7NSColorCvp"></a>
                     <a name="//apple_ref/swift/Property/navigationColor" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV15navigationColorSo7NSColorCvp">navigationColor</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV15navigationColorSo7NSColorCvp">navigationColor</a>
                     </code>
                   </div>
@@ -630,7 +687,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L425">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L508">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -638,8 +695,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV17cameraBoundsColorSo7NSColorCvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV17cameraBoundsColorSo7NSColorCvp"></a> -->
+                    <a name="/cameraBoundsColor.s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV17cameraBoundsColorSo7NSColorCvp"></a>
                     <a name="//apple_ref/swift/Property/cameraBoundsColor" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV17cameraBoundsColorSo7NSColorCvp">cameraBoundsColor</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV17cameraBoundsColorSo7NSColorCvp">cameraBoundsColor</a>
                     </code>
                   </div>
@@ -660,7 +719,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L428">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L511">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -668,8 +727,74 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV12MouseFiltersV"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV17objectFillOpacity12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/objectFillOpacity.s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV17objectFillOpacity12CoreGraphics7CGFloatVvp"></a>
+                    <a name="//apple_ref/swift/Property/objectFillOpacity" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV17objectFillOpacity12CoreGraphics7CGFloatVvp">objectFillOpacity</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV17objectFillOpacity12CoreGraphics7CGFloatVvp">objectFillOpacity</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Debug object fill opacity.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">objectFillOpacity</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L514">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV12anchorRadius12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/anchorRadius.s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV12anchorRadius12CoreGraphics7CGFloatVvp"></a>
+                    <a name="//apple_ref/swift/Property/anchorRadius" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV12anchorRadius12CoreGraphics7CGFloatVvp">anchorRadius</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV12anchorRadius12CoreGraphics7CGFloatVvp">anchorRadius</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Default anchor display radius.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">anchorRadius</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L517">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV12MouseFiltersV"></a> -->
+                    <a name="/MouseFilters.s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV12MouseFiltersV"></a>
                     <a name="//apple_ref/swift/Struct/MouseFilters" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV12MouseFiltersV">MouseFilters</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV12MouseFiltersV">MouseFilters</a>
                     </code>
                   </div>
@@ -678,30 +803,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <h3 id='overview' class='heading'>Overview</h3>
-
-<p>Global debug display mouse filter options (macOS).</p>
+                        <p>Global debug display mouse filter options (macOS).</p>
 <h4 id='properties' class='heading'>Properties</h4>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">tileCoordinates</td>
-<td style="text-align: left">Show tile coordinates.</td>
-</tr>
-<tr>
-<td style="text-align: left">sceneCoordinates</td>
-<td style="text-align: left">Show scene coordinates.</td>
-</tr>
-<tr>
-<td style="text-align: left">tileDataUnderCursor</td>
-<td style="text-align: left">Show tile data properties.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>tileCoordinates</code>: show tile coordinates.</li>
+<li><code>sceneCoordinates</code>: show scene coordinates.</li>
+<li><code>tileDataUnderCursor</code>: show tile data properties.</li>
+</ul>
 
                         <a href="../../Classes/TiledGlobals/DebugDisplayOptions/MouseFilters.html" class="slightly-smaller">See more</a>
                       </div>
@@ -714,7 +823,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L442-L456">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L527-L541">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

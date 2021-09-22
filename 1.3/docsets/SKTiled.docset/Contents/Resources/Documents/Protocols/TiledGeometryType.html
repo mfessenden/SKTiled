@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -253,6 +251,30 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
               </li>
             </ul>
           </li>
@@ -270,51 +292,24 @@
 
                 </div>
               </div>
-            <h2 id='overview' class='heading'>Overview</h2>
-
-<p>The <code>TiledGeometryType</code> protocol describes a drawable type used to manage &amp; render <strong>Tiled</strong> objects.</p>
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>The <code>TiledGeometryType</code> protocol describes a drawable type used to manage and render <strong>Tiled</strong> geometry objects.</p>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code>objectPath</code></td>
-<td style="text-align: left">the node&rsquo;s bounding shape.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>bounds</code></td>
-<td style="text-align: left">the node&rsquo;s bounding rect.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>renderQuality</code></td>
-<td style="text-align: left">render scaling quality.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>visibleToCamera</code></td>
-<td style="text-align: left">node is visible to camera.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>objectPath</code>: the node&rsquo;s bounding shape</li>
+<li><code>boundingRect</code>:  the node&rsquo;s bounding rect</li>
+<li><code>boundsShape</code>:  the node&rsquo;s rect shape</li>
+<li><code>renderQuality</code>: render scaling quality</li>
+<li><code>visibleToCamera</code>: node is visible to camera</li>
+</ul>
 <h3 id='methods' class='heading'>Methods</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Method</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code>getVertices(offset: CGPoint)</code></td>
-<td style="text-align: left">return&rsquo;s the node&rsquo;s shape points.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>contains(touch: CGPoint)</code></td>
-<td style="text-align: left">returns true if a point is contained in this shape&rsquo;s frame.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>contains(touch: CGPoint)</code>: returns true if a point is contained in this shape&rsquo;s frame.</li>
+<li><code>getVertices(offset: CGPoint)</code>: return&rsquo;s the node&rsquo;s shape points.</li>
+<li><code>draw()</code>: draw the object&rsquo;s contents.</li>
+</ul>
 
           </div>
         </section>
@@ -326,9 +321,11 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(im)getVerticesWithOffset:"></a>
-                    <a name="//apple_ref/swift/Method/getVertices(offset:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(im)getVerticesWithOffset:">getVertices(offset:<wbr>)</a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(py)container"></a> -->
+                    <a name="/container.c:@M@SKTiled@objc(pl)TiledGeometryType(py)container"></a>
+                    <a name="//apple_ref/swift/Property/container" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(py)container">container</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(py)container">container</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -336,7 +333,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Object points, property translated with the current map orientation.</p>
+                        <p>The object&rsquo;s parent container.</p>
 
                       </div>
                       <div class="declaration">
@@ -344,12 +341,12 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">func</span> <span class="nf">getVertices</span><span class="p">(</span><span class="nv">offset</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">CGPoint</span><span class="p">]</span></code></pre>
+<span class="kd">optional</span> <span class="k">var</span> <span class="nv">container</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TiledMappableGeometryType.html">TiledMappableGeometryType</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGeometryType.swift#L53">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGeometryType.swift#L51">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -357,8 +354,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(py)objectPath"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(py)objectPath"></a> -->
+                    <a name="/objectPath.c:@M@SKTiled@objc(pl)TiledGeometryType(py)objectPath"></a>
                     <a name="//apple_ref/swift/Property/objectPath" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(py)objectPath">objectPath</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(py)objectPath">objectPath</a>
                     </code>
                   </div>
@@ -367,7 +366,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A path defining the shape of geometry. Used to draw the bounding shape.</p>
+                        <p>This object&rsquo;s <code>CGPath</code> defining the shape of geometry. Used to draw the bounding shape.</p>
 
                       </div>
                       <div class="declaration">
@@ -380,7 +379,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGeometryType.swift#L56">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGeometryType.swift#L54">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -388,8 +387,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(py)boundsShape"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(py)boundsShape"></a> -->
+                    <a name="/boundsShape.c:@M@SKTiled@objc(pl)TiledGeometryType(py)boundsShape"></a>
                     <a name="//apple_ref/swift/Property/boundsShape" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(py)boundsShape">boundsShape</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(py)boundsShape">boundsShape</a>
                     </code>
                   </div>
@@ -411,7 +412,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGeometryType.swift#L59">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGeometryType.swift#L57">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -419,8 +420,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(py)boundingRect"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(py)boundingRect"></a> -->
+                    <a name="/boundingRect.c:@M@SKTiled@objc(pl)TiledGeometryType(py)boundingRect"></a>
                     <a name="//apple_ref/swift/Property/boundingRect" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(py)boundingRect">boundingRect</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(py)boundingRect">boundingRect</a>
                     </code>
                   </div>
@@ -442,7 +445,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGeometryType.swift#L62">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGeometryType.swift#L60">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -450,8 +453,43 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(py)renderQuality"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(py)anchorShape"></a> -->
+                    <a name="/anchorShape.c:@M@SKTiled@objc(pl)TiledGeometryType(py)anchorShape"></a>
+                    <a name="//apple_ref/swift/Property/anchorShape" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(py)anchorShape">anchorShape</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(py)anchorShape">anchorShape</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Object anchor node visualization node.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="k">var</span> <span class="nv">anchorShape</span><span class="p">:</span> <span class="kt">SKShapeNode</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGeometryType.swift#L63">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(py)renderQuality"></a> -->
+                    <a name="/renderQuality.c:@M@SKTiled@objc(pl)TiledGeometryType(py)renderQuality"></a>
                     <a name="//apple_ref/swift/Property/renderQuality" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(py)renderQuality">renderQuality</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(py)renderQuality">renderQuality</a>
                     </code>
                   </div>
@@ -473,7 +511,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGeometryType.swift#L65">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGeometryType.swift#L66">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -481,8 +519,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(py)visibleToCamera"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(py)visibleToCamera"></a> -->
+                    <a name="/visibleToCamera.c:@M@SKTiled@objc(pl)TiledGeometryType(py)visibleToCamera"></a>
                     <a name="//apple_ref/swift/Property/visibleToCamera" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(py)visibleToCamera">visibleToCamera</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(py)visibleToCamera">visibleToCamera</a>
                     </code>
                   </div>
@@ -504,7 +544,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGeometryType.swift#L68">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGeometryType.swift#L69">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -512,8 +552,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(im)containsWithTouch:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(im)containsWithTouch:"></a> -->
+                    <a name="/contains(touch:).c:@M@SKTiled@objc(pl)TiledGeometryType(im)containsWithTouch:"></a>
                     <a name="//apple_ref/swift/Method/contains(touch:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(im)containsWithTouch:">contains(touch:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(im)containsWithTouch:">contains(touch:<wbr>)</a>
                     </code>
                   </div>
@@ -558,7 +600,7 @@
                         <p>node was touched.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGeometryType.swift#L74">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGeometryType.swift#L75">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -566,8 +608,66 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(im)draw"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(im)getVerticesWithOffset:"></a> -->
+                    <a name="/getVertices(offset:).c:@M@SKTiled@objc(pl)TiledGeometryType(im)getVerticesWithOffset:"></a>
+                    <a name="//apple_ref/swift/Method/getVertices(offset:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(im)getVerticesWithOffset:">getVertices(offset:<wbr>)</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(im)getVerticesWithOffset:">getVertices(offset:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the points representing the object&rsquo;s bounding shape - translated with the current map orientation.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">func</span> <span class="nf">getVertices</span><span class="p">(</span><span class="nv">offset</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">CGPoint</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>offset</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>offset to be applied to each point.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>array of points.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGeometryType.swift#L81">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledGeometryType(im)draw"></a> -->
+                    <a name="/draw().c:@M@SKTiled@objc(pl)TiledGeometryType(im)draw"></a>
                     <a name="//apple_ref/swift/Method/draw()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(im)draw">draw()</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledGeometryType(im)draw">draw()</a>
                     </code>
                   </div>
@@ -576,7 +676,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Refresh the object&rsquo;s content.</p>
+                        <p>Refresh the node&rsquo;s content.</p>
 
                       </div>
                       <div class="declaration">
@@ -589,7 +689,55 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGeometryType.swift#L77">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGeometryType.swift#L84">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Extensions"></a>
+                <a name="//apple_ref/swift/Section/Extensions" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Extensions"></a>
+                  <h3 class="section-name"><p>Extensions</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled17TiledGeometryTypePAAE14shaderUniformsSaySo9SKUniformCGvp"></a> -->
+                    <a name="/shaderUniforms.s:7SKTiled17TiledGeometryTypePAAE14shaderUniformsSaySo9SKUniformCGvp"></a>
+                    <a name="//apple_ref/swift/Property/shaderUniforms" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled17TiledGeometryTypePAAE14shaderUniformsSaySo9SKUniformCGvp">shaderUniforms</a> -->
+                    <a class="token" href="#/s:7SKTiled17TiledGeometryTypePAAE14shaderUniformsSaySo9SKUniformCGvp">shaderUniforms</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns an array of shader unforms based on the current attributes.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">shaderUniforms</span><span class="p">:</span> <span class="p">[</span><span class="kt">SKUniform</span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGeometryType.swift#L161-L167">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

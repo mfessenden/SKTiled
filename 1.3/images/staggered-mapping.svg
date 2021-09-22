@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="237px" height="83px" viewBox="0 0 237 83" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>staggered-mapping</title>
+    <g id="staggered-mapping" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#000000" x="0" y="0" width="237" height="83"></rect>
+        <g id="Row-0" transform="translate(12.000000, 14.250160)" stroke="#FF0F0F" stroke-dasharray="4,2">
+            <path d="M16,0 L32,8 L16,16 L0,8 L16,0 Z" id="staggered-tile-0"></path>
+            <path d="M48,0 L64,8 L48,16 L32,8 L48,0 Z" id="staggered-tile-1"></path>
+            <path d="M80,0 L96,8 L80,16 L64,8 L80,0 Z" id="staggered-tile-2"></path>
+            <path d="M144,0 L160,8 L144,16 L128,8 L144,0 Z" id="staggered-tile-3"></path>
+            <path d="M112,0 L128,8 L112,16 L96,8 L112,0 Z" id="staggered-tile-4"></path>
+            <path d="M176,0 L192,8 L176,16 L160,8 L176,0 Z" id="staggered-tile-5"></path>
+        </g>
+        <g id="Row-1" transform="translate(12.000000, 30.250160)" stroke="#FF0F0F" stroke-dasharray="4,2">
+            <path d="M16,0 L32,8 L16,16 L0,8 L16,0 Z" id="staggered-tile-0"></path>
+            <path d="M48,0 L64,8 L48,16 L32,8 L48,0 Z" id="staggered-tile-1"></path>
+            <path d="M80,0 L96,8 L80,16 L64,8 L80,0 Z" id="staggered-tile-2"></path>
+            <path d="M144,0 L160,8 L144,16 L128,8 L144,0 Z" id="staggered-tile-3"></path>
+            <path d="M112,0 L128,8 L112,16 L96,8 L112,0 Z" id="staggered-tile-4"></path>
+            <path d="M176,0 L192,8 L176,16 L160,8 L176,0 Z" id="staggered-tile-5"></path>
+        </g>
+        <g id="Row-2" transform="translate(12.000000, 46.250160)" stroke="#FF0F0F" stroke-dasharray="4,2">
+            <path d="M16,0 L32,8 L16,16 L0,8 L16,0 Z" id="staggered-tile-0"></path>
+            <path d="M48,0 L64,8 L48,16 L32,8 L48,0 Z" id="staggered-tile-1"></path>
+            <path d="M80,0 L96,8 L80,16 L64,8 L80,0 Z" id="staggered-tile-2"></path>
+            <path d="M144,0 L160,8 L144,16 L128,8 L144,0 Z" id="staggered-tile-3"></path>
+            <path d="M112,0 L128,8 L112,16 L96,8 L112,0 Z" id="staggered-tile-4"></path>
+            <path d="M176,0 L192,8 L176,16 L160,8 L176,0 Z" id="staggered-tile-5"></path>
+        </g>
+        <g id="Row-3" transform="translate(28.000000, 54.250160)" stroke="#FF0F0F" stroke-dasharray="4,2">
+            <path d="M16,0 L32,8 L16,16 L0,8 L16,0 Z" id="staggered-tile-0"></path>
+            <path d="M48,0 L64,8 L48,16 L32,8 L48,0 Z" id="staggered-tile-1"></path>
+            <path d="M80,0 L96,8 L80,16 L64,8 L80,0 Z" id="staggered-tile-2"></path>
+            <path d="M144,0 L160,8 L144,16 L128,8 L144,0 Z" id="staggered-tile-3"></path>
+            <path d="M112,0 L128,8 L112,16 L96,8 L112,0 Z" id="staggered-tile-4"></path>
+            <path d="M176,0 L192,8 L176,16 L160,8 L176,0 Z" id="staggered-tile-5"></path>
+        </g>
+        <g id="Extra" transform="translate(188.000000, 22.250160)" stroke="#FF0F0F" stroke-dasharray="4,2">
+            <path d="M16,0 L32,8 L16,16 L0,8 L16,0 Z" id="staggered-tile-0"></path>
+            <path d="M16,16 L32,24 L16,32 L0,24 L16,16 Z" id="staggered-tile-1"></path>
+        </g>
+    </g>
+</svg>

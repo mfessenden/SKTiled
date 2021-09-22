@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="705px" height="184px" viewBox="0 0 705 184" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>embed-xcframeworks</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="59.0547267%" id="linearGradient-1">
+            <stop stop-color="#F8E772" offset="0%"></stop>
+            <stop stop-color="#C79D2C" offset="100%"></stop>
+        </linearGradient>
+        <path d="M15.1184896,2.83333333 L15.1184896,9.91666667 C15.1184896,10.1774678 14.9070685,10.3888889 14.6462674,10.3888889 L0.479600694,10.3888889 C0.218799563,10.3888889 0.00737847222,10.1774678 0.00737847222,9.91666667 L0.00737847222,2.83333333 C0.00737847222,1.26852654 1.27590501,0 2.84071181,0 L12.2851563,0 C13.849963,0 15.1184896,1.26852654 15.1184896,2.83333333 Z" id="path-2"></path>
+        <filter x="-9.9%" y="-14.4%" width="119.9%" height="128.9%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.374603714 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <filter x="-6.6%" y="-9.6%" width="113.2%" height="119.3%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.509272036   0 0 0 0 0.509272036   0 0 0 0 0.509272036  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <rect id="path-6" x="0.302517361" y="5.66666667" width="14.4765625" height="4.3828125" rx="0.13546875"></rect>
+        <filter x="-3.5%" y="-11.4%" width="106.9%" height="122.8%" filterUnits="objectBoundingBox" id="filter-7">
+            <feGaussianBlur stdDeviation="0.5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="0" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.835294118   0 0 0 0 0.690196078   0 0 0 0 0.17254902  0 0 0 0.773409194 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <filter x="-34.3%" y="-85.0%" width="166.2%" height="270.0%" filterUnits="objectBoundingBox" id="filter-8">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <path d="M5.1277704,-2.07168062e-16 L158.87223,2.07168062e-16 C160.655267,-1.2037061e-16 161.30184,0.185651222 161.953691,0.534265408 C162.605543,0.882879593 163.11712,1.39445674 163.465735,2.04630859 C163.814349,2.69816044 164,3.34473292 164,5.1277704 L164,50.8722296 C164,52.6552671 163.814349,53.3018396 163.465735,53.9536914 C163.11712,54.6055433 162.605543,55.1171204 161.953691,55.4657346 C161.30184,55.8143488 160.655267,56 158.87223,56 L5.1277704,56 C3.34473292,56 2.69816044,55.8143488 2.04630859,55.4657346 C1.39445674,55.1171204 0.882879593,54.6055433 0.534265408,53.9536914 C0.185651222,53.3018396 8.02470732e-17,52.6552671 -1.38112041e-16,50.8722296 L1.38112041e-16,5.1277704 C-8.02470732e-17,3.34473292 0.185651222,2.69816044 0.534265408,2.04630859 C0.882879593,1.39445674 1.39445674,0.882879593 2.04630859,0.534265408 C2.69816044,0.185651222 3.34473292,1.2037061e-16 5.1277704,-2.07168062e-16 Z" id="path-9"></path>
+        <filter x="-11.9%" y="-25.9%" width="123.8%" height="169.6%" filterUnits="objectBoundingBox" id="filter-10">
+            <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="5" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.28 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter2"></feMorphology>
+            <feOffset dx="0" dy="0" in="shadowSpreadOuter2" result="shadowOffsetOuter2"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter2" result="shadowBlurOuter2"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter2" in2="SourceAlpha" operator="out" result="shadowBlurOuter2"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter2" result="shadowMatrixOuter2"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="shadowMatrixOuter2"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="embed-xcframeworks" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#FFFFFF" x="0" y="0" width="705" height="184"></rect>
+        <g id="Buttons" transform="translate(173.992649, 160.000000)">
+            <path d="M5.5,0 L5.5,11 M3.061617e-17,5.5 L11,5.5" id="Plus" stroke="#595959"></path>
+            <line x1="30.5032298" y1="0.00412134408" x2="30.5114725" y2="11.0041213" id="Minus" stroke="#B4B4B4" transform="translate(30.507351, 5.504121) rotate(-90.000000) translate(-30.507351, -5.504121) "></line>
+        </g>
+        <g id="Grid" transform="translate(166.000000, 40.000000)">
+            <g id="Row-1" transform="translate(0.000000, 24.500000)">
+                <rect id="Rectangle" fill="#0069D9" x="0.5" y="0" width="524" height="22"></rect>
+                <g id="Group" transform="translate(4.000000, 3.000000)">
+                    <g id="Toolbox" transform="translate(0.937066, 2.021701)">
+                        <g id="Body" transform="translate(0.000000, 1.756076)">
+                            <mask id="mask-3" fill="white">
+                                <use xlink:href="#path-2"></use>
+                            </mask>
+                            <g id="BODY-MASK">
+                                <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-2"></use>
+                                <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                                <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-2"></use>
+                            </g>
+                            <g id="Rectangle" mask="url(#mask-3)" fill="black" fill-opacity="1">
+                                <use filter="url(#filter-7)" xlink:href="#path-6"></use>
+                            </g>
+                            <g id="Ridges" opacity="0.430783226" style="mix-blend-mode: screen;" mask="url(#mask-3)" fill-rule="nonzero">
+                                <g transform="translate(0.280382, 1.010851)">
+                                    <polygon id="Ridge1" fill="#A8A8A7" points="14.5208333 2.09548611 14.5208333 2.49392361 0.0442708333 2.49392361 0.0442708333 2.09548611"></polygon>
+                                    <polygon id="Ridge2" fill="#868686" points="14.5208333 0.900173611 14.5208333 1.29861111 0.0442708333 1.29861111 0.0442708333 0.900173611"></polygon>
+                                    <path d="M0.376302083,0.3984375 C0.516591624,0.247579628 0.682779056,0.113331701 0.869532932,-1.20792265e-13 L13.6955712,-1.20792265e-13 C13.8823251,0.113331701 14.0485125,0.247579628 14.1888021,0.3984375 L0.376302083,0.3984375 L0.376302083,0.3984375 Z" id="Ridge3" fill="#F2F2F2"></path>
+                                </g>
+                            </g>
+                            <rect id="Slit" fill="#8E6214" mask="url(#mask-3)" x="0.346788194" y="5.19444444" width="14.4765625" height="1"></rect>
+                        </g>
+                        <path d="M15.1184896,4.58940972 L15.1184896,11.6727431 C15.1184896,11.9335442 14.9070685,12.1449653 14.6462674,12.1449653 L0.479600694,12.1449653 C0.218799563,12.1449653 0.00737847222,11.9335442 0.00737847222,11.6727431 L0.00737847222,4.58940972 C0.00737847222,3.02460293 1.27590501,1.75607639 2.84071181,1.75607639 L12.2851563,1.75607639 C13.849963,1.75607639 15.1184896,3.02460293 15.1184896,4.58940972 Z" id="TINT" fill="#F1D75C" style="mix-blend-mode: hue;"></path>
+                        <g id="Clasps" transform="translate(2.840712, 6.478299)" fill="#A6A7A7" stroke="#4B4A46" stroke-width="0.5">
+                            <rect id="Clasp---LT" x="0.25" y="0.25" width="1" height="1.86111111" rx="0.5"></rect>
+                            <rect id="Clasp---RT" x="8.27777778" y="0.25" width="1" height="1.86111111" rx="0.5"></rect>
+                        </g>
+                        <g id="Handle" filter="url(#filter-8)" transform="translate(3.877387, 0.000000)">
+                            <path d="M5.76996528,2.05859375 C5.76996528,1.66739205 6.08709691,1.35026042 6.47829861,1.35026042 C6.86950031,1.35026042 7.18663194,1.66739205 7.18663194,2.05859375" id="Fixture---RT" stroke="#4B4A46" stroke-width="0.5" fill="#A6A7A7" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M0.0590277778,2.05859375 C0.0590277778,1.66739205 0.376159413,1.35026042 0.767361111,1.35026042 C1.15856281,1.35026042 1.47569444,1.66739205 1.47569444,2.05859375" id="Fixture---LT" stroke="#4B4A46" stroke-width="0.5" fill="#A6A7A7" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M2.15423487,0.724936108 L1.60890991,2.24599386 L0.872089902,2.24834848 L1.57158127,0.25124411 C1.6220409,0.110498646 1.75545209,0.0166027746 1.90496952,0.0166027746 L5.31316245,0.0166027746 C5.46176184,0.0166027746 5.59455937,0.109366349 5.64569712,0.248889498 L6.35559869,2.24834848 L5.6241231,2.24834848 L5.06576504,0.724936108 L2.15423487,0.724936108 Z" fill="#8E6214" fill-rule="nonzero"></path>
+                        </g>
+                    </g>
+                </g>
+                <text id="Framework-Name-Value" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' font-size="11" font-weight="400" letter-spacing="-0.1" fill="#DBE8F5">
+                    <tspan x="23" y="15">SKTiled.xcframework</tspan>
+                </text>
+                <text id="Platform-Value" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' font-size="11" font-weight="400" letter-spacing="-0.1" fill="#DBE8F5">
+                    <tspan x="276" y="15">macOS + iOS</tspan>
+                </text>
+                <path d="M356.5,13.0075684 L353.25,16.5151367 L350,13.0075684 M356.5,9.50756836 L353.25,6 L350,9.50756836" id="Arrows" stroke="#DBE8F5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path>
+            </g>
+            <g id="Grid-Lines" transform="translate(0.000000, 46.000000)" stroke="#E6E6E6">
+                <line x1="0.5" y1="67.5" x2="524.5" y2="67.5" id="Line0"></line>
+                <line x1="0.5" y1="44.5" x2="524.5" y2="44.5" id="Line1"></line>
+                <line x1="0.5" y1="22.5" x2="524.5" y2="22.5" id="Line2"></line>
+                <line x1="0.5" y1="0.5" x2="524.5" y2="0.5" id="Line3"></line>
+            </g>
+            <g id="Grid-Header">
+                <rect id="Background" fill="#EDEDED" x="0.5" y="0" width="524" height="25"></rect>
+                <path d="M269.53709,4.46525301 C269.53709,4.46525301 269.53709,9.79944041 269.53709,20.4678152" id="VLine0" stroke="#D4D4D4" stroke-linecap="square"></path>
+                <path d="M377.53709,4.46525301 C377.53709,4.46525301 377.53709,9.79944041 377.53709,20.4678152" id="VLine1" stroke="#D4D4D4" stroke-linecap="square"></path>
+                <text id="Embed" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' font-size="11.5" font-weight="400" fill="#1C1C1C">
+                    <tspan x="381" y="16">Embed</tspan>
+                </text>
+                <text id="Platforms" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' font-size="11.5" font-weight="400" fill="#1C1C1C">
+                    <tspan x="273" y="16">Platforms</tspan>
+                </text>
+                <text id="Name" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' font-size="11.5" font-weight="400" fill="#1C1C1C">
+                    <tspan x="2" y="16">Name</tspan>
+                </text>
+                <line x1="0.5" y1="24.5" x2="524.5" y2="24.5" id="Line4" stroke="#C7C7C7"></line>
+                <line x1="0.5" y1="0.5" x2="524.5" y2="0.5" id="Line5" stroke="#C6C6C7"></line>
+            </g>
+        </g>
+        <g id="Title-Header" transform="translate(6.000000, 13.000000)">
+            <text id="Frameworks,-Librarie" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' font-size="12" font-weight="bold" fill="#1C1C1C">
+                <tspan x="16.5" y="11">Frameworks, Libraries, and Embedded Content</tspan>
+            </text>
+            <polygon id="Rectangle" fill="#8C8C8C" points="0 3 9 3 4.5 10.6123746"></polygon>
+        </g>
+        <g id="Embed-Menu" transform="translate(529.000000, 64.000000)">
+            <g id="Fill-+-Shadows" transform="translate(0.500000, 0.000000)">
+                <use fill="black" fill-opacity="1" filter="url(#filter-10)" xlink:href="#path-9"></use>
+                <path stroke-opacity="0.15" stroke="#000000" stroke-width="0.5" d="M5.1277704,-0.25 L158.87223,-0.25 C160.726066,-0.25 161.394799,-0.0481403937 162.071591,0.313812108 C162.767655,0.686070879 163.313929,1.2323455 163.686188,1.92840888 C164.04814,2.60520121 164.25,3.27393361 164.25,5.1277704 L164.25,5.1277704 L164.25,50.8722296 C164.25,52.7260664 164.04814,53.3947988 163.686188,54.0715911 C163.313929,54.7676545 162.767655,55.3139291 162.071591,55.6861879 C161.394799,56.0481404 160.726066,56.25 158.87223,56.25 L158.87223,56.25 L5.1277704,56.25 C3.27393361,56.25 2.60520121,56.0481404 1.92840888,55.6861879 C1.2323455,55.3139291 0.686070879,54.7676545 0.313812108,54.0715911 C-0.0481403937,53.3947988 -0.25,52.7260664 -0.25,50.8722296 L-0.25,50.8722296 L-0.25,5.1277704 C-0.25,3.27393361 -0.0481403937,2.60520121 0.313812108,1.92840888 C0.686070879,1.2323455 1.2323455,0.686070879 1.92840888,0.313812108 C2.60520121,-0.0481403937 3.27393361,-0.25 5.1277704,-0.25 L5.1277704,-0.25 Z" fill-opacity="0.85" fill="#EEEEEE" fill-rule="evenodd"></path>
+            </g>
+            <g id="Menu-Items" transform="translate(0.000000, 4.000000)">
+                <g id="Row-1">
+                    <rect id="Background" x="0" y="0" width="165" height="16"></rect>
+                    <text id="Do-Not-Embed" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' font-size="11.5" font-weight="400" letter-spacing="0.15" fill="#1C1C1C">
+                        <tspan x="21" y="12">Do Not Embed</tspan>
+                    </text>
+                    <path d="M7.83647614,10.070518 L11.6675376,4.32392791 C11.8903368,3.98972913 12.3418731,3.89942192 12.676072,4.1222211 C13.0102709,4.34502029 13.1005781,4.79655637 12.8777789,5.13075515 L8.51419184,11.6761334 C8.24686552,12.0771227 7.67052629,12.111925 7.35689082,11.746017 L5.17509731,9.20059217 C4.91370234,8.89563148 4.94901942,8.43650958 5.25398022,8.1751147 C5.55894102,7.91371982 6.01806309,7.94903689 6.27945806,8.25399758 L7.83647614,10.070518 Z" id="Icon" fill="#000000" fill-rule="nonzero"></path>
+                </g>
+                <g id="Row-2" transform="translate(0.000000, 16.000000)">
+                    <rect id="Background" fill="#0069D9" x="0" y="0" width="165" height="16"></rect>
+                    <text id="Title" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' font-size="11.5" font-weight="400" letter-spacing="0.15" fill="#FFFFFF">
+                        <tspan x="21" y="12">Embed &amp; Sign</tspan>
+                    </text>
+                </g>
+                <g id="Row-3" transform="translate(0.000000, 32.000000)">
+                    <rect id="Background" x="0" y="0" width="165" height="16"></rect>
+                    <text id="Title" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' font-size="11.5" font-weight="400" letter-spacing="0.15" fill="#1C1C1C">
+                        <tspan x="21" y="12">Embed Without Signing</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

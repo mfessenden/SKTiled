@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -253,6 +251,30 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
               </li>
             </ul>
           </li>
@@ -269,54 +291,24 @@
 
                 </div>
               </div>
-            <h2 id='overview' class='heading'>Overview</h2>
-
-<p>The <code>TiledGlobals</code> object provides information about the framework, as well as allowing
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>The <code>TiledGlobals</code> object provides information about the framework, as well as allowing
 you to set default attributes for various objects.</p>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">renderer</td>
-<td style="text-align: left">Returns the current SpriteKit renderer (get-only).</td>
-</tr>
-<tr>
-<td style="text-align: left">loggingLevel</td>
-<td style="text-align: left">Logging verbosity.</td>
-</tr>
-<tr>
-<td style="text-align: left">updateMode</td>
-<td style="text-align: left">Default tile update mode.</td>
-</tr>
-<tr>
-<td style="text-align: left">enableRenderCallbacks</td>
-<td style="text-align: left">Enable callbacks from the tilemap on rendering statistics.</td>
-</tr>
-<tr>
-<td style="text-align: left">enableCameraCallbacks</td>
-<td style="text-align: left">Enable callbacks from camera to camera delegates.</td>
-</tr>
-<tr>
-<td style="text-align: left">renderQuality</td>
-<td style="text-align: left">Global render quality values.</td>
-</tr>
-<tr>
-<td style="text-align: left">contentScale</td>
-<td style="text-align: left">Returns the device retina display scale factor.</td>
-</tr>
-<tr>
-<td style="text-align: left">version</td>
-<td style="text-align: left">Returns the current framework version.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>renderer</code>:               returns the current SpriteKit renderer (get-only).</li>
+<li><code>loggingLevel</code>:           global logging verbosity.</li>
+<li><code>updateMode</code>:             default tile update mode.</li>
+<li><code>enableRenderCallbacks</code>:  enable callbacks from the tilemap on rendering statistics.</li>
+<li><code>enableCameraCallbacks</code>:  enable callbacks from camera to camera delegates.</li>
+<li><code>renderQuality</code>:          global render quality values.</li>
+<li><code>contentScale</code>:           returns the device retina display scale factor.</li>
+<li><code>version</code>:                returns the current framework version.</li>
+</ul>
 <h3 id='usage' class='heading'>Usage</h3>
 
-<p><strong>SKTiled</strong> object default values are set in the <code>TiledGlobals</code> object.</p>
+<p><strong>SKTiled</strong> framework default values are set in the <code>TiledGlobals</code> object.</p>
 <pre class="highlight swift"><code><span class="c1">// access the default singleton instance</span>
 <span class="k">let</span> <span class="nv">tiledGlobals</span> <span class="o">=</span> <span class="kt">TiledGlobals</span><span class="o">.</span><span class="k">default</span>
 
@@ -324,7 +316,7 @@ you to set default attributes for various objects.</p>
 <span class="n">tiledGlobals</span><span class="o">.</span><span class="n">enableCameraCallbacks</span> <span class="o">=</span> <span class="kc">false</span>
 
 <span class="c1">// set debugging mouse filters (macOS)</span>
-<span class="n">tiledGlobals</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">mouseFilters</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="n">tileCoordinates</span><span class="p">,</span> <span class="o">.</span><span class="n">tilesUnderCursor</span><span class="p">]</span>
+<span class="n">tiledGlobals</span><span class="o">.</span><span class="n">debugDisplayOptions</span><span class="o">.</span><span class="n">mouseFilters</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="n">tileCoordinates</span><span class="p">,</span> <span class="o">.</span><span class="n">tilesUnderCursor</span><span class="p">]</span>
 
 <span class="c1">// increase the default text object render quality</span>
 <span class="n">tiledGlobals</span><span class="o">.</span><span class="n">renderQuality</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="mf">12.0</span>
@@ -340,8 +332,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC7defaultACvpZ"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC7defaultACvpZ"></a> -->
+                    <a name="/default.s:7SKTiled12TiledGlobalsC7defaultACvpZ"></a>
                     <a name="//apple_ref/swift/Variable/default" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC7defaultACvpZ">default</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC7defaultACvpZ">default</a>
                     </code>
                   </div>
@@ -350,7 +344,7 @@ you to set default attributes for various objects.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Default singleton instance.</p>
+                        <p>Default <code>TiledGlobals</code> singleton.</p>
 
                       </div>
                       <div class="declaration">
@@ -362,16 +356,31 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L122-L124">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L124-L126">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Framework%20Globals"></a>
+                <a name="//apple_ref/swift/Section/Framework Globals" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Framework%20Globals"></a>
+                  <h3 class="section-name"><p>Framework Globals</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC8rendererAC8RendererOvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC8rendererAC8RendererOvp"></a> -->
+                    <a name="/renderer.s:7SKTiled12TiledGlobalsC8rendererAC8RendererOvp"></a>
                     <a name="//apple_ref/swift/Property/renderer" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC8rendererAC8RendererOvp">renderer</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC8rendererAC8RendererOvp">renderer</a>
                     </code>
                   </div>
@@ -392,7 +401,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L127">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L131">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -400,8 +409,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC5speed12CoreGraphics7CGFloatVvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC5speed12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/speed.s:7SKTiled12TiledGlobalsC5speed12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/speed" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC5speed12CoreGraphics7CGFloatVvp">speed</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC5speed12CoreGraphics7CGFloatVvp">speed</a>
                     </code>
                   </div>
@@ -422,7 +433,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L130-L135">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L134-L139">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -430,8 +441,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC11resourceUrl10Foundation3URLVSgvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC11resourceUrl10Foundation3URLVSgvp"></a> -->
+                    <a name="/resourceUrl.s:7SKTiled12TiledGlobalsC11resourceUrl10Foundation3URLVSgvp"></a>
                     <a name="//apple_ref/swift/Property/resourceUrl" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC11resourceUrl10Foundation3URLVSgvp">resourceUrl</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC11resourceUrl10Foundation3URLVSgvp">resourceUrl</a>
                     </code>
                   </div>
@@ -452,7 +465,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L138-L145">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L142-L149">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -460,8 +473,42 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC6isBetaSbvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC7helpUrl10Foundation3URLVvp"></a> -->
+                    <a name="/helpUrl.s:7SKTiled12TiledGlobalsC7helpUrl10Foundation3URLVvp"></a>
+                    <a name="//apple_ref/swift/Property/helpUrl" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC7helpUrl10Foundation3URLVvp">helpUrl</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC7helpUrl10Foundation3URLVvp">helpUrl</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the URL of the current version&rsquo;s documentation online.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">helpUrl</span><span class="p">:</span> <span class="kt">URL</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L152-L154">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC6isBetaSbvp"></a> -->
+                    <a name="/isBeta.s:7SKTiled12TiledGlobalsC6isBetaSbvp"></a>
                     <a name="//apple_ref/swift/Property/isBeta" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC6isBetaSbvp">isBeta</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC6isBetaSbvp">isBeta</a>
                     </code>
                   </div>
@@ -482,7 +529,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L148-L150">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L157-L159">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -490,8 +537,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC12isPlaygroundSbvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC12isPlaygroundSbvp"></a> -->
+                    <a name="/isPlayground.s:7SKTiled12TiledGlobalsC12isPlaygroundSbvp"></a>
                     <a name="//apple_ref/swift/Property/isPlayground" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC12isPlaygroundSbvp">isPlayground</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC12isPlaygroundSbvp">isPlayground</a>
                     </code>
                   </div>
@@ -500,7 +549,7 @@ you to set default attributes for various objects.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Indicates the environment is a playground.</p>
+                        <p>Indicates the current environment is a playground.</p>
 
                       </div>
                       <div class="declaration">
@@ -512,7 +561,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L153-L155">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L162-L164">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -520,8 +569,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC6domainSSvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC6domainSSvp"></a> -->
+                    <a name="/domain.s:7SKTiled12TiledGlobalsC6domainSSvp"></a>
                     <a name="//apple_ref/swift/Property/domain" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC6domainSSvp">domain</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC6domainSSvp">domain</a>
                     </code>
                   </div>
@@ -542,7 +593,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L158-L160">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L167-L169">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -550,8 +601,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC6isDemoSbvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC6isDemoSbvp"></a> -->
+                    <a name="/isDemo.s:7SKTiled12TiledGlobalsC6isDemoSbvp"></a>
                     <a name="//apple_ref/swift/Property/isDemo" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC6isDemoSbvp">isDemo</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC6isDemoSbvp">isDemo</a>
                     </code>
                   </div>
@@ -572,7 +625,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L163-L165">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L172-L174">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -580,8 +633,42 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC12loggingLevelAA07LoggingE0Ovp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC13isDevelopmentSbvp"></a> -->
+                    <a name="/isDevelopment.s:7SKTiled12TiledGlobalsC13isDevelopmentSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isDevelopment" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC13isDevelopmentSbvp">isDevelopment</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC13isDevelopmentSbvp">isDevelopment</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Indicates extra development features should be enabled.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isDevelopment</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L177-L179">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC12loggingLevelAA07LoggingE0Ovp"></a> -->
+                    <a name="/loggingLevel.s:7SKTiled12TiledGlobalsC12loggingLevelAA07LoggingE0Ovp"></a>
                     <a name="//apple_ref/swift/Property/loggingLevel" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC12loggingLevelAA07LoggingE0Ovp">loggingLevel</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC12loggingLevelAA07LoggingE0Ovp">loggingLevel</a>
                     </code>
                   </div>
@@ -602,7 +689,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L168">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L182">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -610,9 +697,11 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC16debugDrawOptionsSo05DebugeF0Vvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC16debugDrawOptionsAA05DebugeF0Vvp"></a> -->
+                    <a name="/debugDrawOptions.s:7SKTiled12TiledGlobalsC16debugDrawOptionsAA05DebugeF0Vvp"></a>
                     <a name="//apple_ref/swift/Property/debugDrawOptions" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC16debugDrawOptionsSo05DebugeF0Vvp">debugDrawOptions</a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC16debugDrawOptionsAA05DebugeF0Vvp">debugDrawOptions</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC16debugDrawOptionsAA05DebugeF0Vvp">debugDrawOptions</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -620,19 +709,28 @@ you to set default attributes for various objects.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Default debug draw options..</p>
+                        <p>Default debug draw options for all node types.</p>
+<h3 id='usage' class='heading'>Usage</h3>
+
+<ul>
+<li><code>drawGrid</code>: visualize the nodes&rsquo;s tile grid.</li>
+<li><code>drawFrame</code>: visualize the nodes&rsquo;s bounding rect.</li>
+<li><code>drawGraph</code>: visualize the nodes&rsquo;s pathfinding graph.</li>
+<li><code>drawObjectFrames</code>: draw object&rsquo;s bounding shapes.</li>
+<li><code>drawAnchor</code>: draw the layer&rsquo;s anchor point.</li>
+</ul>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">debugDrawOptions</span><span class="p">:</span> <span class="kt">DebugDrawOptions</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">debugDrawOptions</span><span class="p">:</span> <span class="kt"><a href="../Structs/DebugDrawOptions.html">DebugDrawOptions</a></span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L171">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L194">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -640,8 +738,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC10updateModeAA010TileUpdateE0Ovp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC10updateModeAA010TileUpdateE0Ovp"></a> -->
+                    <a name="/updateMode.s:7SKTiled12TiledGlobalsC10updateModeAA010TileUpdateE0Ovp"></a>
                     <a name="//apple_ref/swift/Property/updateMode" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC10updateModeAA010TileUpdateE0Ovp">updateMode</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC10updateModeAA010TileUpdateE0Ovp">updateMode</a>
                     </code>
                   </div>
@@ -662,7 +762,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L174">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L197">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -670,8 +770,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC15zDeltaForLayers12CoreGraphics7CGFloatVvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC15zDeltaForLayers12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/zDeltaForLayers.s:7SKTiled12TiledGlobalsC15zDeltaForLayers12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/zDeltaForLayers" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC15zDeltaForLayers12CoreGraphics7CGFloatVvp">zDeltaForLayers</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC15zDeltaForLayers12CoreGraphics7CGFloatVvp">zDeltaForLayers</a>
                     </code>
                   </div>
@@ -692,7 +794,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L177">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L200">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -700,8 +802,42 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC22lowerBoundForDebugging12CoreGraphics7CGFloatVvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC7uiColorSo7NSColorCvp"></a> -->
+                    <a name="/uiColor.s:7SKTiled12TiledGlobalsC7uiColorSo7NSColorCvp"></a>
+                    <a name="//apple_ref/swift/Property/uiColor" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC7uiColorSo7NSColorCvp">uiColor</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC7uiColorSo7NSColorCvp">uiColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>User interface color.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">uiColor</span><span class="p">:</span> <span class="kt">SKColor</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L203">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC22lowerBoundForDebugging12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/lowerBoundForDebugging.s:7SKTiled12TiledGlobalsC22lowerBoundForDebugging12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/lowerBoundForDebugging" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC22lowerBoundForDebugging12CoreGraphics7CGFloatVvp">lowerBoundForDebugging</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC22lowerBoundForDebugging12CoreGraphics7CGFloatVvp">lowerBoundForDebugging</a>
                     </code>
                   </div>
@@ -722,7 +858,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L180">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L208">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -730,9 +866,11 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC21enableRenderCallbacksSbvp"></a>
-                    <a name="//apple_ref/swift/Property/enableRenderCallbacks" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC21enableRenderCallbacksSbvp">enableRenderCallbacks</a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC32enableRenderPerformanceCallbacksSbvp"></a> -->
+                    <a name="/enableRenderPerformanceCallbacks.s:7SKTiled12TiledGlobalsC32enableRenderPerformanceCallbacksSbvp"></a>
+                    <a name="//apple_ref/swift/Property/enableRenderPerformanceCallbacks" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC32enableRenderPerformanceCallbacksSbvp">enableRenderPerformanceCallbacks</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC32enableRenderPerformanceCallbacksSbvp">enableRenderPerformanceCallbacks</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -747,12 +885,12 @@ you to set default attributes for various objects.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">enableRenderCallbacks</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">enableRenderPerformanceCallbacks</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L183">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L211">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -760,8 +898,74 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC21enableCameraCallbacksSbvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC26enableTilemapNotificationsSbvp"></a> -->
+                    <a name="/enableTilemapNotifications.s:7SKTiled12TiledGlobalsC26enableTilemapNotificationsSbvp"></a>
+                    <a name="//apple_ref/swift/Property/enableTilemapNotifications" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC26enableTilemapNotificationsSbvp">enableTilemapNotifications</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC26enableTilemapNotificationsSbvp">enableTilemapNotifications</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Enable callbacks from the tilemap to subscribers.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">enableTilemapNotifications</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L214">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC28enableTilemapInfiniteOffsetsSbvp"></a> -->
+                    <a name="/enableTilemapInfiniteOffsets.s:7SKTiled12TiledGlobalsC28enableTilemapInfiniteOffsetsSbvp"></a>
+                    <a name="//apple_ref/swift/Property/enableTilemapInfiniteOffsets" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC28enableTilemapInfiniteOffsetsSbvp">enableTilemapInfiniteOffsets</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC28enableTilemapInfiniteOffsetsSbvp">enableTilemapInfiniteOffsets</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Enable infinite offset use.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">enableTilemapInfiniteOffsets</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L217-L227">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC21enableCameraCallbacksSbvp"></a> -->
+                    <a name="/enableCameraCallbacks.s:7SKTiled12TiledGlobalsC21enableCameraCallbacksSbvp"></a>
                     <a name="//apple_ref/swift/Property/enableCameraCallbacks" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC21enableCameraCallbacksSbvp">enableCameraCallbacks</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC21enableCameraCallbacksSbvp">enableCameraCallbacks</a>
                     </code>
                   </div>
@@ -782,7 +986,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L186">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L242">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -790,8 +994,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC35enableCameraContainedNodesCallbacksSbvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC35enableCameraContainedNodesCallbacksSbvp"></a> -->
+                    <a name="/enableCameraContainedNodesCallbacks.s:7SKTiled12TiledGlobalsC35enableCameraContainedNodesCallbacksSbvp"></a>
                     <a name="//apple_ref/swift/Property/enableCameraContainedNodesCallbacks" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC35enableCameraContainedNodesCallbacksSbvp">enableCameraContainedNodesCallbacks</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC35enableCameraContainedNodesCallbacksSbvp">enableCameraContainedNodesCallbacks</a>
                     </code>
                   </div>
@@ -800,7 +1006,7 @@ you to set default attributes for various objects.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Enable callbacks from camera to camera delegates about visible nodes.</p>
+                        <p>Allows the camera to update delegate when the contained nodes array changes. Disable this to improve render performance.</p>
 
                       </div>
                       <div class="declaration">
@@ -812,7 +1018,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L189">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L245">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -820,8 +1026,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC13renderQualityAC06RenderE0Vvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC13renderQualityAC06RenderE0Vvp"></a> -->
+                    <a name="/renderQuality.s:7SKTiled12TiledGlobalsC13renderQualityAC06RenderE0Vvp"></a>
                     <a name="//apple_ref/swift/Property/renderQuality" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC13renderQualityAC06RenderE0Vvp">renderQuality</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC13renderQualityAC06RenderE0Vvp">renderQuality</a>
                     </code>
                   </div>
@@ -842,7 +1050,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L192">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L248">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -850,9 +1058,11 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC5debugAC19DebugDisplayOptionsVvp"></a>
-                    <a name="//apple_ref/swift/Property/debug" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC5debugAC19DebugDisplayOptionsVvp">debug</a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19debugDisplayOptionsAC05DebugeF0Vvp"></a> -->
+                    <a name="/debugDisplayOptions.s:7SKTiled12TiledGlobalsC19debugDisplayOptionsAC05DebugeF0Vvp"></a>
+                    <a name="//apple_ref/swift/Property/debugDisplayOptions" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19debugDisplayOptionsAC05DebugeF0Vvp">debugDisplayOptions</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC19debugDisplayOptionsAC05DebugeF0Vvp">debugDisplayOptions</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -860,19 +1070,21 @@ you to set default attributes for various objects.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Debugging display options.</p>
+                        <p>Debugging visualzation options.</p>
+
+<p>The <code><a href="../Classes/TiledGlobals/DebugDisplayOptions.html">DebugDisplayOptions</a></code> structure has attributes for attributes such as node highlight color, highlight duration as well as what kind of objects respond to mouse actions <strong>(macOS only)</strong>.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">debug</span><span class="p">:</span> <span class="kt"><a href="../Classes/TiledGlobals/DebugDisplayOptions.html">DebugDisplayOptions</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">debugDisplayOptions</span><span class="p">:</span> <span class="kt"><a href="../Classes/TiledGlobals/DebugDisplayOptions.html">DebugDisplayOptions</a></span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L195">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L253">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -880,8 +1092,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC15timeDisplayModeAC04TimeeF0Ovp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC15timeDisplayModeAC04TimeeF0Ovp"></a> -->
+                    <a name="/timeDisplayMode.s:7SKTiled12TiledGlobalsC15timeDisplayModeAC04TimeeF0Ovp"></a>
                     <a name="//apple_ref/swift/Property/timeDisplayMode" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC15timeDisplayModeAC04TimeeF0Ovp">timeDisplayMode</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC15timeDisplayModeAC04TimeeF0Ovp">timeDisplayMode</a>
                     </code>
                   </div>
@@ -902,7 +1116,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L198">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L256">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -910,8 +1124,42 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC19layerTintAttributesAC05LayerE7OptionsVvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC15mouseEventDeltaSdvp"></a> -->
+                    <a name="/mouseEventDelta.s:7SKTiled12TiledGlobalsC15mouseEventDeltaSdvp"></a>
+                    <a name="//apple_ref/swift/Property/mouseEventDelta" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC15mouseEventDeltaSdvp">mouseEventDelta</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC15mouseEventDeltaSdvp">mouseEventDelta</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Mouse event limiter.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">mouseEventDelta</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L259">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19layerTintAttributesAC05LayerE7OptionsVvp"></a> -->
+                    <a name="/layerTintAttributes.s:7SKTiled12TiledGlobalsC19layerTintAttributesAC05LayerE7OptionsVvp"></a>
                     <a name="//apple_ref/swift/Property/layerTintAttributes" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19layerTintAttributesAC05LayerE7OptionsVvp">layerTintAttributes</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC19layerTintAttributesAC05LayerE7OptionsVvp">layerTintAttributes</a>
                     </code>
                   </div>
@@ -932,7 +1180,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L201">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L262">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -940,8 +1188,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC10screenSizeSo6CGSizeVvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC10screenSizeSo6CGSizeVvp"></a> -->
+                    <a name="/screenSize.s:7SKTiled12TiledGlobalsC10screenSizeSo6CGSizeVvp"></a>
                     <a name="//apple_ref/swift/Property/screenSize" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC10screenSizeSo6CGSizeVvp">screenSize</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC10screenSizeSo6CGSizeVvp">screenSize</a>
                     </code>
                   </div>
@@ -962,7 +1212,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L204-L206">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L265-L267">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -970,8 +1220,42 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC12contentScale12CoreGraphics7CGFloatVvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC10screenRectSo6CGRectVvp"></a> -->
+                    <a name="/screenRect.s:7SKTiled12TiledGlobalsC10screenRectSo6CGRectVvp"></a>
+                    <a name="//apple_ref/swift/Property/screenRect" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC10screenRectSo6CGRectVvp">screenRect</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC10screenRectSo6CGRectVvp">screenRect</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a <code>CGRect</code> representing the screen (window) size.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">screenRect</span><span class="p">:</span> <span class="kt">CGRect</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L270-L274">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC12contentScale12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/contentScale.s:7SKTiled12TiledGlobalsC12contentScale12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/contentScale" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC12contentScale12CoreGraphics7CGFloatVvp">contentScale</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC12contentScale12CoreGraphics7CGFloatVvp">contentScale</a>
                     </code>
                   </div>
@@ -992,7 +1276,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L209-L211">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L277-L279">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1000,8 +1284,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC2osSSvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC2osSSvp"></a> -->
+                    <a name="/os.s:7SKTiled12TiledGlobalsC2osSSvp"></a>
                     <a name="//apple_ref/swift/Property/os" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC2osSSvp">os</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC2osSSvp">os</a>
                     </code>
                   </div>
@@ -1022,7 +1308,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L214-L224">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L282-L292">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1030,8 +1316,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC14executableNameSSvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC14executableNameSSvp"></a> -->
+                    <a name="/executableName.s:7SKTiled12TiledGlobalsC14executableNameSSvp"></a>
                     <a name="//apple_ref/swift/Property/executableName" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC14executableNameSSvp">executableName</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC14executableNameSSvp">executableName</a>
                     </code>
                   </div>
@@ -1052,7 +1340,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L227">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L295">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1060,8 +1348,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC10identifierSSvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC10identifierSSvp"></a> -->
+                    <a name="/identifier.s:7SKTiled12TiledGlobalsC10identifierSSvp"></a>
                     <a name="//apple_ref/swift/Property/identifier" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC10identifierSSvp">identifier</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC10identifierSSvp">identifier</a>
                     </code>
                   </div>
@@ -1082,7 +1372,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L236">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L304">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1090,8 +1380,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC10bundleNameSSvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC10bundleNameSSvp"></a> -->
+                    <a name="/bundleName.s:7SKTiled12TiledGlobalsC10bundleNameSSvp"></a>
                     <a name="//apple_ref/swift/Property/bundleName" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC10bundleNameSSvp">bundleName</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC10bundleNameSSvp">bundleName</a>
                     </code>
                   </div>
@@ -1112,7 +1404,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L245">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L313">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1120,8 +1412,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC11windowTitleSSvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC11windowTitleSSvp"></a> -->
+                    <a name="/windowTitle.s:7SKTiled12TiledGlobalsC11windowTitleSSvp"></a>
                     <a name="//apple_ref/swift/Property/windowTitle" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC11windowTitleSSvp">windowTitle</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC11windowTitleSSvp">windowTitle</a>
                     </code>
                   </div>
@@ -1142,7 +1436,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L254">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L322">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1150,8 +1444,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC7versionAC7VersionVvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC7versionAC7VersionVvp"></a> -->
+                    <a name="/version.s:7SKTiled12TiledGlobalsC7versionAC7VersionVvp"></a>
                     <a name="//apple_ref/swift/Property/version" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC7versionAC7VersionVvp">version</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC7versionAC7VersionVvp">version</a>
                     </code>
                   </div>
@@ -1172,7 +1468,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L261">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L329">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1180,8 +1476,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC5buildSSSgvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC5buildSSSgvp"></a> -->
+                    <a name="/build.s:7SKTiled12TiledGlobalsC5buildSSSgvp"></a>
                     <a name="//apple_ref/swift/Property/build" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC5buildSSSgvp">build</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC5buildSSSgvp">build</a>
                     </code>
                   </div>
@@ -1202,7 +1500,56 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L270-L272">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L338-L340">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Framework%20Directories"></a>
+                <a name="//apple_ref/swift/Section/Framework Directories" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Framework%20Directories"></a>
+                  <h3 class="section-name"><p>Framework Directories</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC15exportDirectory10Foundation3URLVSgvp"></a> -->
+                    <a name="/exportDirectory.s:7SKTiled12TiledGlobalsC15exportDirectory10Foundation3URLVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/exportDirectory" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC15exportDirectory10Foundation3URLVSgvp">exportDirectory</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC15exportDirectory10Foundation3URLVSgvp">exportDirectory</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a prefernces path directory in the current user&rsquo;s home directory (macOS only).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">exportDirectory</span><span class="p">:</span> <span class="kt">URL</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>url of created directory.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L347-L367">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1223,8 +1570,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC13allowDemoMapsSbvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC13allowDemoMapsSbvp"></a> -->
+                    <a name="/allowDemoMaps.s:7SKTiled12TiledGlobalsC13allowDemoMapsSbvp"></a>
                     <a name="//apple_ref/swift/Property/allowDemoMaps" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC13allowDemoMapsSbvp">allowDemoMaps</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC13allowDemoMapsSbvp">allowDemoMaps</a>
                     </code>
                   </div>
@@ -1245,7 +1594,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L278">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L372">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1253,8 +1602,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC13allowUserMapsSbvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC13allowUserMapsSbvp"></a> -->
+                    <a name="/allowUserMaps.s:7SKTiled12TiledGlobalsC13allowUserMapsSbvp"></a>
                     <a name="//apple_ref/swift/Property/allowUserMaps" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC13allowUserMapsSbvp">allowUserMaps</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC13allowUserMapsSbvp">allowUserMaps</a>
                     </code>
                   </div>
@@ -1275,7 +1626,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L281">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L375">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1283,8 +1634,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC17enableMouseEventsSbvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC17enableMouseEventsSbvp"></a> -->
+                    <a name="/enableMouseEvents.s:7SKTiled12TiledGlobalsC17enableMouseEventsSbvp"></a>
                     <a name="//apple_ref/swift/Property/enableMouseEvents" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC17enableMouseEventsSbvp">enableMouseEvents</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC17enableMouseEventsSbvp">enableMouseEvents</a>
                     </code>
                   </div>
@@ -1305,7 +1658,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L284">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L378">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1313,8 +1666,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC15validImageTypesSaySSGvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC15validImageTypesSaySSGvp"></a> -->
+                    <a name="/validImageTypes.s:7SKTiled12TiledGlobalsC15validImageTypesSaySSGvp"></a>
                     <a name="//apple_ref/swift/Property/validImageTypes" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC15validImageTypesSaySSGvp">validImageTypes</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC15validImageTypesSaySSGvp">validImageTypes</a>
                     </code>
                   </div>
@@ -1335,7 +1690,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L287">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L381">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1343,8 +1698,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC14validFileTypesSaySSGvp"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC14validFileTypesSaySSGvp"></a> -->
+                    <a name="/validFileTypes.s:7SKTiled12TiledGlobalsC14validFileTypesSaySSGvp"></a>
                     <a name="//apple_ref/swift/Property/validFileTypes" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC14validFileTypesSaySSGvp">validFileTypes</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC14validFileTypesSaySSGvp">validFileTypes</a>
                     </code>
                   </div>
@@ -1365,7 +1722,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L290">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L384">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1373,8 +1730,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC7VersionV"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC7VersionV"></a> -->
+                    <a name="/Version.s:7SKTiled12TiledGlobalsC7VersionV"></a>
                     <a name="//apple_ref/swift/Struct/Version" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC7VersionV">Version</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC7VersionV">Version</a>
                     </code>
                   </div>
@@ -1383,38 +1742,16 @@ you to set default attributes for various objects.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <h3 id='overview' class='heading'>Overview</h3>
-
-<p>Structure representing the framework version (semantic version).</p>
+                        <p>The <code>Version</code> structure represents the framework version (semantic version).</p>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">major</td>
-<td style="text-align: left">Framework major version.</td>
-</tr>
-<tr>
-<td style="text-align: left">minor</td>
-<td style="text-align: left">Framework minor version.</td>
-</tr>
-<tr>
-<td style="text-align: left">patch</td>
-<td style="text-align: left">Framework patch version.</td>
-</tr>
-<tr>
-<td style="text-align: left">build</td>
-<td style="text-align: left">Framework build versions.</td>
-</tr>
-<tr>
-<td style="text-align: left">suffix</td>
-<td style="text-align: left">Version suffix.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>major</code>: Framework major version.</li>
+<li><code>minor</code>: Framework minor version.</li>
+<li><code>patch</code>: Framework patch version.</li>
+<li><code><a href="../Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC5buildSSSgvp">build</a></code>: Framework build versions.</li>
+<li><code>suffix</code>: Version suffix.</li>
+</ul>
 
                         <a href="../Classes/TiledGlobals/Version.html" class="slightly-smaller">See more</a>
                       </div>
@@ -1427,7 +1764,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L328-L350">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L416-L438">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1435,8 +1772,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC13RenderQualityV"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC13RenderQualityV"></a> -->
+                    <a name="/RenderQuality.s:7SKTiled12TiledGlobalsC13RenderQualityV"></a>
                     <a name="//apple_ref/swift/Struct/RenderQuality" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC13RenderQualityV">RenderQuality</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC13RenderQualityV">RenderQuality</a>
                     </code>
                   </div>
@@ -1445,34 +1784,15 @@ you to set default attributes for various objects.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <h3 id='overview' class='heading'>Overview</h3>
-
-<p>Represents the render scaling factor when dealing with higher resolutions &amp; retina screen scale factors.</p>
+                        <p>The <code>RenderQuality</code> structure represents the render scaling factor used when dealing with higher resolutions &amp; retina screen scale factors.</p>
 <h4 id='properties' class='heading'>Properties</h4>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">default</td>
-<td style="text-align: left">Global render quality.</td>
-</tr>
-<tr>
-<td style="text-align: left">object</td>
-<td style="text-align: left">Object render quality.</td>
-</tr>
-<tr>
-<td style="text-align: left">text</td>
-<td style="text-align: left">Text object render quality</td>
-</tr>
-<tr>
-<td style="text-align: left">override</td>
-<td style="text-align: left">Override value.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code><a href="../Classes/TiledGlobals.html#/s:7SKTiled12TiledGlobalsC7defaultACvpZ">default</a></code>: global render quality.</li>
+<li><code>object</code>: object render quality.</li>
+<li><code>text</code>: text object render quality</li>
+<li><code>override</code>: override value.</li>
+</ul>
 
                         <a href="../Classes/TiledGlobals/RenderQuality.html" class="slightly-smaller">See more</a>
                       </div>
@@ -1485,7 +1805,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L365-L378">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L449-L462">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1493,8 +1813,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV"></a> -->
+                    <a name="/DebugDisplayOptions.s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV"></a>
                     <a name="//apple_ref/swift/Struct/DebugDisplayOptions" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV">DebugDisplayOptions</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC19DebugDisplayOptionsV">DebugDisplayOptions</a>
                     </code>
                   </div>
@@ -1503,34 +1825,14 @@ you to set default attributes for various objects.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <h3 id='overview' class='heading'>Overview</h3>
-
-<p>This structure represents global debugging visualization attributes.</p>
+                        <p>The <code>DebugDisplayOptions</code> structure represents global debugging visualization attributes.</p>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-<th style="text-align: center">Render Speed</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">dynamic</td>
-<td style="text-align: left">Dynamically update tiles as needed.</td>
-<td style="text-align: center">normal</td>
-</tr>
-<tr>
-<td style="text-align: left">full</td>
-<td style="text-align: left">All tiles are updated each frame.</td>
-<td style="text-align: center">slower</td>
-</tr>
-<tr>
-<td style="text-align: left">actions</td>
-<td style="text-align: left">Tiles are not updated, SpriteKit actions are used instead.</td>
-<td style="text-align: center">fastest</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>mouseFilters</code>: mouse interaction options.</li>
+<li><code>mousePointerSize</code>: mouse pointer font size.</li>
+<li><code>highlightDuration</code>: global highlight duration for selectable objects.</li>
+</ul>
 
                         <a href="../Classes/TiledGlobals/DebugDisplayOptions.html" class="slightly-smaller">See more</a>
                       </div>
@@ -1543,7 +1845,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L392-L457">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L472-L542">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1551,8 +1853,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC15TimeDisplayModeO"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC15TimeDisplayModeO"></a> -->
+                    <a name="/TimeDisplayMode.s:7SKTiled12TiledGlobalsC15TimeDisplayModeO"></a>
                     <a name="//apple_ref/swift/Enum/TimeDisplayMode" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC15TimeDisplayModeO">TimeDisplayMode</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC15TimeDisplayModeO">TimeDisplayMode</a>
                     </code>
                   </div>
@@ -1561,26 +1865,13 @@ you to set default attributes for various objects.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <h2 id='overview' class='heading'>Overview</h2>
-
-<p>Display flag for render statistics.</p>
+                        <p>Display flag for render statistics.</p>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">milliseconds</td>
-<td style="text-align: left">Show render time in milliseconds.</td>
-</tr>
-<tr>
-<td style="text-align: left">seconds</td>
-<td style="text-align: left">Show render time in seconds.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>milliseconds</code>: show render time in milliseconds.</li>
+<li><code>seconds</code>: show render time in seconds.</li>
+</ul>
 
                       </div>
                       <div class="declaration">
@@ -1592,7 +1883,7 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L476-L479">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L557-L560">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1600,8 +1891,10 @@ you to set default attributes for various objects.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12TiledGlobalsC8RendererO"></a>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC8RendererO"></a> -->
+                    <a name="/Renderer.s:7SKTiled12TiledGlobalsC8RendererO"></a>
                     <a name="//apple_ref/swift/Enum/Renderer" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC8RendererO">Renderer</a> -->
                     <a class="token" href="#/s:7SKTiled12TiledGlobalsC8RendererO">Renderer</a>
                     </code>
                   </div>
@@ -1610,26 +1903,13 @@ you to set default attributes for various objects.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <h2 id='overview' class='heading'>Overview</h2>
-
-<p>Indicates the current renderer (OpenGL or Metal).</p>
+                        <p>Indicates the current renderer (OpenGL or Metal).</p>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">opengl</td>
-<td style="text-align: left">Indicates the current SpriteKit renderer is OpenGL.</td>
-</tr>
-<tr>
-<td style="text-align: left">metal</td>
-<td style="text-align: left">Indicates the current SpriteKit renderer is Metal.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>opengl</code>: indicates the current SpriteKit renderer is OpenGL.</li>
+<li><code>metal</code>: indicates the current SpriteKit renderer is Metal.</li>
+</ul>
 
                         <a href="../Classes/TiledGlobals/Renderer.html" class="slightly-smaller">See more</a>
                       </div>
@@ -1642,7 +1922,86 @@ you to set default attributes for various objects.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledGlobals.swift#L492-L495">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L569-L572">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Deprecations"></a>
+                <a name="//apple_ref/swift/Section/Deprecations" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Deprecations"></a>
+                  <h3 class="section-name"><p>Deprecations</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC5debugAC19DebugDisplayOptionsVvp"></a> -->
+                    <a name="/debug.s:7SKTiled12TiledGlobalsC5debugAC19DebugDisplayOptionsVvp"></a>
+                    <a name="//apple_ref/swift/Property/debug" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC5debugAC19DebugDisplayOptionsVvp">debug</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC5debugAC19DebugDisplayOptionsVvp">debug</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Debugging display options.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"debugDisplayOptions"</span><span class="p">)</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">debug</span><span class="p">:</span> <span class="kt"><a href="../Classes/TiledGlobals/DebugDisplayOptions.html">DebugDisplayOptions</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L925-L931">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled12TiledGlobalsC21enableRenderCallbacksSbvp"></a> -->
+                    <a name="/enableRenderCallbacks.s:7SKTiled12TiledGlobalsC21enableRenderCallbacksSbvp"></a>
+                    <a name="//apple_ref/swift/Property/enableRenderCallbacks" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12TiledGlobalsC21enableRenderCallbacksSbvp">enableRenderCallbacks</a> -->
+                    <a class="token" href="#/s:7SKTiled12TiledGlobalsC21enableRenderCallbacksSbvp">enableRenderCallbacks</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Enable callbacks for render performance statistics.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"enableRenderPerformanceCallbacks"</span><span class="p">)</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">enableRenderCallbacks</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledGlobals.swift#L935-L941">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

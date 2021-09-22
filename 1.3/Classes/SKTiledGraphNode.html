@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -256,6 +254,30 @@
               </li>
             </ul>
           </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -265,13 +287,12 @@
             <h1>SKTiledGraphNode</h1>
               <div class='declaration'>
                 <div class='language'>
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTiledGraphNode</span> <span class="p">:</span> <span class="kt">GKGridGraphNode</span><span class="p">,</span> <span class="kt"><a href="../Protocols/TiledAttributedType.html">TiledAttributedType</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SKTiledGraphNode</span> <span class="p">:</span> <span class="kt">GKGridGraphNode</span><span class="p">,</span> <span class="kt"><a href="../Protocols/TiledObjectType.html">TiledObjectType</a></span></code></pre>
 
                 </div>
               </div>
-            <h2 id='overview' class='heading'>Overview</h2>
-
-<p>Custom <a href="https://developer.apple.com/documentation/gameplaykit/gkgridgraphnode"><code>GKGridGraphNode</code></a> object that adds a weight parameter for
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>The <code>SKTiledGraphNode</code> node is a custom <a href="https://developer.apple.com/documentation/gameplaykit/gkgridgraphnode"><code>GKGridGraphNode</code></a> object that adds a weight parameter for
 use with Tiled scene properties. Can be used with normal <a href="https://developer.apple.com/documentation/gameplaykit/gkgridgraphnode"><code>GKGridGraphNode</code></a>
 instances. The <code><a href="../Classes/SKTiledGraphNode.html#/s:7SKTiled0A9GraphNodeC6weightSfvp">SKTiledGraphNode.weight</a></code> property is used to affect the estimated cost to a
 connected node. (Increasing the weight makes it less likely to be travelled to, decreasing more likely).</p>
@@ -292,8 +313,10 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)uuid"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)uuid"></a> -->
+                    <a name="/uuid.c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)uuid"></a>
                     <a name="//apple_ref/swift/Property/uuid" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)uuid">uuid</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)uuid">uuid</a>
                     </code>
                   </div>
@@ -314,7 +337,7 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L222">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTiled+GameplayKit.swift#L220">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -322,8 +345,10 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)type"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)type"></a> -->
+                    <a name="/type.c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)type"></a>
                     <a name="//apple_ref/swift/Property/type" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)type">type</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)type">type</a>
                     </code>
                   </div>
@@ -344,7 +369,7 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L225">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTiled+GameplayKit.swift#L223">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -352,8 +377,10 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)properties"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)properties"></a> -->
+                    <a name="/properties.c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)properties"></a>
                     <a name="//apple_ref/swift/Property/properties" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)properties">properties</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)properties">properties</a>
                     </code>
                   </div>
@@ -374,7 +401,7 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L228">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTiled+GameplayKit.swift#L226">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -382,8 +409,10 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)ignoreProperties"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)ignoreProperties"></a> -->
+                    <a name="/ignoreProperties.c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)ignoreProperties"></a>
                     <a name="//apple_ref/swift/Property/ignoreProperties" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)ignoreProperties">ignoreProperties</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTiledGraphNode(py)ignoreProperties">ignoreProperties</a>
                     </code>
                   </div>
@@ -404,7 +433,7 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L231">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTiled+GameplayKit.swift#L232">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -412,8 +441,10 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled0A9GraphNodeC13renderQuality12CoreGraphics7CGFloatVvp"></a>
+                    <!-- <a name="/s:7SKTiled0A9GraphNodeC13renderQuality12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/renderQuality.s:7SKTiled0A9GraphNodeC13renderQuality12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/renderQuality" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled0A9GraphNodeC13renderQuality12CoreGraphics7CGFloatVvp">renderQuality</a> -->
                     <a class="token" href="#/s:7SKTiled0A9GraphNodeC13renderQuality12CoreGraphics7CGFloatVvp">renderQuality</a>
                     </code>
                   </div>
@@ -434,7 +465,7 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L234">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTiled+GameplayKit.swift#L235">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -442,8 +473,10 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled0A9GraphNodeC6weightSfvp"></a>
+                    <!-- <a name="/s:7SKTiled0A9GraphNodeC6weightSfvp"></a> -->
+                    <a name="/weight.s:7SKTiled0A9GraphNodeC6weightSfvp"></a>
                     <a name="//apple_ref/swift/Property/weight" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled0A9GraphNodeC6weightSfvp">weight</a> -->
                     <a class="token" href="#/s:7SKTiled0A9GraphNodeC6weightSfvp">weight</a>
                     </code>
                   </div>
@@ -464,7 +497,7 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L237">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTiled+GameplayKit.swift#L238">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -473,11 +506,11 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Init"></a>
-                <a name="//apple_ref/swift/Section/Init" class="dashAnchor"></a>
+                <a name="/Initialization"></a>
+                <a name="//apple_ref/swift/Section/Initialization" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/Init"></a>
-                  <h3 class="section-name"><p>Init</p>
+                  <a class="section-name-link" href="#/Initialization"></a>
+                  <h3 class="section-name"><p>Initialization</p>
 </h3>
                 </div>
               </div>
@@ -485,8 +518,10 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled0A9GraphNodeC12gridPosition6weightACs5SIMD2Vys5Int32VG_Sftcfc"></a>
+                    <!-- <a name="/s:7SKTiled0A9GraphNodeC12gridPosition6weightACs5SIMD2Vys5Int32VG_Sftcfc"></a> -->
+                    <a name="/init(gridPosition:weight:).s:7SKTiled0A9GraphNodeC12gridPosition6weightACs5SIMD2Vys5Int32VG_Sftcfc"></a>
                     <a name="//apple_ref/swift/Method/init(gridPosition:weight:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled0A9GraphNodeC12gridPosition6weightACs5SIMD2Vys5Int32VG_Sftcfc">init(gridPosition:<wbr>weight:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled0A9GraphNodeC12gridPosition6weightACs5SIMD2Vys5Int32VG_Sftcfc">init(gridPosition:<wbr>weight:<wbr>)</a>
                     </code>
                   </div>
@@ -538,7 +573,58 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L247-L250">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTiled+GameplayKit.swift#L248-L251">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTiledGraphNode(im)initWithCoder:"></a> -->
+                    <a name="/init(coder:).c:@M@SKTiled@objc(cs)SKTiledGraphNode(im)initWithCoder:"></a>
+                    <a name="//apple_ref/swift/Method/init(coder:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTiledGraphNode(im)initWithCoder:">init(coder:<wbr>)</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTiledGraphNode(im)initWithCoder:">init(coder:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instantiate the node with a decoder instance.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>aDecoder</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>decoder.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTiled+GameplayKit.swift#L260-L262">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -559,8 +645,10 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTiledGraphNode(im)costToNode:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTiledGraphNode(im)costToNode:"></a> -->
+                    <a name="/cost(to:).c:@M@SKTiled@objc(cs)SKTiledGraphNode(im)costToNode:"></a>
                     <a name="//apple_ref/swift/Method/cost(to:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTiledGraphNode(im)costToNode:">cost(to:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTiledGraphNode(im)costToNode:">cost(to:<wbr>)</a>
                     </code>
                   </div>
@@ -604,7 +692,7 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                         <p>cost to travel to the given node.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L266-L271">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTiled+GameplayKit.swift#L270-L275">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -612,8 +700,10 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTiledGraphNode(im)estimatedCostToNode:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTiledGraphNode(im)estimatedCostToNode:"></a> -->
+                    <a name="/estimatedCost(to:).c:@M@SKTiled@objc(cs)SKTiledGraphNode(im)estimatedCostToNode:"></a>
                     <a name="//apple_ref/swift/Method/estimatedCost(to:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTiledGraphNode(im)estimatedCostToNode:">estimatedCost(to:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTiledGraphNode(im)estimatedCostToNode:">estimatedCost(to:<wbr>)</a>
                     </code>
                   </div>
@@ -657,7 +747,7 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                         <p>heuristic cost to node.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L277-L284">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTiled+GameplayKit.swift#L281-L288">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -665,8 +755,10 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@CM@SKTiled@objc(cs)SKTiledGraphNode(im)parsePropertiesWithCompletion:"></a>
+                    <!-- <a name="/c:@CM@SKTiled@objc(cs)SKTiledGraphNode(im)parsePropertiesWithCompletion:"></a> -->
+                    <a name="/parseProperties(completion:).c:@CM@SKTiled@objc(cs)SKTiledGraphNode(im)parsePropertiesWithCompletion:"></a>
                     <a name="//apple_ref/swift/Method/parseProperties(completion:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKTiledGraphNode(im)parsePropertiesWithCompletion:">parseProperties(completion:<wbr>)</a> -->
                     <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKTiledGraphNode(im)parsePropertiesWithCompletion:">parseProperties(completion:<wbr>)</a>
                     </code>
                   </div>
@@ -706,7 +798,7 @@ connected node. (Increasing the weight makes it less likely to be travelled to, 
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTiled+GameplayKit.swift#L330-L334">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTiled+GameplayKit.swift#L334-L338">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

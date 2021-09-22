@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -253,6 +251,30 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
               </li>
             </ul>
           </li>
@@ -269,30 +291,15 @@
 
                 </div>
               </div>
-            <h2 id='overview' class='heading'>Overview</h2>
-
-<p>A structure representing a single frame of animation. Time is stored in milliseconds.</p>
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>The <code>TileAnimationFrame</code> structure represents a single frame of animation. Time is stored in milliseconds.</p>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: center">Property</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: center">id</td>
-<td>unique tile (local) id.</td>
-</tr>
-<tr>
-<td style="text-align: center">duration</td>
-<td>frame duration.</td>
-</tr>
-<tr>
-<td style="text-align: center">texture</td>
-<td>optional tile texture.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>id</code>: unique tile (local) id.</li>
+<li><code>duration</code>: frame duration.</li>
+<li><code>texture</code>: optional tile texture.</li>
+</ul>
 
           </div>
         </section>
@@ -313,8 +320,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled18TileAnimationFrameC2ids6UInt32Vvp"></a>
+                    <!-- <a name="/s:7SKTiled18TileAnimationFrameC2ids6UInt32Vvp"></a> -->
+                    <a name="/id.s:7SKTiled18TileAnimationFrameC2ids6UInt32Vvp"></a>
                     <a name="//apple_ref/swift/Property/id" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled18TileAnimationFrameC2ids6UInt32Vvp">id</a> -->
                     <a class="token" href="#/s:7SKTiled18TileAnimationFrameC2ids6UInt32Vvp">id</a>
                     </code>
                   </div>
@@ -335,7 +344,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TileAnimationFrame.swift#L48">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TileAnimationFrame.swift#L43">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -343,8 +352,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled18TileAnimationFrameC8durationSivp"></a>
+                    <!-- <a name="/s:7SKTiled18TileAnimationFrameC8durationSivp"></a> -->
+                    <a name="/duration.s:7SKTiled18TileAnimationFrameC8durationSivp"></a>
                     <a name="//apple_ref/swift/Property/duration" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled18TileAnimationFrameC8durationSivp">duration</a> -->
                     <a class="token" href="#/s:7SKTiled18TileAnimationFrameC8durationSivp">duration</a>
                     </code>
                   </div>
@@ -365,7 +376,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TileAnimationFrame.swift#L51">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TileAnimationFrame.swift#L46">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -373,8 +384,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled18TileAnimationFrameC7textureSo9SKTextureCSgvp"></a>
+                    <!-- <a name="/s:7SKTiled18TileAnimationFrameC7textureSo9SKTextureCSgvp"></a> -->
+                    <a name="/texture.s:7SKTiled18TileAnimationFrameC7textureSo9SKTextureCSgvp"></a>
                     <a name="//apple_ref/swift/Property/texture" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled18TileAnimationFrameC7textureSo9SKTextureCSgvp">texture</a> -->
                     <a class="token" href="#/s:7SKTiled18TileAnimationFrameC7textureSo9SKTextureCSgvp">texture</a>
                     </code>
                   </div>
@@ -395,7 +408,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TileAnimationFrame.swift#L54">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TileAnimationFrame.swift#L49">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -403,8 +416,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled18TileAnimationFrameC2id8duration7textureACs6UInt32V_SiSo9SKTextureCSgtcfc"></a>
+                    <!-- <a name="/s:7SKTiled18TileAnimationFrameC2id8duration7textureACs6UInt32V_SiSo9SKTextureCSgtcfc"></a> -->
+                    <a name="/init(id:duration:texture:).s:7SKTiled18TileAnimationFrameC2id8duration7textureACs6UInt32V_SiSo9SKTextureCSgtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(id:duration:texture:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled18TileAnimationFrameC2id8duration7textureACs6UInt32V_SiSo9SKTextureCSgtcfc">init(id:<wbr>duration:<wbr>texture:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled18TileAnimationFrameC2id8duration7textureACs6UInt32V_SiSo9SKTextureCSgtcfc">init(id:<wbr>duration:<wbr>texture:<wbr>)</a>
                     </code>
                   </div>
@@ -470,7 +485,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TileAnimationFrame.swift#L62-L70">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TileAnimationFrame.swift#L57-L65">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -491,8 +506,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled18TileAnimationFrameC2id8duration7textureACSi_SiSo9SKTextureCSgtcfc"></a>
+                    <!-- <a name="/s:7SKTiled18TileAnimationFrameC2id8duration7textureACSi_SiSo9SKTextureCSgtcfc"></a> -->
+                    <a name="/init(id:duration:texture:).s:7SKTiled18TileAnimationFrameC2id8duration7textureACSi_SiSo9SKTextureCSgtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(id:duration:texture:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled18TileAnimationFrameC2id8duration7textureACSi_SiSo9SKTextureCSgtcfc">init(id:<wbr>duration:<wbr>texture:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled18TileAnimationFrameC2id8duration7textureACSi_SiSo9SKTextureCSgtcfc">init(id:<wbr>duration:<wbr>texture:<wbr>)</a>
                     </code>
                   </div>
@@ -557,7 +574,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TileAnimationFrame.swift#L111-L113">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TileAnimationFrame.swift#L111-L113">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

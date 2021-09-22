@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -253,6 +251,30 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
               </li>
             </ul>
           </li>
@@ -269,9 +291,8 @@
 
                 </div>
               </div>
-            <h2 id='overview' class='heading'>Overview</h2>
-
-<p>Subclass of <code><a href="../Classes/TiledLayerObject.html">TiledLayerObject</a></code>, the group layer is a container for managing groups of layers.</p>
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>Subclass of <code><a href="../Classes/TiledLayerObject.html">TiledLayerObject</a></code>, the <code>SKGroupLayer</code> node is a container for managing groups of layers.</p>
 <h3 id='usage' class='heading'>Usage</h3>
 
 <p>Query child layers:</p>
@@ -298,8 +319,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12SKGroupLayerC9lastIndexs6UInt32Vvp"></a>
+                    <!-- <a name="/s:7SKTiled12SKGroupLayerC9lastIndexs6UInt32Vvp"></a> -->
+                    <a name="/lastIndex.s:7SKTiled12SKGroupLayerC9lastIndexs6UInt32Vvp"></a>
                     <a name="//apple_ref/swift/Property/lastIndex" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12SKGroupLayerC9lastIndexs6UInt32Vvp">lastIndex</a> -->
                     <a class="token" href="#/s:7SKTiled12SKGroupLayerC9lastIndexs6UInt32Vvp">lastIndex</a>
                     </code>
                   </div>
@@ -320,7 +343,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L66-L68">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L65-L67">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -328,8 +351,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12SKGroupLayerC13lastZPosition12CoreGraphics7CGFloatVvp"></a>
+                    <!-- <a name="/s:7SKTiled12SKGroupLayerC13lastZPosition12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/lastZPosition.s:7SKTiled12SKGroupLayerC13lastZPosition12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/lastZPosition" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12SKGroupLayerC13lastZPosition12CoreGraphics7CGFloatVvp">lastZPosition</a> -->
                     <a class="token" href="#/s:7SKTiled12SKGroupLayerC13lastZPosition12CoreGraphics7CGFloatVvp">lastZPosition</a>
                     </code>
                   </div>
@@ -350,7 +375,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L71-L73">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L70-L72">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -358,8 +383,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12SKGroupLayerC6layersSayAA05TiledC6ObjectCGvp"></a>
+                    <!-- <a name="/s:7SKTiled12SKGroupLayerC6layersSayAA05TiledC6ObjectCGvp"></a> -->
+                    <a name="/layers.s:7SKTiled12SKGroupLayerC6layersSayAA05TiledC6ObjectCGvp"></a>
                     <a name="//apple_ref/swift/Property/layers" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12SKGroupLayerC6layersSayAA05TiledC6ObjectCGvp">layers</a> -->
                     <a class="token" href="#/s:7SKTiled12SKGroupLayerC6layersSayAA05TiledC6ObjectCGvp">layers</a>
                     </code>
                   </div>
@@ -368,7 +395,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns a flattened array of child layers.</p>
+                        <p>Returns a flattened array of contained child layers.</p>
 
                       </div>
                       <div class="declaration">
@@ -380,7 +407,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L76-L82">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L75-L81">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -388,8 +415,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKGroupLayer(py)speed"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKGroupLayer(py)speed"></a> -->
+                    <a name="/speed.c:@M@SKTiled@objc(cs)SKGroupLayer(py)speed"></a>
                     <a name="//apple_ref/swift/Property/speed" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKGroupLayer(py)speed">speed</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKGroupLayer(py)speed">speed</a>
                     </code>
                   </div>
@@ -410,7 +439,41 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L85-L90">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L84-L89">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled12SKGroupLayerC9tintColorSo7NSColorCSgvp"></a> -->
+                    <a name="/tintColor.s:7SKTiled12SKGroupLayerC9tintColorSo7NSColorCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/tintColor" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12SKGroupLayerC9tintColorSo7NSColorCSgvp">tintColor</a> -->
+                    <a class="token" href="#/s:7SKTiled12SKGroupLayerC9tintColorSo7NSColorCSgvp">tintColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>Set the layer tint color. Tiles contained in this layer will be tinted with the given color.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">tintColor</span><span class="p">:</span> <span class="kt">SKColor</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L94-L120">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -419,11 +482,11 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Init"></a>
-                <a name="//apple_ref/swift/Section/Init" class="dashAnchor"></a>
+                <a name="/Initialization"></a>
+                <a name="//apple_ref/swift/Section/Initialization" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/Init"></a>
-                  <h3 class="section-name"><p>Init</p>
+                  <a class="section-name-link" href="#/Initialization"></a>
+                  <h3 class="section-name"><p>Initialization</p>
 </h3>
                 </div>
               </div>
@@ -431,8 +494,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12SKGroupLayerC9layerName7tilemapACSS_AA9SKTilemapCtcfc"></a>
+                    <!-- <a name="/s:7SKTiled12SKGroupLayerC9layerName7tilemapACSS_AA9SKTilemapCtcfc"></a> -->
+                    <a name="/init(layerName:tilemap:).s:7SKTiled12SKGroupLayerC9layerName7tilemapACSS_AA9SKTilemapCtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(layerName:tilemap:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12SKGroupLayerC9layerName7tilemapACSS_AA9SKTilemapCtcfc">init(layerName:<wbr>tilemap:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled12SKGroupLayerC9layerName7tilemapACSS_AA9SKTilemapCtcfc">init(layerName:<wbr>tilemap:<wbr>)</a>
                     </code>
                   </div>
@@ -484,7 +549,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L99-L102">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L129-L132">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -492,8 +557,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12SKGroupLayerC7tilemap10attributesACSgAA9SKTilemapC_SDyS2SGtcfc"></a>
+                    <!-- <a name="/s:7SKTiled12SKGroupLayerC7tilemap10attributesACSgAA9SKTilemapC_SDyS2SGtcfc"></a> -->
+                    <a name="/init(tilemap:attributes:).s:7SKTiled12SKGroupLayerC7tilemap10attributesACSgAA9SKTilemapC_SDyS2SGtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(tilemap:attributes:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12SKGroupLayerC7tilemap10attributesACSgAA9SKTilemapC_SDyS2SGtcfc">init(tilemap:<wbr>attributes:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled12SKGroupLayerC7tilemap10attributesACSgAA9SKTilemapC_SDyS2SGtcfc">init(tilemap:<wbr>attributes:<wbr>)</a>
                     </code>
                   </div>
@@ -547,7 +614,58 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L111-L115">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L141-L145">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKGroupLayer(im)initWithCoder:"></a> -->
+                    <a name="/init(coder:).c:@M@SKTiled@objc(cs)SKGroupLayer(im)initWithCoder:"></a>
+                    <a name="//apple_ref/swift/Method/init(coder:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKGroupLayer(im)initWithCoder:">init(coder:<wbr>)</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKGroupLayer(im)initWithCoder:">init(coder:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instantiate the node with a decoder instance.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>aDecoder</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>decoder.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L150-L152">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -568,8 +686,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12SKGroupLayerC9allLayersSayAA05TiledC6ObjectCGyF"></a>
+                    <!-- <a name="/s:7SKTiled12SKGroupLayerC9allLayersSayAA05TiledC6ObjectCGyF"></a> -->
+                    <a name="/allLayers().s:7SKTiled12SKGroupLayerC9allLayersSayAA05TiledC6ObjectCGyF"></a>
                     <a name="//apple_ref/swift/Method/allLayers()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12SKGroupLayerC9allLayersSayAA05TiledC6ObjectCGyF">allLayers()</a> -->
                     <a class="token" href="#/s:7SKTiled12SKGroupLayerC9allLayersSayAA05TiledC6ObjectCGyF">allLayers()</a>
                     </code>
                   </div>
@@ -594,7 +714,7 @@
                         <p>array of layers.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L126-L128">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L159-L161">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -602,8 +722,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12SKGroupLayerC10layerNamesSaySSGyF"></a>
+                    <!-- <a name="/s:7SKTiled12SKGroupLayerC10layerNamesSaySSGyF"></a> -->
+                    <a name="/layerNames().s:7SKTiled12SKGroupLayerC10layerNamesSaySSGyF"></a>
                     <a name="//apple_ref/swift/Method/layerNames()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12SKGroupLayerC10layerNamesSaySSGyF">layerNames()</a> -->
                     <a class="token" href="#/s:7SKTiled12SKGroupLayerC10layerNamesSaySSGyF">layerNames()</a>
                     </code>
                   </div>
@@ -628,7 +750,7 @@
                         <p>layer names.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L133-L135">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L166-L168">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -636,8 +758,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12SKGroupLayerC03addC0_7clampedSb7success_AA05TiledC6ObjectC5layertAH_SbtF"></a>
+                    <!-- <a name="/s:7SKTiled12SKGroupLayerC03addC0_7clampedSb7success_AA05TiledC6ObjectC5layertAH_SbtF"></a> -->
+                    <a name="/addLayer(_:clamped:).s:7SKTiled12SKGroupLayerC03addC0_7clampedSb7success_AA05TiledC6ObjectC5layertAH_SbtF"></a>
                     <a name="//apple_ref/swift/Method/addLayer(_:clamped:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12SKGroupLayerC03addC0_7clampedSb7success_AA05TiledC6ObjectC5layertAH_SbtF">addLayer(_:<wbr>clamped:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled12SKGroupLayerC03addC0_7clampedSb7success_AA05TiledC6ObjectC5layertAH_SbtF">addLayer(_:<wbr>clamped:<wbr>)</a>
                     </code>
                   </div>
@@ -694,7 +818,7 @@
                         <p>add was successful, layer added.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L144-L176">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L177-L214">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -702,8 +826,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12SKGroupLayerC06removeC0yAA05TiledC6ObjectCSgAFF"></a>
+                    <!-- <a name="/s:7SKTiled12SKGroupLayerC06removeC0yAA05TiledC6ObjectCSgAFF"></a> -->
+                    <a name="/removeLayer(_:).s:7SKTiled12SKGroupLayerC06removeC0yAA05TiledC6ObjectCSgAFF"></a>
                     <a name="//apple_ref/swift/Method/removeLayer(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12SKGroupLayerC06removeC0yAA05TiledC6ObjectCSgAFF">removeLayer(_:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled12SKGroupLayerC06removeC0yAA05TiledC6ObjectCSgAFF">removeLayer(_:<wbr>)</a>
                     </code>
                   </div>
@@ -747,7 +873,7 @@
                         <p>removed layer.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L182-L184">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L220-L222">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -768,8 +894,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled12SKGroupLayerC6updateyySdF"></a>
+                    <!-- <a name="/s:7SKTiled12SKGroupLayerC6updateyySdF"></a> -->
+                    <a name="/update(_:).s:7SKTiled12SKGroupLayerC6updateyySdF"></a>
                     <a name="//apple_ref/swift/Method/update(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled12SKGroupLayerC6updateyySdF">update(_:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled12SKGroupLayerC6updateyySdF">update(_:<wbr>)</a>
                     </code>
                   </div>
@@ -809,17 +937,32 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L191-L193">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L229-L231">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Extensions"></a>
+                <a name="//apple_ref/swift/Section/Extensions" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Extensions"></a>
+                  <h3 class="section-name"><p>Extensions</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKGroupLayer(py)tiledNodeName"></a>
-                    <a name="//apple_ref/swift/Property/tiledNodeName" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKGroupLayer(py)tiledNodeName">tiledNodeName</a>
+                    <!-- <a name="/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledElementName"></a> -->
+                    <a name="/tiledElementName.c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledElementName"></a>
+                    <a name="//apple_ref/swift/Property/tiledElementName" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledElementName">tiledElementName</a> -->
+                    <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledElementName">tiledElementName</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -835,12 +978,12 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">tiledNodeName</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">tiledElementName</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L196-L198">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L242-L244">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -848,9 +991,11 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKGroupLayer(py)tiledNodeNiceName"></a>
+                    <!-- <a name="/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledNodeNiceName"></a> -->
+                    <a name="/tiledNodeNiceName.c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledNodeNiceName"></a>
                     <a name="//apple_ref/swift/Property/tiledNodeNiceName" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKGroupLayer(py)tiledNodeNiceName">tiledNodeNiceName</a>
+                    <!-- <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledNodeNiceName">tiledNodeNiceName</a> -->
+                    <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledNodeNiceName">tiledNodeNiceName</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -871,7 +1016,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L201-L203">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L247-L249">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -879,9 +1024,11 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKGroupLayer(py)tiledIconName"></a>
+                    <!-- <a name="/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledIconName"></a> -->
+                    <a name="/tiledIconName.c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledIconName"></a>
                     <a name="//apple_ref/swift/Property/tiledIconName" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKGroupLayer(py)tiledIconName">tiledIconName</a>
+                    <!-- <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledIconName">tiledIconName</a> -->
+                    <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledIconName">tiledIconName</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -902,7 +1049,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L206-L208">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L252-L254">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -910,9 +1057,11 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKGroupLayer(py)tiledListDescription"></a>
+                    <!-- <a name="/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledListDescription"></a> -->
+                    <a name="/tiledListDescription.c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledListDescription"></a>
                     <a name="//apple_ref/swift/Property/tiledListDescription" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKGroupLayer(py)tiledListDescription">tiledListDescription</a>
+                    <!-- <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledListDescription">tiledListDescription</a> -->
+                    <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledListDescription">tiledListDescription</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -920,7 +1069,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A description of the node.</p>
+                        <p>A description of the node used in list or outline views.</p>
 
                       </div>
                       <div class="declaration">
@@ -933,7 +1082,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L211-L215">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L257-L262">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -941,9 +1090,11 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKGroupLayer(py)tiledDescription"></a>
-                    <a name="//apple_ref/swift/Property/tiledDescription" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKGroupLayer(py)tiledDescription">tiledDescription</a>
+                    <!-- <a name="/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledDisplayItemDescription"></a> -->
+                    <a name="/tiledDisplayItemDescription.c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledDisplayItemDescription"></a>
+                    <a name="//apple_ref/swift/Property/tiledDisplayItemDescription" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledDisplayItemDescription">tiledDisplayItemDescription</a> -->
+                    <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledDisplayItemDescription">tiledDisplayItemDescription</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -951,7 +1102,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A description of the node.</p>
+                        <p>A description of the node used for debug output text.</p>
 
                       </div>
                       <div class="declaration">
@@ -959,12 +1110,45 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">tiledDescription</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+<span class="kd">public</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">tiledDisplayItemDescription</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKGroupLayer.swift#L218-L220">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L265-L270">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledHelpDescription"></a> -->
+                    <a name="/tiledHelpDescription.c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledHelpDescription"></a>
+                    <a name="//apple_ref/swift/Property/tiledHelpDescription" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledHelpDescription">tiledHelpDescription</a> -->
+                    <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKGroupLayer(py)tiledHelpDescription">tiledHelpDescription</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A description of the node type used for help features.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">tiledHelpDescription</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKGroupLayer.swift#L273-L275">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

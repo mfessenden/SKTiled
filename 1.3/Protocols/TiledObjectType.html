@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -253,6 +251,30 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
               </li>
             </ul>
           </li>
@@ -266,30 +288,45 @@
               <div class='declaration'>
                 <div class='language'>
                   <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TiledObjectType</span> <span class="p">:</span> <span class="kt">TiledCustomReflectableType</span></code></pre>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TiledObjectType</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/TiledCustomReflectableType.html">TiledCustomReflectableType</a></span></code></pre>
 
                 </div>
               </div>
-            <h2 id='overview' class='heading'>Overview</h2>
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>The <code>TiledObjectType</code> protocol defines a basic node type with a data structure for mapping custom <strong>Tiled</strong>
+properties to <strong>SpriteKit</strong> nodes. The <code>TiledObjectType.parseProperties</code> method maps Tiled node custom properties to SpriteKit/SKTiled properties.</p>
 
-<p>The <code>TiledObjectType</code> protocol defines a basic type used throughout the API.</p>
+<p>Objects conforming to this protocol will automatically receive properties from the source <strong>Tiled</strong> scene, unless supressed by setting the nodes&rsquo;s <code><a href="../Protocols/TiledObjectType.html#/c:@M@SKTiled@objc(pl)TiledObjectType(py)ignoreProperties">TiledObjectType.ignoreProperties</a></code> property.</p>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code>uuid</code></td>
-<td style="text-align: left">Unique object id.</td>
-</tr>
-<tr>
-<td style="text-align: left"><code>type</code></td>
-<td style="text-align: left">Tiled object type.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>uuid</code>:  unique object id.</li>
+<li><code>type</code>: Tiled object type.</li>
+<li><code>properties</code>: object of custom Tiled properties.</li>
+<li><code>ignoreProperties</code>: ignore Tiled properties.</li>
+<li><code>parseProperties</code>:  parse Tiled attributes (with optional completion handler).</li>
+</ul>
+<h3 id='usage' class='heading'>Usage</h3>
+
+<p>Querying a property is simple. Simply use the <code>hasKey</code> function:</p>
+<pre class="highlight swift"><code><span class="n">tiledObject</span><span class="o">.</span><span class="nf">hasKey</span><span class="p">(</span><span class="s">"floorColor"</span><span class="p">)</span>
+</code></pre>
+
+<p>If a property value is convertible to other types (such as boolean, integer or double), you can use one of several convenience methods to query the value:</p>
+<pre class="highlight swift"><code><span class="c1">// query a Tiled integer property</span>
+<span class="k">let</span> <span class="nv">score</span> <span class="o">=</span> <span class="n">tiledObject</span><span class="o">.</span><span class="nf">intForKey</span><span class="p">(</span><span class="s">"scoreValue"</span><span class="p">)</span> <span class="p">??</span> <span class="mi">0</span>
+
+<span class="c1">// query a TIled boolean property</span>
+<span class="k">let</span> <span class="nv">isDynamic</span> <span class="o">=</span> <span class="n">tiledObject</span><span class="o">.</span><span class="nf">boolForKey</span><span class="p">(</span><span class="s">"isDynamic"</span><span class="p">)</span> <span class="o">==</span> <span class="kc">true</span>
+</code></pre>
+
+<p>Finally, you can subscript the properties dictionary with any object conforming to the <code>TiledObjectType</code> protocol:</p>
+<pre class="highlight swift"><code><span class="c1">// use a subscript to query a property or add a new one</span>
+<span class="k">let</span> <span class="nv">floorColor</span> <span class="o">=</span> <span class="n">tiledObject</span><span class="p">[</span><span class="s">"floorColor"</span><span class="p">]</span>
+<span class="n">tiledObject</span><span class="p">[</span><span class="s">"orientation"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"bottom-left"</span>
+</code></pre>
+
+<p>For more information, see the <a href="../tiled-properties.html">Tiled Properties</a> page in the <strong><a href="https://mfessenden.github.io/SKTiled/1.3/index.html">official documentation</a></strong>. Also see the <strong><a href="https://doc.mapeditor.org/en/stable/manual/custom-properties/">Tiled Properties</a></strong> page in the <strong><a href="https://doc.mapeditor.org/en/stable">Tiled Documentation</a></strong>.</p>
 
           </div>
         </section>
@@ -301,8 +338,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TiledObjectType(py)uuid"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledObjectType(py)uuid"></a> -->
+                    <a name="/uuid.c:@M@SKTiled@objc(pl)TiledObjectType(py)uuid"></a>
                     <a name="//apple_ref/swift/Property/uuid" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledObjectType(py)uuid">uuid</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledObjectType(py)uuid">uuid</a>
                     </code>
                   </div>
@@ -318,12 +357,13 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">uuid</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="k">var</span> <span class="nv">uuid</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledObjectType.swift#L45">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L79">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -331,8 +371,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)TiledObjectType(py)type"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledObjectType(py)type"></a> -->
+                    <a name="/type.c:@M@SKTiled@objc(pl)TiledObjectType(py)type"></a>
                     <a name="//apple_ref/swift/Property/type" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledObjectType(py)type">type</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledObjectType(py)type">type</a>
                     </code>
                   </div>
@@ -341,19 +383,1219 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Object type property.</p>
+                        <p>Object type property as parsed from the <strong>Tiled</strong> scene.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="k">var</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">String</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/TiledObjectType.swift#L48">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L82">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledObjectType(py)properties"></a> -->
+                    <a name="/properties.c:@M@SKTiled@objc(pl)TiledObjectType(py)properties"></a>
+                    <a name="//apple_ref/swift/Property/properties" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledObjectType(py)properties">properties</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledObjectType(py)properties">properties</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Storage for custom <strong>Tiled</strong> properties. These properties are set in the <strong>Tiled</strong> scene.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="k">var</span> <span class="nv">properties</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L85">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledObjectType(py)ignoreProperties"></a> -->
+                    <a name="/ignoreProperties.c:@M@SKTiled@objc(pl)TiledObjectType(py)ignoreProperties"></a>
+                    <a name="//apple_ref/swift/Property/ignoreProperties" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledObjectType(py)ignoreProperties">ignoreProperties</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledObjectType(py)ignoreProperties">ignoreProperties</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Ignore custom node properties.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="k">var</span> <span class="nv">ignoreProperties</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L91">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)TiledObjectType(im)parsePropertiesWithCompletion:"></a> -->
+                    <a name="/parseProperties(completion:).c:@M@SKTiled@objc(pl)TiledObjectType(im)parsePropertiesWithCompletion:"></a>
+                    <a name="//apple_ref/swift/Method/parseProperties(completion:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledObjectType(im)parsePropertiesWithCompletion:">parseProperties(completion:<wbr>)</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)TiledObjectType(im)parsePropertiesWithCompletion:">parseProperties(completion:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parse function (with optional completion block).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">parseProperties</span><span class="p">(</span><span class="nv">completion</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L94">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Extensions"></a>
+                <a name="//apple_ref/swift/Section/Extensions" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Extensions"></a>
+                  <h3 class="section-name"><p>Extensions</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAE14mirrorChildrenSaySS5label_yp5valuetGyF"></a> -->
+                    <a name="/mirrorChildren().s:7SKTiled15TiledObjectTypePAAE14mirrorChildrenSaySS5label_yp5valuetGyF"></a>
+                    <a name="//apple_ref/swift/Method/mirrorChildren()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE14mirrorChildrenSaySS5label_yp5valuetGyF">mirrorChildren()</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE14mirrorChildrenSaySS5label_yp5valuetGyF">mirrorChildren()</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a mirror representation of the properties attribute.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">mirrorChildren</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[(</span><span class="nv">label</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Any</span><span class="p">)]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>array of mirror child values.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L141-L147">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAE8getValue3for07defaultF0SSSgSS_AGtF"></a> -->
+                    <a name="/getValue(for:defaultValue:).s:7SKTiled15TiledObjectTypePAAE8getValue3for07defaultF0SSSgSS_AGtF"></a>
+                    <a name="//apple_ref/swift/Method/getValue(for:defaultValue:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE8getValue3for07defaultF0SSSgSS_AGtF">getValue(for:<wbr>defaultValue:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE8getValue3for07defaultF0SSSgSS_AGtF">getValue(for:<wbr>defaultValue:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Query and return a custom property. Optionally setting a default value.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getValue</span><span class="p">(</span><span class="k">for</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">defaultValue</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>property key.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>default</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>default value, if the property doesn&rsquo;t already exist.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>custom property value.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L159-L165">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAE8setValue3for_ySS_SStF"></a> -->
+                    <a name="/setValue(for:_:).s:7SKTiled15TiledObjectTypePAAE8setValue3for_ySS_SStF"></a>
+                    <a name="//apple_ref/swift/Method/setValue(for:_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE8setValue3for_ySS_SStF">setValue(for:<wbr>_:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE8setValue3for_ySS_SStF">setValue(for:<wbr>_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Sets a named <code>SKTiled</code> property.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setValue</span><span class="p">(</span><span class="k">for</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>property key.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>value</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>property value.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L172-L178">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Properties%20Parsing"></a>
+                <a name="//apple_ref/swift/Section/Properties Parsing" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Properties%20Parsing"></a>
+                  <h3 class="section-name"><p>Properties Parsing</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAEySSSgSScip"></a> -->
+                    <a name="/subscript(_:).s:7SKTiled15TiledObjectTypePAAEySSSgSScip"></a>
+                    <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAEySSSgSScip">subscript(_:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAEySSSgSScip">subscript(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Return a string value for the given key, if it exists.</p>
+<h3 id='usage' class='heading'>Usage</h3>
+<pre class="highlight swift"><code> <span class="k">if</span> <span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="n">tileData</span><span class="p">[</span><span class="s">"name"</span><span class="p">]</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"tile data is named '</span><span class="se">\(</span><span class="n">name</span><span class="se">)</span><span class="s">'"</span><span class="p">)</span>
+ <span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">subscript</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>String</code> key to query.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L193-L199">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAE13hasPropertiesSbvp"></a> -->
+                    <a name="/hasProperties.s:7SKTiled15TiledObjectTypePAAE13hasPropertiesSbvp"></a>
+                    <a name="//apple_ref/swift/Property/hasProperties" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE13hasPropertiesSbvp">hasProperties</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE13hasPropertiesSbvp">hasProperties</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns true if the node has stored properties.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">hasProperties</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L202-L204">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAE16propertiesStringSSvp"></a> -->
+                    <a name="/propertiesString.s:7SKTiled15TiledObjectTypePAAE16propertiesStringSSvp"></a>
+                    <a name="//apple_ref/swift/Property/propertiesString" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE16propertiesStringSSvp">propertiesString</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE16propertiesStringSSvp">propertiesString</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a string representation of the node&rsquo;s properties.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">propertiesString</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L207-L212">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAE26propertiesAttributedString10delineatorSo012NSAttributedG0CSSSg_tF"></a> -->
+                    <a name="/propertiesAttributedString(delineator:).s:7SKTiled15TiledObjectTypePAAE26propertiesAttributedString10delineatorSo012NSAttributedG0CSSSg_tF"></a>
+                    <a name="//apple_ref/swift/Method/propertiesAttributedString(delineator:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE26propertiesAttributedString10delineatorSo012NSAttributedG0CSSSg_tF">propertiesAttributedString(delineator:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE26propertiesAttributedString10delineatorSo012NSAttributedG0CSSSg_tF">propertiesAttributedString(delineator:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns an attributed string representation of the node&rsquo;s properties.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">propertiesAttributedString</span><span class="p">(</span><span class="nv">delineator</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">NSAttributedString</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>delineator</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>param string delineator.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>attributed string.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L218-L274">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAE6hasKeyySbSSF"></a> -->
+                    <a name="/hasKey(_:).s:7SKTiled15TiledObjectTypePAAE6hasKeyySbSSF"></a>
+                    <a name="//apple_ref/swift/Method/hasKey(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE6hasKeyySbSSF">hasKey(_:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE6hasKeyySbSSF">hasKey(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns true if the node has the given custom <code>SKTiled</code> property (case insensitive).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">hasKey</span><span class="p">(</span><span class="n">_</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>custom property key.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L279-L282">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAE10boolForKeyySbSSF"></a> -->
+                    <a name="/boolForKey(_:).s:7SKTiled15TiledObjectTypePAAE10boolForKeyySbSSF"></a>
+                    <a name="//apple_ref/swift/Method/boolForKey(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE10boolForKeyySbSSF">boolForKey(_:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE10boolForKeyySbSSF">boolForKey(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a boolean value for the given key.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">boolForKey</span><span class="p">(</span><span class="n">_</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>property key.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L287-L292">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAE12stringForKeyySSSgSSF"></a> -->
+                    <a name="/stringForKey(_:).s:7SKTiled15TiledObjectTypePAAE12stringForKeyySSSgSSF"></a>
+                    <a name="//apple_ref/swift/Method/stringForKey(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE12stringForKeyySSSgSSF">stringForKey(_:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE12stringForKeyySSSgSSF">stringForKey(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a string for the given SKTiled key.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">stringForKey</span><span class="p">(</span><span class="n">_</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>property key.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L297-L304">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAE9intForKeyySiSgSSF"></a> -->
+                    <a name="/intForKey(_:).s:7SKTiled15TiledObjectTypePAAE9intForKeyySiSgSSF"></a>
+                    <a name="//apple_ref/swift/Method/intForKey(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE9intForKeyySiSgSSF">intForKey(_:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE9intForKeyySiSgSSF">intForKey(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a integer value for the given key.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">intForKey</span><span class="p">(</span><span class="n">_</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>property key.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L309-L314">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAE17unsignedIntForKeyySuSgSSF"></a> -->
+                    <a name="/unsignedIntForKey(_:).s:7SKTiled15TiledObjectTypePAAE17unsignedIntForKeyySuSgSSF"></a>
+                    <a name="//apple_ref/swift/Method/unsignedIntForKey(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE17unsignedIntForKeyySuSgSSF">unsignedIntForKey(_:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE17unsignedIntForKeyySuSgSSF">unsignedIntForKey(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns an unsigned integer value for the given key.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">unsignedIntForKey</span><span class="p">(</span><span class="n">_</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UInt</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>property key.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L319-L324">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAE12doubleForKeyySdSgSSF"></a> -->
+                    <a name="/doubleForKey(_:).s:7SKTiled15TiledObjectTypePAAE12doubleForKeyySdSgSSF"></a>
+                    <a name="//apple_ref/swift/Method/doubleForKey(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE12doubleForKeyySdSgSSF">doubleForKey(_:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE12doubleForKeyySdSgSSF">doubleForKey(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a float value for the given key.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">doubleForKey</span><span class="p">(</span><span class="n">_</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Double</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>property key.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>parsed double value.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L330-L335">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAE11colorForKeyySo7NSColorCSgSSF"></a> -->
+                    <a name="/colorForKey(_:).s:7SKTiled15TiledObjectTypePAAE11colorForKeyySo7NSColorCSgSSF"></a>
+                    <a name="//apple_ref/swift/Method/colorForKey(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE11colorForKeyySo7NSColorCSgSSF">colorForKey(_:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE11colorForKeyySo7NSColorCSgSSF">colorForKey(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a color given a property string.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">colorForKey</span><span class="p">(</span><span class="n">_</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SKColor</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>property key.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>parsed color.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L341-L346">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAE11removeValue3forSSSgSS_tF"></a> -->
+                    <a name="/removeValue(for:).s:7SKTiled15TiledObjectTypePAAE11removeValue3forSSSgSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/removeValue(for:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE11removeValue3forSSSgSS_tF">removeValue(for:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE11removeValue3forSSSgSS_tF">removeValue(for:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Remove a named SKTiled property, returns the value as a string (if property exists).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeValue</span><span class="p">(</span><span class="k">for</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>property key.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L351-L356">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAE13setProperties_9overwriteySDyS2SG_SbtF"></a> -->
+                    <a name="/setProperties(_:overwrite:).s:7SKTiled15TiledObjectTypePAAE13setProperties_9overwriteySDyS2SG_SbtF"></a>
+                    <a name="//apple_ref/swift/Method/setProperties(_:overwrite:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE13setProperties_9overwriteySDyS2SG_SbtF">setProperties(_:<wbr>overwrite:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE13setProperties_9overwriteySDyS2SG_SbtF">setProperties(_:<wbr>overwrite:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set the node&rsquo;s properties values, optionally overwriting current values.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setProperties</span><span class="p">(</span><span class="n">_</span> <span class="nv">attrs</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">],</span> <span class="nv">overwrite</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>attrs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>dictionary of properties.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>overwrite</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>overwrite the current value, if one exists.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L363-L372">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Deprecations"></a>
+                <a name="//apple_ref/swift/Section/Deprecations" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Deprecations"></a>
+                  <h3 class="section-name"><p>Deprecations</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAE8setValue6forKey_ySS_SStF"></a> -->
+                    <a name="/setValue(forKey:_:).s:7SKTiled15TiledObjectTypePAAE8setValue6forKey_ySS_SStF"></a>
+                    <a name="//apple_ref/swift/Method/setValue(forKey:_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE8setValue6forKey_ySS_SStF">setValue(forKey:<wbr>_:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE8setValue6forKey_ySS_SStF">setValue(forKey:<wbr>_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Sets a named SKTiled property. Returns the value, or nil if it does not exist.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"setValue(for:﹚"</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">setValue</span><span class="p">(</span><span class="n">forKey</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>property key.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>value</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>property value.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L480-L482">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAAE14removeProperty6forKeySSSgSS_tF"></a> -->
+                    <a name="/removeProperty(forKey:).s:7SKTiled15TiledObjectTypePAAE14removeProperty6forKeySSSgSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/removeProperty(forKey:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE14removeProperty6forKeySSSgSS_tF">removeProperty(forKey:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAAE14removeProperty6forKeySSSgSS_tF">removeProperty(forKey:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Remove a named <code>SKTiled</code> property, returns the value as a string (if property exists).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"removeValue(for:﹚"</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeProperty</span><span class="p">(</span><span class="n">forKey</span> <span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>property key.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L488-L490">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Available%20where%20%60Self%60:%20%60SKNode%60"></a>
+                <a name="//apple_ref/swift/Section/Available where `Self`: `SKNode`" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Available%20where%20%60Self%60:%20%60SKNode%60"></a>
+                  <h3 class="section-name"><p>Available where <code>Self</code>: <code>SKNode</code></p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled15TiledObjectTypePAASo6SKNodeCRbzrlE8getChild4uuidAESgSS_tF"></a> -->
+                    <a name="/getChild(uuid:).s:7SKTiled15TiledObjectTypePAASo6SKNodeCRbzrlE8getChild4uuidAESgSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/getChild(uuid:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled15TiledObjectTypePAASo6SKNodeCRbzrlE8getChild4uuidAESgSS_tF">getChild(uuid:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled15TiledObjectTypePAASo6SKNodeCRbzrlE8getChild4uuidAESgSS_tF">getChild(uuid:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a Tiled SpriteKit node with a matching unique ID.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getChild</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SKNode</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>uuid</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>unique Tiled node id to match.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>child <code>TiledObjectType</code> node with the given unique id.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TiledObjectType.swift#L458-L465">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

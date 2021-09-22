@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1122px" height="236px" viewBox="0 0 1122 236" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>map-statistics</title>
+    <g id="map-statistics" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#292A30" x="0" y="0" width="1122" height="236"></rect>
+        <g id="Column-2" transform="translate(422.000000, 41.000000)" fill="#FFFFFF" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' font-size="12" font-style="italic" font-weight="bold">
+            <text id="size-stats0">
+                <tspan x="0" y="11">size: 448 x 576, offset: [0,0], anc: [0,0], zpos: 250, opac: 1.00, stat: ( ), —-</tspan>
+            </text>
+            <text id="size-stats1">
+                <tspan x="0" y="26">size: 448 x 576, offset: [0,0], anc: [0,0], zpos: 15,  opac: 1.00, stat: (x), —-</tspan>
+            </text>
+            <text id="size-stats2">
+                <tspan x="0" y="41">size: 448 x 576, offset: [0,0], anc: [0,0], zpos: 10,  opac: 1.00, stat: (x), —-</tspan>
+            </text>
+            <text id="size-stats5">
+                <tspan x="0" y="56">size: 448 x 576, offset: [0,0], anc: [0,0], zpos: 1,   opac: 1.00, stat: (x), —-</tspan>
+            </text>
+            <text id="size-stats7">
+                <tspan x="0" y="71">size: 448 x 576, offset: [0,0], anc: [0,0], zpos: 200, opac: 1.00, stat: (x), —-</tspan>
+            </text>
+            <text id="size-stats2">
+                <tspan x="0" y="101">size: 448 x 576, offset: [0,0], anc: [0,0], zpos: 15,  opac: 1.00, stat: ( ), —-   nav: 312</tspan>
+            </text>
+            <text id="size-stats4">
+                <tspan x="0" y="116">size: 448 x 576, offset: [0,0], anc: [0,0], zpos: 10,  opac: 1.00, stat: ( ), —-   nav: 316</tspan>
+            </text>
+            <text id="size-stats6">
+                <tspan x="0" y="131">size: 448 x 576, offset: [0,0], anc: [0,0], zpos: 1,   opac: 1.00, stat: ( ), —-   nav: 316</tspan>
+            </text>
+            <text id="size-stats8">
+                <tspan x="0" y="146">size: 448 x 576, offset: [0,0], anc: [0,0], zpos: 100, opac: 1.00, stat: ( ), —-</tspan>
+            </text>
+            <text id="size-stats9">
+                <tspan x="0" y="86">size: 448 x 576, offset: [0,0], anc: [0,0], zpos: 150, opac: 1.00, stat: ( ), —-</tspan>
+            </text>
+            <text id="size-stats10">
+                <tspan x="0" y="161">size: 448 x 576, offset: [0,0], anc: [0,0], zpos: 10,  opac: 1.00, stat: ( ), —-</tspan>
+            </text>
+            <text id="size-stats11">
+                <tspan x="0" y="175">size: 448 x 576, offset: [0,0], anc: [0,0], zpos: 1,   opac: 1.00, stat: (x), —-</tspan>
+            </text>
+        </g>
+        <g id="Column-1" transform="translate(29.000000, 41.000000)" fill="#FFFFFF" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' font-size="12" font-style="italic" font-weight="bold">
+            <text id="layer-stats0">
+                <tspan x="0" y="11">3.   Group     (x)  </tspan>
+                <tspan x="148.359375" y="11" font-family="Menlo-BoldItalic, Menlo">▿</tspan>
+                <tspan x="155.583984" y="11"> “HUD”         pos: [-224,288],  </tspan>
+            </text>
+            <text id="layer-stats1">
+                <tspan x="37" y="26">Tile      (x)      “Messages”  </tspan>
+            </text>
+            <text id="layer-stats2">
+                <tspan x="37" y="41">Tile      (x)      “Score”</tspan>
+            </text>
+            <text id="layer-stats3">
+                <tspan x="37" y="56">Tile      (x)      “Door”  </tspan>
+            </text>
+            <text id="layer-stats4">
+                <tspan x="37" y="101">Tile      (x)      “Fruit”</tspan>
+            </text>
+            <text id="layer-stats5">
+                <tspan x="37" y="116">Tile      (x)      “Ghosts”  </tspan>
+            </text>
+            <text id="layer-stats6">
+                <tspan x="37" y="131">Tile      (x)      “Player”  </tspan>
+            </text>
+            <text id="layer-stats7">
+                <tspan x="37" y="161">Tile      (x)      “Dots”  </tspan>
+            </text>
+            <text id="layer-stats8">
+                <tspan x="37" y="175">Tile      (x)      “Maze”  </tspan>
+            </text>
+            <text id="layer-stats9">
+                <tspan x="0" y="71">2.   Group     (x)    “Actors”      pos: [-224,288],  </tspan>
+            </text>
+            <text id="layer-stats10">
+                <tspan x="0" y="86">1.   Group     (x)  </tspan>
+                <tspan x="148.359375" y="86" font-family="Menlo-BoldItalic, Menlo">▿</tspan>
+                <tspan x="155.583984" y="86"> “Graphs”      pos: [-224,288],  </tspan>
+            </text>
+            <text id="layer-stats11">
+                <tspan x="0" y="146">1.   Group     (x)  </tspan>
+                <tspan x="148.359375" y="146" font-family="Menlo-BoldItalic, Menlo">▿</tspan>
+                <tspan x="155.583984" y="146"> “Layout”      pos: [-224,288],  </tspan>
+            </text>
+        </g>
+        <g id="Header" transform="translate(29.000000, 11.000000)" fill="#FFFFFF" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' font-size="12" font-style="italic" font-weight="bold">
+            <text id="underline">
+                <tspan x="0" y="26">————————————————————————————————————————————————————————-</tspan>
+            </text>
+            <text id="Title">
+                <tspan x="0" y="11"># Tilemap “mspacman-8x8”: 686 Tiles: 12 Layers : 3 Graphs</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

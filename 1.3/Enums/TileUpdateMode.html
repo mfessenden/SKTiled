@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -253,6 +251,30 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
               </li>
             </ul>
           </li>
@@ -269,44 +291,33 @@
 
                 </div>
               </div>
-            <h2 id='overview' class='heading'>Overview</h2>
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>The <code>TileUpdateMode</code> enumeration dictates how the tilemap updates its tiles in your scene. Changing this property can drastically affect your CPU usage, so use it carefully.</p>
 
-<p>Describes how the tilemap updates its tiles in your scene. Changing this property will affect your CPU usage, so use it carefully.</p>
+<p>The default mode is <code>TileUpdateMode.actions</code>, which should be used for the best performance. In this mode, animated tiles are animated with <a href="https://developer.apple.com/documentation/spritekit/getting_started_with_actions"><strong>SpriteKit actions</strong></a>.</p>
 
-<p>The default mode is <code>TileUpdateMode.dynamic</code>, which updates tiles as needed each frame. For best performance, use <code>TileUpdateMode.actions</code>, which will
-run SpriteKit actions on animated tiles.</p>
+<p>If <code>full</code> mode is used, each tile (animated or otherwise) is updated <strong>every frame</strong>. This ensures accuracy in syncronizing frames.</p>
+<div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    If <code>dynamic</code> or <code>full</code> mode is selected, the <code><a href="../Classes/SKTilemap.html">SKTilemap</a></code> node <strong>must</strong> be included in your scene&rsquo;s main update loop to render properly.
+
+</div>
 <h3 id='usage' class='heading'>Usage</h3>
 <pre class="highlight swift"><code><span class="c1">// passing the tile update mode to the load function</span>
-<span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">updateMode</span><span class="p">:</span> <span class="kt">TileUpdateMode</span><span class="o">.</span><span class="kd">dynamic</span><span class="p">)</span><span class="o">!</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">tilemap</span> <span class="o">=</span> <span class="kt">SKTilemap</span><span class="o">.</span><span class="nf">load</span><span class="p">(</span><span class="nv">tmxFile</span><span class="p">:</span> <span class="s">"MyFile.tmx"</span><span class="p">,</span> <span class="nv">updateMode</span><span class="p">:</span> <span class="kt">TileUpdateMode</span><span class="o">.</span><span class="kd">dynamic</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">scene</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">tilemap</span><span class="p">)</span>
+<span class="p">}</span>
 
 <span class="c1">// updating the attribute on the tilemp node</span>
 <span class="n">tilemap</span><span class="o">.</span><span class="n">updateMode</span> <span class="o">=</span> <span class="kt">TileUpdateMode</span><span class="o">.</span><span class="n">actions</span>
 </code></pre>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-<th style="text-align: center">Render Speed</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">dynamic</td>
-<td style="text-align: left">Dynamically update tiles as needed.</td>
-<td style="text-align: center">normal</td>
-</tr>
-<tr>
-<td style="text-align: left">full</td>
-<td style="text-align: left">All tiles are updated each frame.</td>
-<td style="text-align: center">slower</td>
-</tr>
-<tr>
-<td style="text-align: left">actions</td>
-<td style="text-align: left">Tiles are not updated, SpriteKit actions are used instead.</td>
-<td style="text-align: center">fastest</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>dynamic</code>: dynamically update tiles as needed.</li>
+<li><code>full</code>: <strong>all</strong> tiles are updated each frame.</li>
+<li><code>actions</code>: tiles are not updated, SpriteKit actions are used instead.</li>
+</ul>
 
           </div>
         </section>
@@ -327,8 +338,10 @@ run SpriteKit actions on animated tiles.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled14TileUpdateModeO8allModesSayACGyFZ"></a>
+                    <!-- <a name="/s:7SKTiled14TileUpdateModeO8allModesSayACGyFZ"></a> -->
+                    <a name="/allModes().s:7SKTiled14TileUpdateModeO8allModesSayACGyFZ"></a>
                     <a name="//apple_ref/swift/Method/allModes()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled14TileUpdateModeO8allModesSayACGyFZ">allModes()</a> -->
                     <a class="token" href="#/s:7SKTiled14TileUpdateModeO8allModesSayACGyFZ">allModes()</a>
                     </code>
                   </div>
@@ -353,7 +366,7 @@ run SpriteKit actions on animated tiles.</p>
                         <p>array of all tile update modes.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2627-L2629">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTilemap.swift#L3122-L3124">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -361,8 +374,10 @@ run SpriteKit actions on animated tiles.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled14TileUpdateModeO4nextACyF"></a>
+                    <!-- <a name="/s:7SKTiled14TileUpdateModeO4nextACyF"></a> -->
+                    <a name="/next().s:7SKTiled14TileUpdateModeO4nextACyF"></a>
                     <a name="//apple_ref/swift/Method/next()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled14TileUpdateModeO4nextACyF">next()</a> -->
                     <a class="token" href="#/s:7SKTiled14TileUpdateModeO4nextACyF">next()</a>
                     </code>
                   </div>
@@ -387,7 +402,7 @@ run SpriteKit actions on animated tiles.</p>
                         <p>next update mode.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2634-L2640">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTilemap.swift#L3129-L3135">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -395,8 +410,10 @@ run SpriteKit actions on animated tiles.</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled14TileUpdateModeO15uiControlStringSSvp"></a>
+                    <!-- <a name="/s:7SKTiled14TileUpdateModeO15uiControlStringSSvp"></a> -->
+                    <a name="/uiControlString.s:7SKTiled14TileUpdateModeO15uiControlStringSSvp"></a>
                     <a name="//apple_ref/swift/Property/uiControlString" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled14TileUpdateModeO15uiControlStringSSvp">uiControlString</a> -->
                     <a class="token" href="#/s:7SKTiled14TileUpdateModeO15uiControlStringSSvp">uiControlString</a>
                     </code>
                   </div>
@@ -417,7 +434,7 @@ run SpriteKit actions on animated tiles.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTilemap.swift#L2643-L2649">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTilemap.swift#L3138-L3144">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

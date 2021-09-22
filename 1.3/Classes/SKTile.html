@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -256,6 +254,30 @@
               </li>
             </ul>
           </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -265,78 +287,33 @@
             <h1>SKTile</h1>
               <div class='declaration'>
                 <div class='language'>
-                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">SKTile</span> <span class="p">:</span> <span class="kt">SKSpriteNode</span></code></pre>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">SKTile</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TiledGeometryType.html">TiledGeometryType</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">SKTile</span> <span class="p">:</span> <span class="kt">SKSpriteNode</span><span class="p">,</span> <span class="kt">CustomReflectable</span></code></pre>
 
                 </div>
               </div>
-            <h2 id='overview' class='heading'>Overview</h2>
-
-<p>The <code>SKTile</code> class is a custom <a href="https://developer.apple.com/documentation/spritekit/skspritenode">SpriteKit sprite</a> node that references its image and animation data from tileset. The tile represents a single piece of a larger image stored in a <a href="SKTileLayer.html">tile layer</a> container.</p>
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>The <code>SKTile</code> class is a custom <strong><a href="https://developer.apple.com/documentation/spritekit/skspritenode">SpriteKit sprite</a></strong> node that references its image and animation data from a tileset container. The tile represents a single piece of a larger image stored in a <strong><a href="SKTileLayer.html">tile layer</a></strong> container.</p>
 
 <p><img src="../images/tiledata-setup.svg" alt="Tile Data Setup"></p>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">tileId</td>
-<td style="text-align: left">tile global id.</td>
-</tr>
-<tr>
-<td style="text-align: left">tileData</td>
-<td style="text-align: left">tileset <a href="SKTilesetData.html">tile data</a> reference</td>
-</tr>
-<tr>
-<td style="text-align: left">tileSize</td>
-<td style="text-align: left">tile size (in pixels)</td>
-</tr>
-<tr>
-<td style="text-align: left">layer</td>
-<td style="text-align: left">parent tile layer</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>globalId</code>: tile global id.</li>
+<li><code>tileData</code>: tileset <strong><a href="SKTilesetData.html">tile data</a></strong> reference.</li>
+<li><code>tileSize</code>: tile size (in pixels).</li>
+<li><code>layer</code>: parent tile layer.</li>
+</ul>
 <h3 id='instance-methods' class='heading'>Instance Methods</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Method</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">setupPhysics(shapeOf:isDynamic:)</td>
-<td style="text-align: left">Setup physics for the tile.</td>
-</tr>
-<tr>
-<td style="text-align: left">setupPhysics(rectSize:isDynamic:)</td>
-<td style="text-align: left">Setup physics for the tile.</td>
-</tr>
-<tr>
-<td style="text-align: left">setupPhysics(withSize:isDynamic:)</td>
-<td style="text-align: left">Setup physics for the tile.</td>
-</tr>
-<tr>
-<td style="text-align: left">runAnimation()</td>
-<td style="text-align: left">Play tile animation (if animated).</td>
-</tr>
-<tr>
-<td style="text-align: left">removeAnimation(restore:)</td>
-<td style="text-align: left">Remove animation.</td>
-</tr>
-<tr>
-<td style="text-align: left">runAnimationAsActions()</td>
-<td style="text-align: left">Runs a SpriteKit action to animate the tile.</td>
-</tr>
-<tr>
-<td style="text-align: left">removeAnimationActions(restore:)</td>
-<td style="text-align: left">Remove the animation for the current tile.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>setupPhysics(shapeOf:isDynamic:)</code>:  setup physics for the tile.</li>
+<li><code>setupPhysics(rectSize:isDynamic:)</code>: setup physics for the tile.</li>
+<li><code>setupPhysics(withSize:isDynamic:)</code>: setup physics for the tile.</li>
+<li><code>runAnimation()</code>:                    play tile animation (if animated).</li>
+<li><code>removeAnimation(restore:)</code>:         remove animation.</li>
+<li><code>runAnimationAsActions()</code>:           runs a SpriteKit action to animate the tile.</li>
+<li><code>removeAnimationActions(restore:)</code>:  remove the animation for the current tile.</li>
+</ul>
 
           </div>
         </section>
@@ -348,8 +325,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC8tileSizeSo6CGSizeVvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC8tileSizeSo6CGSizeVvp"></a> -->
+                    <a name="/tileSize.s:7SKTiled6SKTileC8tileSizeSo6CGSizeVvp"></a>
                     <a name="//apple_ref/swift/Property/tileSize" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC8tileSizeSo6CGSizeVvp">tileSize</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC8tileSizeSo6CGSizeVvp">tileSize</a>
                     </code>
                   </div>
@@ -358,7 +337,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Tile size.</p>
+                        <p>Tile size (in pixels).</p>
 
                       </div>
                       <div class="declaration">
@@ -370,7 +349,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L197">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L76">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -378,8 +357,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTile(py)uuid"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(py)uuid"></a> -->
+                    <a name="/uuid.c:@M@SKTiled@objc(cs)SKTile(py)uuid"></a>
                     <a name="//apple_ref/swift/Property/uuid" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)uuid">uuid</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)uuid">uuid</a>
                     </code>
                   </div>
@@ -401,7 +382,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L200">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L79">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -409,8 +390,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTile(py)type"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(py)type"></a> -->
+                    <a name="/type.c:@M@SKTiled@objc(cs)SKTile(py)type"></a>
                     <a name="//apple_ref/swift/Property/type" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)type">type</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)type">type</a>
                     </code>
                   </div>
@@ -432,7 +415,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L203">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L82">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -440,8 +423,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC8tileDataAA09SKTilesetD0Cvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC8tileDataAA09SKTilesetD0Cvp"></a> -->
+                    <a name="/tileData.s:7SKTiled6SKTileC8tileDataAA09SKTilesetD0Cvp"></a>
                     <a name="//apple_ref/swift/Property/tileData" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC8tileDataAA09SKTilesetD0Cvp">tileData</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC8tileDataAA09SKTilesetD0Cvp">tileData</a>
                     </code>
                   </div>
@@ -450,7 +435,10 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Tileset tile data.</p>
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>The <code>SKTile.tileData</code> property holds a reference to the tile data contained in the referencing tileset. This struct
+contains attributes like texture, animation frame data and</p>
 
                       </div>
                       <div class="declaration">
@@ -462,7 +450,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L209-L219">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L91-L103">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -470,8 +458,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC8globalIds6UInt32Vvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC8globalIds6UInt32Vvp"></a> -->
+                    <a name="/globalId.s:7SKTiled6SKTileC8globalIds6UInt32Vvp"></a>
                     <a name="//apple_ref/swift/Property/globalId" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC8globalIds6UInt32Vvp">globalId</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC8globalIds6UInt32Vvp">globalId</a>
                     </code>
                   </div>
@@ -480,7 +470,9 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The tile global id.</p>
+                        <h2 id='overview' class='heading'>Overview</h2>
+
+<p>Tile global id attribute. This attribute determines the tile data assigned to the tile. Changing this value will update this tiles&rsquo; tile data.</p>
 
 <p>This is a wrapper for the <code><a href="../Structs/TileID.html">TileID</a></code> data structure and represents both global ID &amp; tile orientation flags.</p>
 
@@ -495,7 +487,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L224-L234">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L110-L122">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -503,9 +495,11 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC10realTileIds6UInt32Vvp"></a>
-                    <a name="//apple_ref/swift/Property/realTileId" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled6SKTileC10realTileIds6UInt32Vvp">realTileId</a>
+                    <!-- <a name="/s:7SKTiled6SKTileC12maskedTileIds6UInt32Vvp"></a> -->
+                    <a name="/maskedTileId.s:7SKTiled6SKTileC12maskedTileIds6UInt32Vvp"></a>
+                    <a name="//apple_ref/swift/Property/maskedTileId" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC12maskedTileIds6UInt32Vvp">maskedTileId</a> -->
+                    <a class="token" href="#/s:7SKTiled6SKTileC12maskedTileIds6UInt32Vvp">maskedTileId</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -513,23 +507,26 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <h2 id='overview' class='heading'>Overview</h2>
+                        <p>Returns the tile data &ldquo;real value&rdquo; (global id with flags mask). If tile flip flags have been set in <strong>Tiled</strong>, this value will match the value set in the parent layer&rsquo;s tile data array.</p>
 
-<p>Returns the tile data &ldquo;real value&rdquo; (global id with flags mask).</p>
-
-<p>For example, a value of 2684354571 indicates a global id of 11, flipped horizontally &amp; diagonally.</p>
+<p>For example, a value of <strong>2684354571</strong> translates to a global id of <strong>11</strong>, flipped horizontally &amp; diagonally.</p>
+<pre class="highlight swift"><code><span class="n">tile</span><span class="o">.</span><span class="n">globalId</span> <span class="o">=</span> <span class="mi">11</span>
+<span class="n">tile</span><span class="o">.</span><span class="n">flipFlags</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="n">flipHorizontal</span><span class="p">,</span> <span class="o">.</span><span class="n">flipDiagonal</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">tile</span><span class="o">.</span><span class="n">maskedTileId</span><span class="p">)</span>
+<span class="c1">// 2684354571</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">realTileId</span><span class="p">:</span> <span class="kt">UInt32</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">maskedTileId</span><span class="p">:</span> <span class="kt">UInt32</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L241-L243">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L134-L136">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -537,8 +534,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC17currentCoordinates5SIMD2Vys5Int32VGvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC17currentCoordinates5SIMD2Vys5Int32VGvp"></a> -->
+                    <a name="/currentCoordinate.s:7SKTiled6SKTileC17currentCoordinates5SIMD2Vys5Int32VGvp"></a>
                     <a name="//apple_ref/swift/Property/currentCoordinate" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC17currentCoordinates5SIMD2Vys5Int32VGvp">currentCoordinate</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC17currentCoordinates5SIMD2Vys5Int32VGvp">currentCoordinate</a>
                     </code>
                   </div>
@@ -559,7 +558,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L246">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L139">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -567,8 +566,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC5layerAA16TiledLayerObjectCSgvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC5layerAA16TiledLayerObjectCSgvp"></a> -->
+                    <a name="/layer.s:7SKTiled6SKTileC5layerAA16TiledLayerObjectCSgvp"></a>
                     <a name="//apple_ref/swift/Property/layer" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC5layerAA16TiledLayerObjectCSgvp">layer</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC5layerAA16TiledLayerObjectCSgvp">layer</a>
                     </code>
                   </div>
@@ -577,7 +578,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Weak reference to the parent layer.</p>
+                        <p>Reference to the parent layer.</p>
 
                       </div>
                       <div class="declaration">
@@ -589,7 +590,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L249">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L142">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -597,8 +598,42 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTile(py)visibleToCamera"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC6objectAA0B6ObjectCSgvp"></a> -->
+                    <a name="/object.s:7SKTiled6SKTileC6objectAA0B6ObjectCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/object" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC6objectAA0B6ObjectCSgvp">object</a> -->
+                    <a class="token" href="#/s:7SKTiled6SKTileC6objectAA0B6ObjectCSgvp">object</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parent tile onbject.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">object</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTileObject.html">SKTileObject</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L145">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(py)visibleToCamera"></a> -->
+                    <a name="/visibleToCamera.c:@M@SKTiled@objc(cs)SKTile(py)visibleToCamera"></a>
                     <a name="//apple_ref/swift/Property/visibleToCamera" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)visibleToCamera">visibleToCamera</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)visibleToCamera">visibleToCamera</a>
                     </code>
                   </div>
@@ -619,7 +654,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L252">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L148">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -627,8 +662,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC10renderModeAA010TileRenderD0Ovp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC10renderModeAA010TileRenderD0Ovp"></a> -->
+                    <a name="/renderMode.s:7SKTiled6SKTileC10renderModeAA010TileRenderD0Ovp"></a>
                     <a name="//apple_ref/swift/Property/renderMode" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC10renderModeAA010TileRenderD0Ovp">renderMode</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC10renderModeAA010TileRenderD0Ovp">renderMode</a>
                     </code>
                   </div>
@@ -657,12 +694,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">renderMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/TileRenderMode.html">TileRenderMode</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">renderMode</span><span class="p">:</span> <span class="kt"><a href="../Globals.html#/s:7SKTiled14TileRenderModeO">TileRenderMode</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L267-L277">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L163-L173">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -670,8 +707,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC12isTileObjectSbvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC12isTileObjectSbvp"></a> -->
+                    <a name="/isTileObject.s:7SKTiled6SKTileC12isTileObjectSbvp"></a>
                     <a name="//apple_ref/swift/Property/isTileObject" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC12isTileObjectSbvp">isTileObject</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC12isTileObjectSbvp">isTileObject</a>
                     </code>
                   </div>
@@ -692,7 +731,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L280">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L176">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -700,9 +739,43 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTile(py)debugDrawOptions"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)DebugDrawableType(py)_debugLevel"></a> -->
+                    <a name="/_debugLevel.c:@M@SKTiled@objc(pl)DebugDrawableType(py)_debugLevel"></a>
+                    <a name="//apple_ref/swift/Property/_debugLevel" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)DebugDrawableType(py)_debugLevel">_debugLevel</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)DebugDrawableType(py)_debugLevel">_debugLevel</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">_debugLevel</span><span class="p">:</span> <span class="kt">UInt8</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L40">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled6SKTileC16debugDrawOptionsAA05DebugdE0Vvp"></a> -->
+                    <a name="/debugDrawOptions.s:7SKTiled6SKTileC16debugDrawOptionsAA05DebugdE0Vvp"></a>
                     <a name="//apple_ref/swift/Property/debugDrawOptions" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)debugDrawOptions">debugDrawOptions</a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC16debugDrawOptionsAA05DebugdE0Vvp">debugDrawOptions</a> -->
+                    <a class="token" href="#/s:7SKTiled6SKTileC16debugDrawOptionsAA05DebugdE0Vvp">debugDrawOptions</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -717,13 +790,147 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="k">var</span> <span class="nv">debugDrawOptions</span><span class="p">:</span> <span class="kt">DebugDrawOptions</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">debugDrawOptions</span><span class="p">:</span> <span class="kt"><a href="../Structs/DebugDrawOptions.html">DebugDrawOptions</a></span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L283">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L181">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Properties"></a>
+                <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Properties"></a>
+                  <h3 class="section-name"><p>Properties</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(py)ignoreProperties"></a> -->
+                    <a name="/ignoreProperties.c:@M@SKTiled@objc(cs)SKTile(py)ignoreProperties"></a>
+                    <a name="//apple_ref/swift/Property/ignoreProperties" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)ignoreProperties">ignoreProperties</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)ignoreProperties">ignoreProperties</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Ignore custom node properties.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">ignoreProperties</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L186">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(py)properties"></a> -->
+                    <a name="/properties.c:@M@SKTiled@objc(cs)SKTile(py)properties"></a>
+                    <a name="//apple_ref/swift/Property/properties" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)properties">properties</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)properties">properties</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Storage for custom <strong>Tiled</strong> properties. These properties are set in the <strong>Tiled</strong> scene.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">properties</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L192-L199">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled6SKTileCySSSgSScip"></a> -->
+                    <a name="/subscript(_:).s:7SKTiled6SKTileCySSSgSScip"></a>
+                    <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileCySSSgSScip">subscript(_:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled6SKTileCySSSgSScip">subscript(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Return a string value for the given key, if it exists.</p>
+<h3 id='usage' class='heading'>Usage</h3>
+<pre class="highlight swift"><code> <span class="k">if</span> <span class="k">let</span> <span class="nv">characterName</span> <span class="o">=</span> <span class="n">tile</span><span class="p">[</span><span class="s">"characterName"</span><span class="p">]</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"character name is '</span><span class="se">\(</span><span class="n">characterName</span><span class="se">)</span><span class="s">'."</span><span class="p">)</span>
+ <span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">subscript</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>String</code> key to query.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L212-L218">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -744,8 +951,42 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC17TileAlignmentHintO"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(py)isFocused"></a> -->
+                    <a name="/isFocused.c:@M@SKTiled@objc(cs)SKTile(py)isFocused"></a>
+                    <a name="//apple_ref/swift/Property/isFocused" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)isFocused">isFocused</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)isFocused">isFocused</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Indicates the current node has received focus or selected.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isFocused</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L223-L235">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled6SKTileC17TileAlignmentHintO"></a> -->
+                    <a name="/TileAlignmentHint.s:7SKTiled6SKTileC17TileAlignmentHintO"></a>
                     <a name="//apple_ref/swift/Enum/TileAlignmentHint" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC17TileAlignmentHintO">TileAlignmentHint</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC17TileAlignmentHintO">TileAlignmentHint</a>
                     </code>
                   </div>
@@ -754,67 +995,33 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <h2 id='overview' class='heading'>Overview</h2>
-
-<p>Alignment hint used to define how to handle tile positioning within layers &amp;
+                        <p>Alignment hint used to define how to handle tile positioning within layers &amp;
 objects (in the event the tile size is different than the parent).</p>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">topLeft</td>
-<td style="text-align: left">Tile is positioned at the upper left.</td>
-</tr>
-<tr>
-<td style="text-align: left">top</td>
-<td style="text-align: left">Tile is positioned at top.</td>
-</tr>
-<tr>
-<td style="text-align: left">topRight</td>
-<td style="text-align: left">Tile is positioned at the upper right.</td>
-</tr>
-<tr>
-<td style="text-align: left">left</td>
-<td style="text-align: left">Tile is positioned at the left.</td>
-</tr>
-<tr>
-<td style="text-align: left">center</td>
-<td style="text-align: left">Tile is positioned in the center.</td>
-</tr>
-<tr>
-<td style="text-align: left">right</td>
-<td style="text-align: left">Tile is positioned to the right.</td>
-</tr>
-<tr>
-<td style="text-align: left">bottomLeft</td>
-<td style="text-align: left">Tile is positioned at the bottom left.</td>
-</tr>
-<tr>
-<td style="text-align: left">bottom</td>
-<td style="text-align: left">Tile is positioned at the bottom.</td>
-</tr>
-<tr>
-<td style="text-align: left">bottomRight</td>
-<td style="text-align: left">Tile is positioned at the bottom right.</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>topLeft</code>: Tile is positioned at the upper left.</li>
+<li><code>top</code>: Tile is positioned at top.</li>
+<li><code>topRight</code>: Tile is positioned at the upper right.</li>
+<li><code>left</code>: Tile is positioned at the left.</li>
+<li><code>center</code>: Tile is positioned in the center.</li>
+<li><code>right</code>: Tile is positioned to the right.</li>
+<li><code>bottomLeft</code>: Tile is positioned at the bottom left.</li>
+<li><code>bottom</code>: Tile is positioned at the bottom.</li>
+<li><code>bottomRight</code>: Tile is positioned at the bottom right.</li>
+</ul>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">TileAlignmentHint</span> <span class="p">:</span> <span class="kt">Int</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">TileAlignmentHint</span> <span class="p">:</span> <span class="kt">UInt8</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L326-L336">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L273-L283">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -822,8 +1029,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTile(py)renderQuality"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(py)renderQuality"></a> -->
+                    <a name="/renderQuality.c:@M@SKTiled@objc(cs)SKTile(py)renderQuality"></a>
                     <a name="//apple_ref/swift/Property/renderQuality" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)renderQuality">renderQuality</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)renderQuality">renderQuality</a>
                     </code>
                   </div>
@@ -845,7 +1054,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L339-L345">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L286-L292">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -854,11 +1063,11 @@ objects (in the event the tile size is different than the parent).</p>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Colors"></a>
-                <a name="//apple_ref/swift/Section/Colors" class="dashAnchor"></a>
+                <a name="/Color%20Attributes"></a>
+                <a name="//apple_ref/swift/Section/Color Attributes" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/Colors"></a>
-                  <h3 class="section-name"><p>Colors</p>
+                  <a class="section-name-link" href="#/Color%20Attributes"></a>
+                  <h3 class="section-name"><p>Color Attributes</p>
 </h3>
                 </div>
               </div>
@@ -866,8 +1075,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC14highlightColorSo7NSColorCvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC14highlightColorSo7NSColorCvp"></a> -->
+                    <a name="/highlightColor.s:7SKTiled6SKTileC14highlightColorSo7NSColorCvp"></a>
                     <a name="//apple_ref/swift/Property/highlightColor" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC14highlightColorSo7NSColorCvp">highlightColor</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC14highlightColorSo7NSColorCvp">highlightColor</a>
                     </code>
                   </div>
@@ -888,7 +1099,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L375-L381">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L322-L328">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -896,8 +1107,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC10frameColorSo7NSColorCvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC10frameColorSo7NSColorCvp"></a> -->
+                    <a name="/frameColor.s:7SKTiled6SKTileC10frameColorSo7NSColorCvp"></a>
                     <a name="//apple_ref/swift/Property/frameColor" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC10frameColorSo7NSColorCvp">frameColor</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC10frameColorSo7NSColorCvp">frameColor</a>
                     </code>
                   </div>
@@ -918,7 +1131,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L384-L390">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L331-L337">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -926,8 +1139,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC9tintColorSo7NSColorCSgvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC9tintColorSo7NSColorCSgvp"></a> -->
+                    <a name="/tintColor.s:7SKTiled6SKTileC9tintColorSo7NSColorCSgvp"></a>
                     <a name="//apple_ref/swift/Property/tintColor" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC9tintColorSo7NSColorCSgvp">tintColor</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC9tintColorSo7NSColorCSgvp">tintColor</a>
                     </code>
                   </div>
@@ -948,7 +1163,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L393-L408">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L340-L355">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -957,11 +1172,11 @@ objects (in the event the tile size is different than the parent).</p>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Bounds"></a>
-                <a name="//apple_ref/swift/Section/Bounds" class="dashAnchor"></a>
+                <a name="/Geometry"></a>
+                <a name="//apple_ref/swift/Section/Geometry" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/Bounds"></a>
-                  <h3 class="section-name"><p>Bounds</p>
+                  <a class="section-name-link" href="#/Geometry"></a>
+                  <h3 class="section-name"><p>Geometry</p>
 </h3>
                 </div>
               </div>
@@ -969,8 +1184,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTile(py)boundsShape"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(py)boundsShape"></a> -->
+                    <a name="/boundsShape.c:@M@SKTiled@objc(cs)SKTile(py)boundsShape"></a>
                     <a name="//apple_ref/swift/Property/boundsShape" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)boundsShape">boundsShape</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)boundsShape">boundsShape</a>
                     </code>
                   </div>
@@ -986,12 +1203,13 @@ objects (in the event the tile size is different than the parent).</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">boundsShape</span><span class="p">:</span> <span class="kt">SKShapeNode</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">boundsShape</span><span class="p">:</span> <span class="kt">SKShapeNode</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L416">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L363">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -999,8 +1217,43 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC17highlightDurationSdvp"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(py)anchorShape"></a> -->
+                    <a name="/anchorShape.c:@M@SKTiled@objc(cs)SKTile(py)anchorShape"></a>
+                    <a name="//apple_ref/swift/Property/anchorShape" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)anchorShape">anchorShape</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)anchorShape">anchorShape</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Object anchor node visualization node.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">anchorShape</span><span class="p">:</span> <span class="kt">SKShapeNode</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L386">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled6SKTileC17highlightDurationSdvp"></a> -->
+                    <a name="/highlightDuration.s:7SKTiled6SKTileC17highlightDurationSdvp"></a>
                     <a name="//apple_ref/swift/Property/highlightDuration" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC17highlightDurationSdvp">highlightDuration</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC17highlightDurationSdvp">highlightDuration</a>
                     </code>
                   </div>
@@ -1021,7 +1274,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L433">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L404">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1029,8 +1282,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC15enableAnimationSbvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC15enableAnimationSbvp"></a> -->
+                    <a name="/enableAnimation.s:7SKTiled6SKTileC15enableAnimationSbvp"></a>
                     <a name="//apple_ref/swift/Property/enableAnimation" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC15enableAnimationSbvp">enableAnimation</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC15enableAnimationSbvp">enableAnimation</a>
                     </code>
                   </div>
@@ -1051,7 +1306,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L444-L452">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L407-L415">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1059,8 +1314,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTile(py)objectPath"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(py)objectPath"></a> -->
+                    <a name="/objectPath.c:@M@SKTiled@objc(cs)SKTile(py)objectPath"></a>
                     <a name="//apple_ref/swift/Property/objectPath" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)objectPath">objectPath</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)objectPath">objectPath</a>
                     </code>
                   </div>
@@ -1069,7 +1326,7 @@ objects (in the event the tile size is different than the parent).</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Shape describing this object.</p>
+                        <p>This object&rsquo;s <code>CGPath</code> defining the shape of geometry. Used to draw the bounding shape.</p>
 
                       </div>
                       <div class="declaration">
@@ -1082,7 +1339,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L455">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L423">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1090,8 +1347,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTile(im)getVerticesWithOffset:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(im)getVerticesWithOffset:"></a> -->
+                    <a name="/getVertices(offset:).c:@M@SKTiled@objc(cs)SKTile(im)getVerticesWithOffset:"></a>
                     <a name="//apple_ref/swift/Method/getVertices(offset:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)getVerticesWithOffset:">getVertices(offset:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)getVerticesWithOffset:">getVertices(offset:<wbr>)</a>
                     </code>
                   </div>
@@ -1136,7 +1395,7 @@ objects (in the event the tile size is different than the parent).</p>
                         <p>array of bounding shape points.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L467-L533">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L435-L517">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1144,99 +1403,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC12PhysicsShapeO"></a>
-                    <a name="//apple_ref/swift/Enum/PhysicsShape" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled6SKTileC12PhysicsShapeO">PhysicsShape</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <h2 id='overview' class='heading'>Overview:</h2>
-
-<p>Describes the tile&rsquo;s physics shape.</p>
-<h3 id='properties' class='heading'>Properties</h3>
-
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left">none</td>
-<td style="text-align: left">No physics shape.</td>
-</tr>
-<tr>
-<td style="text-align: left">rectangle</td>
-<td style="text-align: left">Rectangular object shape.</td>
-</tr>
-<tr>
-<td style="text-align: left">ellipse</td>
-<td style="text-align: left">Circular object shape.</td>
-</tr>
-<tr>
-<td style="text-align: left">texture</td>
-<td style="text-align: left">Texture-based shape.</td>
-</tr>
-<tr>
-<td style="text-align: left">path</td>
-<td style="text-align: left">Open path.</td>
-</tr>
-</tbody></table>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">PhysicsShape</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L549-L555">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div class="task-header">
-                    <code>
-                    <a name="/s:7SKTiled6SKTileC12physicsShapeAC07PhysicsD0Ovp"></a>
-                    <a name="//apple_ref/swift/Property/physicsShape" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled6SKTileC12physicsShapeAC07PhysicsD0Ovp">physicsShape</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Physics body shape.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">physicsShape</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTile.html#/s:7SKTiled6SKTileC12PhysicsShapeO">PhysicsShape</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L558">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div class="task-header">
-                    <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTile(py)boundingRect"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(py)boundingRect"></a> -->
+                    <a name="/boundingRect.c:@M@SKTiled@objc(cs)SKTile(py)boundingRect"></a>
                     <a name="//apple_ref/swift/Property/boundingRect" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)boundingRect">boundingRect</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(py)boundingRect">boundingRect</a>
                     </code>
                   </div>
@@ -1257,7 +1427,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L564-L566">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L523-L526">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1266,11 +1436,11 @@ objects (in the event the tile size is different than the parent).</p>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Init"></a>
-                <a name="//apple_ref/swift/Section/Init" class="dashAnchor"></a>
+                <a name="/Initialization"></a>
+                <a name="//apple_ref/swift/Section/Initialization" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/Init"></a>
-                  <h3 class="section-name"><p>Init</p>
+                  <a class="section-name-link" href="#/Initialization"></a>
+                  <h3 class="section-name"><p>Initialization</p>
 </h3>
                 </div>
               </div>
@@ -1278,8 +1448,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC4dataACSgAA13SKTilesetDataC_tcfc"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC4dataACSgAA13SKTilesetDataC_tcfc"></a> -->
+                    <a name="/init(data:).s:7SKTiled6SKTileC4dataACSgAA13SKTilesetDataC_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(data:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC4dataACSgAA13SKTilesetDataC_tcfc">init(data:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC4dataACSgAA13SKTilesetDataC_tcfc">init(data:<wbr>)</a>
                     </code>
                   </div>
@@ -1288,7 +1460,7 @@ objects (in the event the tile size is different than the parent).</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Initialize the tile object with <code><a href="../Classes/SKTilesetData.html">SKTilesetData</a></code> data.</p>
+                        <p>Instantiate the tile with <code><a href="../Classes/SKTilesetData.html">SKTilesetData</a></code> data instance.</p>
 
                       </div>
                       <div class="declaration">
@@ -1319,7 +1491,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L579-L592">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L535-L548">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1327,8 +1499,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTile(im)initWithCoder:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(im)initWithCoder:"></a> -->
+                    <a name="/init(coder:).c:@M@SKTiled@objc(cs)SKTile(im)initWithCoder:"></a>
                     <a name="//apple_ref/swift/Method/init(coder:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)initWithCoder:">init(coder:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)initWithCoder:">init(coder:<wbr>)</a>
                     </code>
                   </div>
@@ -1368,7 +1542,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L597-L602">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L553-L564">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1376,8 +1550,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTile(im)init"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(im)init"></a> -->
+                    <a name="/init().c:@M@SKTiled@objc(cs)SKTile(im)init"></a>
                     <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)init">init()</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)init">init()</a>
                     </code>
                   </div>
@@ -1386,7 +1562,7 @@ objects (in the event the tile size is different than the parent).</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Initialize an empty tile.</p>
+                        <p>Instantiate an empty tile.</p>
 
                       </div>
                       <div class="declaration">
@@ -1398,7 +1574,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L605-L612">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L567-L580">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1406,8 +1582,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC8tileSizeACSo6CGSizeV_tcfc"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC8tileSizeACSo6CGSizeV_tcfc"></a> -->
+                    <a name="/init(tileSize:).s:7SKTiled6SKTileC8tileSizeACSo6CGSizeV_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(tileSize:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC8tileSizeACSo6CGSizeV_tcfc">init(tileSize:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC8tileSizeACSo6CGSizeV_tcfc">init(tileSize:<wbr>)</a>
                     </code>
                   </div>
@@ -1447,7 +1625,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L617-L624">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L585-L598">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1455,8 +1633,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTile(im)initWithTexture:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(im)initWithTexture:"></a> -->
+                    <a name="/init(texture:).c:@M@SKTiled@objc(cs)SKTile(im)initWithTexture:"></a>
                     <a name="//apple_ref/swift/Method/init(texture:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)initWithTexture:">init(texture:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)initWithTexture:">init(texture:<wbr>)</a>
                     </code>
                   </div>
@@ -1496,7 +1676,173 @@ objects (in the event the tile size is different than the parent).</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L629-L636">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L603-L616">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(im)destroy"></a> -->
+                    <a name="/destroy().c:@M@SKTiled@objc(cs)SKTile(im)destroy"></a>
+                    <a name="//apple_ref/swift/Method/destroy()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)destroy">destroy()</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)destroy">destroy()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes this node from the scene graph. Signals the tile cache to remove the tile.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">destroy</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L627-L646">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled6SKTileC7newTile8globalID2inACs6UInt32V_AA9SKTilesetCtFZ"></a> -->
+                    <a name="/newTile(globalID:in:).s:7SKTiled6SKTileC7newTile8globalID2inACs6UInt32V_AA9SKTilesetCtFZ"></a>
+                    <a name="//apple_ref/swift/Method/newTile(globalID:in:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC7newTile8globalID2inACs6UInt32V_AA9SKTilesetCtFZ">newTile(globalID:<wbr>in:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled6SKTileC7newTile8globalID2inACs6UInt32V_AA9SKTilesetCtFZ">newTile(globalID:<wbr>in:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates and returns a new tile instance with the given tileset &amp; global id.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">newTile</span><span class="p">(</span><span class="nv">globalID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="k">in</span> <span class="nv">tileset</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTileset.html">SKTileset</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SKTile</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>globalID</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>tile global id.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tileset</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>tileset instance.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>tile object with the given data.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L654-L666">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled6SKTileC7newTile7localID2inACs6UInt32V_AA9SKTilesetCtFZ"></a> -->
+                    <a name="/newTile(localID:in:).s:7SKTiled6SKTileC7newTile7localID2inACs6UInt32V_AA9SKTilesetCtFZ"></a>
+                    <a name="//apple_ref/swift/Method/newTile(localID:in:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC7newTile7localID2inACs6UInt32V_AA9SKTilesetCtFZ">newTile(localID:<wbr>in:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled6SKTileC7newTile7localID2inACs6UInt32V_AA9SKTilesetCtFZ">newTile(localID:<wbr>in:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates and returns a new tile instance with the given tileset &amp; local id.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">newTile</span><span class="p">(</span><span class="nv">localID</span><span class="p">:</span> <span class="kt">UInt32</span><span class="p">,</span> <span class="k">in</span> <span class="nv">tileset</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTileset.html">SKTileset</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SKTile</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>localID</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>tileset local id.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tileset</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>tileset instance.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>tile object with the given data.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L674-L686">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1517,8 +1863,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTile(im)draw"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(im)draw"></a> -->
+                    <a name="/draw().c:@M@SKTiled@objc(cs)SKTile(im)draw"></a>
                     <a name="//apple_ref/swift/Method/draw()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)draw">draw()</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)draw">draw()</a>
                     </code>
                   </div>
@@ -1540,7 +1888,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L641-L646">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L691-L697">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1561,8 +1909,83 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC12setupPhysics7shapeOf9isDynamicyAC0D5ShapeO_SbtF"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC12PhysicsShapeO"></a> -->
+                    <a name="/PhysicsShape.s:7SKTiled6SKTileC12PhysicsShapeO"></a>
+                    <a name="//apple_ref/swift/Enum/PhysicsShape" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC12PhysicsShapeO">PhysicsShape</a> -->
+                    <a class="token" href="#/s:7SKTiled6SKTileC12PhysicsShapeO">PhysicsShape</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Describes the tile&rsquo;s physics shape.</p>
+<h3 id='properties' class='heading'>Properties</h3>
+
+<ul>
+<li><code>none</code>: No physics shape.</li>
+<li><code>rectangle</code>: Rectangular object shape.</li>
+<li><code>ellipse</code>: Circular object shape.</li>
+<li><code>texture</code>: Texture-based shape.</li>
+<li><code>path</code>: Open path.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">PhysicsShape</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L711-L717">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled6SKTileC12physicsShapeAC07PhysicsD0Ovp"></a> -->
+                    <a name="/physicsShape.s:7SKTiled6SKTileC12physicsShapeAC07PhysicsD0Ovp"></a>
+                    <a name="//apple_ref/swift/Property/physicsShape" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC12physicsShapeAC07PhysicsD0Ovp">physicsShape</a> -->
+                    <a class="token" href="#/s:7SKTiled6SKTileC12physicsShapeAC07PhysicsD0Ovp">physicsShape</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Physics body shape.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">physicsShape</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTile.html#/s:7SKTiled6SKTileC12PhysicsShapeO">PhysicsShape</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L720">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled6SKTileC12setupPhysics7shapeOf9isDynamicyAC0D5ShapeO_SbtF"></a> -->
+                    <a name="/setupPhysics(shapeOf:isDynamic:).s:7SKTiled6SKTileC12setupPhysics7shapeOf9isDynamicyAC0D5ShapeO_SbtF"></a>
                     <a name="//apple_ref/swift/Method/setupPhysics(shapeOf:isDynamic:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC12setupPhysics7shapeOf9isDynamicyAC0D5ShapeO_SbtF">setupPhysics(shapeOf:<wbr>isDynamic:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC12setupPhysics7shapeOf9isDynamicyAC0D5ShapeO_SbtF">setupPhysics(shapeOf:<wbr>isDynamic:<wbr>)</a>
                     </code>
                   </div>
@@ -1614,7 +2037,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L655-L675">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L727-L747">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1622,8 +2045,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC12setupPhysics8rectSize9isDynamicySo6CGSizeV_SbtF"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC12setupPhysics8rectSize9isDynamicySo6CGSizeV_SbtF"></a> -->
+                    <a name="/setupPhysics(rectSize:isDynamic:).s:7SKTiled6SKTileC12setupPhysics8rectSize9isDynamicySo6CGSizeV_SbtF"></a>
                     <a name="//apple_ref/swift/Method/setupPhysics(rectSize:isDynamic:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC12setupPhysics8rectSize9isDynamicySo6CGSizeV_SbtF">setupPhysics(rectSize:<wbr>isDynamic:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC12setupPhysics8rectSize9isDynamicySo6CGSizeV_SbtF">setupPhysics(rectSize:<wbr>isDynamic:<wbr>)</a>
                     </code>
                   </div>
@@ -1675,7 +2100,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L682-L686">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L754-L758">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1683,8 +2108,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC12setupPhysics8withSize9isDynamicy12CoreGraphics7CGFloatV_SbtF"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC12setupPhysics8withSize9isDynamicy12CoreGraphics7CGFloatV_SbtF"></a> -->
+                    <a name="/setupPhysics(withSize:isDynamic:).s:7SKTiled6SKTileC12setupPhysics8withSize9isDynamicy12CoreGraphics7CGFloatV_SbtF"></a>
                     <a name="//apple_ref/swift/Method/setupPhysics(withSize:isDynamic:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC12setupPhysics8withSize9isDynamicy12CoreGraphics7CGFloatV_SbtF">setupPhysics(withSize:<wbr>isDynamic:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC12setupPhysics8withSize9isDynamicy12CoreGraphics7CGFloatV_SbtF">setupPhysics(withSize:<wbr>isDynamic:<wbr>)</a>
                     </code>
                   </div>
@@ -1736,7 +2163,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L693-L697">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L765-L769">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1744,8 +2171,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC12setupPhysics6radius9isDynamicy12CoreGraphics7CGFloatV_SbtF"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC12setupPhysics6radius9isDynamicy12CoreGraphics7CGFloatV_SbtF"></a> -->
+                    <a name="/setupPhysics(radius:isDynamic:).s:7SKTiled6SKTileC12setupPhysics6radius9isDynamicy12CoreGraphics7CGFloatV_SbtF"></a>
                     <a name="//apple_ref/swift/Method/setupPhysics(radius:isDynamic:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC12setupPhysics6radius9isDynamicy12CoreGraphics7CGFloatV_SbtF">setupPhysics(radius:<wbr>isDynamic:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC12setupPhysics6radius9isDynamicy12CoreGraphics7CGFloatV_SbtF">setupPhysics(radius:<wbr>isDynamic:<wbr>)</a>
                     </code>
                   </div>
@@ -1797,7 +2226,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L704-L708">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L776-L780">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1805,8 +2234,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC13removePhysicsyyF"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC13removePhysicsyyF"></a> -->
+                    <a name="/removePhysics().s:7SKTiled6SKTileC13removePhysicsyyF"></a>
                     <a name="//apple_ref/swift/Method/removePhysics()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC13removePhysicsyyF">removePhysics()</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC13removePhysicsyyF">removePhysics()</a>
                     </code>
                   </div>
@@ -1827,7 +2258,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L711-L714">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L783-L786">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1835,8 +2266,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC19setupTileCollisions6offsetySo6CGSizeV_tF"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC19setupTileCollisions6offsetySo6CGSizeV_tF"></a> -->
+                    <a name="/setupTileCollisions(offset:).s:7SKTiled6SKTileC19setupTileCollisions6offsetySo6CGSizeV_tF"></a>
                     <a name="//apple_ref/swift/Method/setupTileCollisions(offset:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC19setupTileCollisions6offsetySo6CGSizeV_tF">setupTileCollisions(offset:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC19setupTileCollisions6offsetySo6CGSizeV_tF">setupTileCollisions(offset:<wbr>)</a>
                     </code>
                   </div>
@@ -1876,7 +2309,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L719-L724">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L791-L796">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1897,8 +2330,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC12runAnimationyyF"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC12runAnimationyyF"></a> -->
+                    <a name="/runAnimation().s:7SKTiled6SKTileC12runAnimationyyF"></a>
                     <a name="//apple_ref/swift/Method/runAnimation()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC12runAnimationyyF">runAnimation()</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC12runAnimationyyF">runAnimation()</a>
                     </code>
                   </div>
@@ -1907,7 +2342,7 @@ objects (in the event the tile size is different than the parent).</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Run tile animation.</p>
+                        <p>Run the tile&rsquo;s animation.</p>
 
                       </div>
                       <div class="declaration">
@@ -1919,7 +2354,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L729-L731">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L801-L803">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1927,8 +2362,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC15removeAnimation7restoreySb_tF"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC15removeAnimation7restoreySb_tF"></a> -->
+                    <a name="/removeAnimation(restore:).s:7SKTiled6SKTileC15removeAnimation7restoreySb_tF"></a>
                     <a name="//apple_ref/swift/Method/removeAnimation(restore:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC15removeAnimation7restoreySb_tF">removeAnimation(restore:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC15removeAnimation7restoreySb_tF">removeAnimation(restore:<wbr>)</a>
                     </code>
                   </div>
@@ -1968,29 +2405,18 @@ objects (in the event the tile size is different than the parent).</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L736-L738">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L808-L810">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/Legacy%20Animation"></a>
-                <a name="//apple_ref/swift/Section/Legacy Animation" class="dashAnchor"></a>
-                <div class="section-name-container">
-                  <a class="section-name-link" href="#/Legacy%20Animation"></a>
-                  <h3 class="section-name"><p>Legacy Animation</p>
-</h3>
-                </div>
-              </div>
-              <ul class="item-container">
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC21runAnimationAsActionsyyF"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC21runAnimationAsActionsyyF"></a> -->
+                    <a name="/runAnimationAsActions().s:7SKTiled6SKTileC21runAnimationAsActionsyyF"></a>
                     <a name="//apple_ref/swift/Method/runAnimationAsActions()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC21runAnimationAsActionsyyF">runAnimationAsActions()</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC21runAnimationAsActionsyyF">runAnimationAsActions()</a>
                     </code>
                   </div>
@@ -2011,7 +2437,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L746-L757">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L815-L825">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2019,8 +2445,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC22removeAnimationActions7restoreySb_tF"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC22removeAnimationActions7restoreySb_tF"></a> -->
+                    <a name="/removeAnimationActions(restore:).s:7SKTiled6SKTileC22removeAnimationActions7restoreySb_tF"></a>
                     <a name="//apple_ref/swift/Method/removeAnimationActions(restore:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC22removeAnimationActions7restoreySb_tF">removeAnimationActions(restore:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC22removeAnimationActions7restoreySb_tF">removeAnimationActions(restore:<wbr>)</a>
                     </code>
                   </div>
@@ -2029,7 +2457,7 @@ objects (in the event the tile size is different than the parent).</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Remove the animation for the current tile.</p>
+                        <p>Remove the SpriteKit animation action for the current tile. If the <code>restore</code> argument is true, the tile&rsquo;s texture will reflect the tile data&rsquo;s initial texture.</p>
 
                       </div>
                       <div class="declaration">
@@ -2060,7 +2488,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L762-L770">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L830-L839">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2081,8 +2509,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC14setTileOverlapyy12CoreGraphics7CGFloatVF"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC14setTileOverlapyy12CoreGraphics7CGFloatVF"></a> -->
+                    <a name="/setTileOverlap(_:).s:7SKTiled6SKTileC14setTileOverlapyy12CoreGraphics7CGFloatVF"></a>
                     <a name="//apple_ref/swift/Method/setTileOverlap(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC14setTileOverlapyy12CoreGraphics7CGFloatVF">setTileOverlap(_:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC14setTileOverlapyy12CoreGraphics7CGFloatVF">setTileOverlap(_:<wbr>)</a>
                     </code>
                   </div>
@@ -2122,7 +2552,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L778-L794">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L847-L863">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2143,8 +2573,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTile(im)mouseMoved:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(im)mouseMoved:"></a> -->
+                    <a name="/mouseMoved(with:).c:@M@SKTiled@objc(cs)SKTile(im)mouseMoved:"></a>
                     <a name="//apple_ref/swift/Method/mouseMoved(with:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)mouseMoved:">mouseMoved(with:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)mouseMoved:">mouseMoved(with:<wbr>)</a>
                     </code>
                   </div>
@@ -2184,7 +2616,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L925-L934">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L994-L1000">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2192,8 +2624,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTile(im)mouseDown:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(im)mouseDown:"></a> -->
+                    <a name="/mouseDown(with:).c:@M@SKTiled@objc(cs)SKTile(im)mouseDown:"></a>
                     <a name="//apple_ref/swift/Method/mouseDown(with:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)mouseDown:">mouseDown(with:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)mouseDown:">mouseDown(with:<wbr>)</a>
                     </code>
                   </div>
@@ -2233,7 +2667,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L939-L948">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1005-L1011">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2241,8 +2675,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/"></a>
+                    <!-- <a name="/"></a> -->
+                    <a name="/touchesBegan(_:with:)."></a>
                     <a name="//apple_ref/swift/Method/touchesBegan(_:with:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/">touchesBegan(_:<wbr>with:<wbr>)</a> -->
                     <a class="token" href="#/">touchesBegan(_:<wbr>with:<wbr>)</a>
                     </code>
                   </div>
@@ -2251,7 +2687,8 @@ objects (in the event the tile size is different than the parent).</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Tells this object that one or more new touches occurred in a view or window.</p>
+
                       </div>
                     </section>
                   </div>
@@ -2259,8 +2696,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(cs)SKTile(im)containsWithTouch:"></a>
+                    <!-- <a name="/c:@M@SKTiled@objc(cs)SKTile(im)containsWithTouch:"></a> -->
+                    <a name="/contains(touch:).c:@M@SKTiled@objc(cs)SKTile(im)containsWithTouch:"></a>
                     <a name="//apple_ref/swift/Method/contains(touch:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)containsWithTouch:">contains(touch:<wbr>)</a> -->
                     <a class="token" href="#/c:@M@SKTiled@objc(cs)SKTile(im)containsWithTouch:">contains(touch:<wbr>)</a>
                     </code>
                   </div>
@@ -2305,7 +2744,7 @@ objects (in the event the tile size is different than the parent).</p>
                         <p>node was touched.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L966-L968">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1043-L1045">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2326,57 +2765,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC11setTileData4datayAA09SKTilesetE0C_tF"></a>
-                    <a name="//apple_ref/swift/Method/setTileData(data:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled6SKTileC11setTileData4datayAA09SKTilesetE0C_tF">setTileData(data:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Update the tile&rsquo;s tile data instance.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setTileData</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTilesetData.html">SKTilesetData</a></span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>data</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>new tile data.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L975-L985">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div class="task-header">
-                    <code>
-                    <a name="/s:7SKTiled6SKTileC6updateyySdF"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC6updateyySdF"></a> -->
+                    <a name="/update(_:).s:7SKTiled6SKTileC6updateyySdF"></a>
                     <a name="//apple_ref/swift/Method/update(_:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC6updateyySdF">update(_:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC6updateyySdF">update(_:<wbr>)</a>
                     </code>
                   </div>
@@ -2416,7 +2808,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L990-L1052">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1054-L1116">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2425,11 +2817,11 @@ objects (in the event the tile size is different than the parent).</p>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Extensions"></a>
-                <a name="//apple_ref/swift/Section/Extensions" class="dashAnchor"></a>
+                <a name="/Reflection"></a>
+                <a name="//apple_ref/swift/Section/Reflection" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/Extensions"></a>
-                  <h3 class="section-name"><p>Extensions</p>
+                  <a class="section-name-link" href="#/Reflection"></a>
+                  <h3 class="section-name"><p>Reflection</p>
 </h3>
                 </div>
               </div>
@@ -2437,8 +2829,55 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC7tilesetAA9SKTilesetCSgvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC12customMirrors0D0Vvp"></a> -->
+                    <a name="/customMirror.s:7SKTiled6SKTileC12customMirrors0D0Vvp"></a>
+                    <a name="//apple_ref/swift/Property/customMirror" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC12customMirrors0D0Vvp">customMirror</a> -->
+                    <a class="token" href="#/s:7SKTiled6SKTileC12customMirrors0D0Vvp">customMirror</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Custom mirror for tile objects.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">customMirror</span><span class="p">:</span> <span class="kt">Mirror</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1121-L1179">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Convenience%20Properties"></a>
+                <a name="//apple_ref/swift/Section/Convenience Properties" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Convenience%20Properties"></a>
+                  <h3 class="section-name"><p>Convenience Properties</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled6SKTileC7tilesetAA9SKTilesetCSgvp"></a> -->
+                    <a name="/tileset.s:7SKTiled6SKTileC7tilesetAA9SKTilesetCSgvp"></a>
                     <a name="//apple_ref/swift/Property/tileset" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC7tilesetAA9SKTilesetCSgvp">tileset</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC7tilesetAA9SKTilesetCSgvp">tileset</a>
                     </code>
                   </div>
@@ -2447,7 +2886,7 @@ objects (in the event the tile size is different than the parent).</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Reference to the tile data&rsquo;s parent tileset.</p>
+                        <p>A reference to the tile data&rsquo;s containing tileset.</p>
 
                       </div>
                       <div class="declaration">
@@ -2458,8 +2897,12 @@ objects (in the event the tile size is different than the parent).</p>
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>tileset instance, if one exists.</p>
+                      </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1246-L1251">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1280-L1285">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2467,8 +2910,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC7tilemapAA9SKTilemapCSgvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC7tilemapAA9SKTilemapCSgvp"></a> -->
+                    <a name="/tilemap.s:7SKTiled6SKTileC7tilemapAA9SKTilemapCSgvp"></a>
                     <a name="//apple_ref/swift/Property/tilemap" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC7tilemapAA9SKTilemapCSgvp">tilemap</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC7tilemapAA9SKTilemapCSgvp">tilemap</a>
                     </code>
                   </div>
@@ -2489,7 +2934,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1254-L1259">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1288-L1293">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2497,8 +2942,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC7opacity12CoreGraphics7CGFloatVvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC7opacity12CoreGraphics7CGFloatVvp"></a> -->
+                    <a name="/opacity.s:7SKTiled6SKTileC7opacity12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/opacity" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC7opacity12CoreGraphics7CGFloatVvp">opacity</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC7opacity12CoreGraphics7CGFloatVvp">opacity</a>
                     </code>
                   </div>
@@ -2519,7 +2966,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1262-L1269">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1296-L1303">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2527,9 +2974,11 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC8isVsibleSbvp"></a>
-                    <a name="//apple_ref/swift/Property/isVsible" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled6SKTileC8isVsibleSbvp">isVsible</a>
+                    <!-- <a name="/s:7SKTiled6SKTileC8isVisbleSbvp"></a> -->
+                    <a name="/isVisble.s:7SKTiled6SKTileC8isVisbleSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isVisble" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC8isVisbleSbvp">isVisble</a> -->
+                    <a class="token" href="#/s:7SKTiled6SKTileC8isVisbleSbvp">isVisble</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2537,19 +2986,19 @@ objects (in the event the tile size is different than the parent).</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Tile visibility.</p>
+                        <p>Toggle for tile visibility.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">isVsible</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">isVisble</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1272-L1279">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1306-L1313">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2557,8 +3006,42 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC21isFlippedHorizontallySbvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC9flipFlagsAA04TileD0Vvp"></a> -->
+                    <a name="/flipFlags.s:7SKTiled6SKTileC9flipFlagsAA04TileD0Vvp"></a>
+                    <a name="//apple_ref/swift/Property/flipFlags" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC9flipFlagsAA04TileD0Vvp">flipFlags</a> -->
+                    <a class="token" href="#/s:7SKTiled6SKTileC9flipFlagsAA04TileD0Vvp">flipFlags</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tile flip flags.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">flipFlags</span><span class="p">:</span> <span class="kt"><a href="../Structs/TileFlags.html">TileFlags</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1316-L1323">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled6SKTileC21isFlippedHorizontallySbvp"></a> -->
+                    <a name="/isFlippedHorizontally.s:7SKTiled6SKTileC21isFlippedHorizontallySbvp"></a>
                     <a name="//apple_ref/swift/Property/isFlippedHorizontally" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC21isFlippedHorizontallySbvp">isFlippedHorizontally</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC21isFlippedHorizontallySbvp">isFlippedHorizontally</a>
                     </code>
                   </div>
@@ -2579,7 +3062,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1282-L1289">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1326-L1333">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2587,8 +3070,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC19isFlippedVerticallySbvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC19isFlippedVerticallySbvp"></a> -->
+                    <a name="/isFlippedVertically.s:7SKTiled6SKTileC19isFlippedVerticallySbvp"></a>
                     <a name="//apple_ref/swift/Property/isFlippedVertically" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC19isFlippedVerticallySbvp">isFlippedVertically</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC19isFlippedVerticallySbvp">isFlippedVertically</a>
                     </code>
                   </div>
@@ -2609,7 +3094,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1292-L1299">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1336-L1343">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2617,8 +3102,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC19isFlippedDiagonallySbvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC19isFlippedDiagonallySbvp"></a> -->
+                    <a name="/isFlippedDiagonally.s:7SKTiled6SKTileC19isFlippedDiagonallySbvp"></a>
                     <a name="//apple_ref/swift/Property/isFlippedDiagonally" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC19isFlippedDiagonallySbvp">isFlippedDiagonally</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC19isFlippedDiagonallySbvp">isFlippedDiagonally</a>
                     </code>
                   </div>
@@ -2639,7 +3126,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1302-L1309">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1346-L1353">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2647,98 +3134,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@CM@SKTiled@objc(cs)SKTile(py)description"></a>
-                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKTile(py)description">description</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Tile textual description.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1312-L1315">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div class="task-header">
-                    <code>
-                    <a name="/c:@CM@SKTiled@objc(cs)SKTile(py)debugDescription"></a>
-                    <a name="//apple_ref/swift/Property/debugDescription" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKTile(py)debugDescription">debugDescription</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Tile debug textual description.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">debugDescription</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1318-L1320">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div class="task-header">
-                    <code>
-                    <a name="/s:7SKTiled6SKTileC16shortDescriptionSSvp"></a>
-                    <a name="//apple_ref/swift/Property/shortDescription" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled6SKTileC16shortDescriptionSSvp">shortDescription</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Returns a shortened textual representation for debugging.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">shortDescription</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1323-L1327">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div class="task-header">
-                    <code>
-                    <a name="/s:7SKTiled6SKTileC10tileOffsetSo7CGPointVvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC10tileOffsetSo7CGPointVvp"></a> -->
+                    <a name="/tileOffset.s:7SKTiled6SKTileC10tileOffsetSo7CGPointVvp"></a>
                     <a name="//apple_ref/swift/Property/tileOffset" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC10tileOffsetSo7CGPointVvp">tileOffset</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC10tileOffsetSo7CGPointVvp">tileOffset</a>
                     </code>
                   </div>
@@ -2759,7 +3158,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1330-L1359">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1356-L1385">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2767,8 +3166,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC10spriteCopySo12SKSpriteNodeCyF"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC10spriteCopySo12SKSpriteNodeCyF"></a> -->
+                    <a name="/spriteCopy().s:7SKTiled6SKTileC10spriteCopySo12SKSpriteNodeCyF"></a>
                     <a name="//apple_ref/swift/Method/spriteCopy()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC10spriteCopySo12SKSpriteNodeCyF">spriteCopy()</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC10spriteCopySo12SKSpriteNodeCyF">spriteCopy()</a>
                     </code>
                   </div>
@@ -2790,10 +3191,10 @@ objects (in the event the tile size is different than the parent).</p>
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>sprite copy with current animation.</p>
+                        <p>sprite copy of tile with current texture/animation.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1407-L1425">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1442-L1460">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2801,8 +3202,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC21replaceWithSpriteCopySo12SKSpriteNodeCyF"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC21replaceWithSpriteCopySo12SKSpriteNodeCyF"></a> -->
+                    <a name="/replaceWithSpriteCopy().s:7SKTiled6SKTileC21replaceWithSpriteCopySo12SKSpriteNodeCyF"></a>
                     <a name="//apple_ref/swift/Method/replaceWithSpriteCopy()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC21replaceWithSpriteCopySo12SKSpriteNodeCyF">replaceWithSpriteCopy()</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC21replaceWithSpriteCopySo12SKSpriteNodeCyF">replaceWithSpriteCopy()</a>
                     </code>
                   </div>
@@ -2818,7 +3221,8 @@ objects (in the event the tile size is different than the parent).</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">replaceWithSpriteCopy</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">SKSpriteNode</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">replaceWithSpriteCopy</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">SKSpriteNode</span></code></pre>
 
                         </div>
                       </div>
@@ -2827,7 +3231,7 @@ objects (in the event the tile size is different than the parent).</p>
                         <p>sprite with current animation.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1430-L1443">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1466-L1474">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2835,8 +3239,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC17withTileDataCloneyyF"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC17withTileDataCloneyyF"></a> -->
+                    <a name="/withTileDataClone().s:7SKTiled6SKTileC17withTileDataCloneyyF"></a>
                     <a name="//apple_ref/swift/Method/withTileDataClone()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC17withTileDataCloneyyF">withTileDataClone()</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC17withTileDataCloneyyF">withTileDataClone()</a>
                     </code>
                   </div>
@@ -2857,7 +3263,104 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1446-L1449">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1477-L1480">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@CM@SKTiled@objc(cs)SKTile(im)highlightNodeWith:duration:"></a> -->
+                    <a name="/highlightNode(with:duration:).c:@CM@SKTiled@objc(cs)SKTile(im)highlightNodeWith:duration:"></a>
+                    <a name="//apple_ref/swift/Method/highlightNode(with:duration:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKTile(im)highlightNodeWith:duration:">highlightNode(with:<wbr>duration:<wbr>)</a> -->
+                    <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKTile(im)highlightNodeWith:duration:">highlightNode(with:<wbr>duration:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Highlight the tile with a given color &amp; duration.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">highlightNode</span><span class="p">(</span><span class="n">with</span> <span class="nv">color</span><span class="p">:</span> <span class="kt">SKColor</span><span class="p">,</span> <span class="nv">duration</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>color</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>highlight color.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>duration</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>duration of highlight effect.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1487-L1516">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@CM@SKTiled@objc(cs)SKTile(im)removeHighlight"></a> -->
+                    <a name="/removeHighlight().c:@CM@SKTiled@objc(cs)SKTile(im)removeHighlight"></a>
+                    <a name="//apple_ref/swift/Method/removeHighlight()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKTile(im)removeHighlight">removeHighlight()</a> -->
+                    <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKTile(im)removeHighlight">removeHighlight()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Remove the current object&rsquo;s highlight color.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">removeHighlight</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1519-L1523">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2878,8 +3381,76 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC14pauseAnimationSbvp"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC7visibleSbvp"></a> -->
+                    <a name="/visible.s:7SKTiled6SKTileC7visibleSbvp"></a>
+                    <a name="//apple_ref/swift/Property/visible" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC7visibleSbvp">visible</a> -->
+                    <a class="token" href="#/s:7SKTiled6SKTileC7visibleSbvp">visible</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Toggle for tile visibility.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"isVisible"</span><span class="p">)</span>
+<span class="kd">open</span> <span class="k">var</span> <span class="nv">visible</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1610-L1617">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled6SKTileC10realTileIds6UInt32Vvp"></a> -->
+                    <a name="/realTileId.s:7SKTiled6SKTileC10realTileIds6UInt32Vvp"></a>
+                    <a name="//apple_ref/swift/Property/realTileId" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC10realTileIds6UInt32Vvp">realTileId</a> -->
+                    <a class="token" href="#/s:7SKTiled6SKTileC10realTileIds6UInt32Vvp">realTileId</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the tile global id unmasked.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"maskedTileId"</span><span class="p">)</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">realTileId</span><span class="p">:</span> <span class="kt">UInt32</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1621-L1623">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled6SKTileC14pauseAnimationSbvp"></a> -->
+                    <a name="/pauseAnimation.s:7SKTiled6SKTileC14pauseAnimationSbvp"></a>
                     <a name="//apple_ref/swift/Property/pauseAnimation" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC14pauseAnimationSbvp">pauseAnimation</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC14pauseAnimationSbvp">pauseAnimation</a>
                     </code>
                   </div>
@@ -2901,7 +3472,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1510-L1516">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1627-L1633">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2909,8 +3480,43 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@CM@SKTiled@objc(cs)SKTile(im)drawWithDebug:"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC16shortDescriptionSSvp"></a> -->
+                    <a name="/shortDescription.s:7SKTiled6SKTileC16shortDescriptionSSvp"></a>
+                    <a name="//apple_ref/swift/Property/shortDescription" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC16shortDescriptionSSvp">shortDescription</a> -->
+                    <a class="token" href="#/s:7SKTiled6SKTileC16shortDescriptionSSvp">shortDescription</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a shortened textual representation for debugging.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"description"</span><span class="p">)</span>
+<span class="kd">open</span> <span class="k">var</span> <span class="nv">shortDescription</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1637-L1639">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/c:@CM@SKTiled@objc(cs)SKTile(im)drawWithDebug:"></a> -->
+                    <a name="/draw(debug:).c:@CM@SKTiled@objc(cs)SKTile(im)drawWithDebug:"></a>
                     <a name="//apple_ref/swift/Method/draw(debug:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKTile(im)drawWithDebug:">draw(debug:<wbr>)</a> -->
                     <a class="token" href="#/c:@CM@SKTiled@objc(cs)SKTile(im)drawWithDebug:">draw(debug:<wbr>)</a>
                     </code>
                   </div>
@@ -2952,7 +3558,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1522-L1524">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1645-L1647">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2960,8 +3566,10 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC4draw2in5debugySo6CGRectV_SbtF"></a>
+                    <!-- <a name="/s:7SKTiled6SKTileC4draw2in5debugySo6CGRectV_SbtF"></a> -->
+                    <a name="/draw(in:debug:).s:7SKTiled6SKTileC4draw2in5debugySo6CGRectV_SbtF"></a>
                     <a name="//apple_ref/swift/Method/draw(in:debug:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC4draw2in5debugySo6CGRectV_SbtF">draw(in:<wbr>debug:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled6SKTileC4draw2in5debugySo6CGRectV_SbtF">draw(in:<wbr>debug:<wbr>)</a>
                     </code>
                   </div>
@@ -3014,7 +3622,7 @@ objects (in the event the tile size is different than the parent).</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1532-L1534">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1655-L1657">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -3022,9 +3630,11 @@ objects (in the event the tile size is different than the parent).</p>
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6SKTileC7visibleSbvp"></a>
-                    <a name="//apple_ref/swift/Property/visible" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SKTiled6SKTileC7visibleSbvp">visible</a>
+                    <!-- <a name="/s:7SKTiled6SKTileC11setTileData4datayAA09SKTilesetE0C_tF"></a> -->
+                    <a name="/setTileData(data:).s:7SKTiled6SKTileC11setTileData4datayAA09SKTilesetE0C_tF"></a>
+                    <a name="//apple_ref/swift/Method/setTileData(data:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6SKTileC11setTileData4datayAA09SKTilesetE0C_tF">setTileData(data:<wbr>)</a> -->
+                    <a class="token" href="#/s:7SKTiled6SKTileC11setTileData4datayAA09SKTilesetE0C_tF">setTileData(data:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -3032,20 +3642,39 @@ objects (in the event the tile size is different than the parent).</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Tile visibility.</p>
+                        <p>Update the tile&rsquo;s tile data instance.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">renamed</span><span class="p">:</span> <span class="s">"isVisible"</span><span class="p">)</span>
-<span class="kd">open</span> <span class="k">var</span> <span class="nv">visible</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use the `SKTile.tileData` property."</span><span class="p">)</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">setTileData</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="kt"><a href="../Classes/SKTilesetData.html">SKTilesetData</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>data</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>new tile data.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1538-L1545">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/SKTile.swift#L1663-L1665">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

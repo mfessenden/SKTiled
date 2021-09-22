@@ -19,9 +19,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -30,14 +30,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -109,7 +107,7 @@
                 <a class='nav-group-task-link' href='Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -119,6 +117,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -157,9 +158,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -236,13 +234,13 @@
                 <a class='nav-group-task-link' href='Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -255,6 +253,30 @@
               </li>
             </ul>
           </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class='main-content'>
@@ -262,6 +284,7 @@
         <section class='section'>
           <div class='section-content'>
             
+            <!-- <div><h1>Overview</h1></div> -->
             <h1 id='working-with-objects' class='heading'>Working with Objects</h1>
 
 <ul>
@@ -271,6 +294,11 @@
 
 <ul>
 <li><a href="#text-object-attributes">Text Object Attributes</a></li>
+</ul></li>
+<li><a href="#point-objects">Point Objects</a>
+
+<ul>
+<li><a href="#custom-point-objects">Custom Point Objects</a></li>
 </ul></li>
 <li><a href="#dynamics">Dynamics</a></li>
 </ul>
@@ -307,7 +335,7 @@
 
 <p><img src="images/tile-objects-selected.gif" alt="Tile Objects"></p>
 
-<p><strong>Tile objects</strong> are special object types that contain an optional globalID value. The corresponding tile texture(s) are rendered within the object&rsquo;s bounding shape. Tile objects are </p>
+<p><strong>Tile objects</strong> are special object types that contain an optional globalID value. The corresponding tile texture(s) are rendered within the object&rsquo;s bounding shape. Tile objects are</p>
 
 <p>Objects added via the <a href="http://doc.mapeditor.org/de/latest/manual/objects/#insert-tile"><strong>Insert Tile</strong></a> tool in Tiled will render as <code><a href="Classes/SKTileObject.html">SKTileObject</a></code> objects. You can also create a tile object manually via the <code><a href="Classes/SKObjectGroup.html#/s:7SKTiled13SKObjectGroupC13newTileObject4dataAA06SKTileF0CAA13SKTilesetDataC_tF">SKObjectGroup.newTileObject(data:)</a></code> method:</p>
 <pre class="highlight swift"><code><span class="c1">// add a tile object for global id 23</span>
@@ -343,6 +371,27 @@
 </code></pre>
 
 <p><em>* text wrap attribute not currently supported.</em></p>
+<h2 id='point-objects' class='heading'>Point Objects</h2>
+
+<p>Point objects are a special object type that represents a single point in the map. As such, it has no shape parameters and is really only useful as a reference point or an anchor for other nodes.</p>
+<h3 id='custom-point-objects' class='heading'>Custom Point Objects</h3>
+
+<p>The <code>TilemapDelegate.customNodeForPointObject</code> protocol method allows you to substitute a custom <code>SKNode</code> type for point objects matching a given type:</p>
+<pre class="highlight swift"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">customNodeForPointObject</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+                                          <span class="nv">attributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">],</span>
+                                          <span class="nv">inLayer</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">SKNode</span><span class="p">?</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ofType</span> <span class="o">==</span> <span class="s">"light"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">light</span> <span class="o">=</span> <span class="kt">SKLightNode</span><span class="p">()</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">lightColor</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="s">"lightColor"</span><span class="p">]</span> <span class="p">{</span>
+            <span class="n">light</span><span class="o">.</span><span class="n">lightColor</span> <span class="o">=</span> <span class="kt">SKColor</span><span class="p">(</span><span class="nv">hexString</span><span class="p">:</span> <span class="n">lightColor</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">light</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>The original point object is destroyed, but any <a href="tiled-properties.html">custom attributes</a> will be passed to this method, allowing you to map them to your custom objects.</p>
 <h2 id='dynamics' class='heading'>Dynamics</h2>
 
 <p>You also have the option of enabling physics for each object, allowing them to react as dynamics bodies in your scene. Passing properties from <strong>Tiled</strong> allows you to easily create dynamic objects in your scenes. Here, a simple scene with one object group and five objects is loaded:</p>

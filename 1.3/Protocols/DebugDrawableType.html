@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -253,6 +251,30 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
               </li>
             </ul>
           </li>
@@ -266,26 +288,17 @@
               <div class='declaration'>
                 <div class='language'>
                   <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">DebugDrawableType</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">DebugDrawableType</span></code></pre>
 
                 </div>
               </div>
-            <h2 id='overview' class='heading'>Overview</h2>
-
-<p>The <code>DebugDrawableType</code> protocol provides an interface to visualizing various object attributes, such as displaying a visual grid over the container, or highlighting object bounds.</p>
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>The <code>DebugDrawableType</code> protocol provides an interface to visualizing various object attributes, such as displaying a visual grid over the container, or highlighting object bounds.</p>
 <h3 id='properties' class='heading'>Properties</h3>
 
-<table><thead>
-<tr>
-<th style="text-align: left">Property</th>
-<th style="text-align: left">Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: left"><code>debugDrawOptions</code></td>
-<td style="text-align: left">Debugging visualization options</td>
-</tr>
-</tbody></table>
+<ul>
+<li><code>_debugLevel</code>: debugging visualization level.</li>
+</ul>
 
           </div>
         </section>
@@ -297,9 +310,11 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/c:@M@SKTiled@objc(pl)DebugDrawableType(py)debugDrawOptions"></a>
-                    <a name="//apple_ref/swift/Property/debugDrawOptions" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@SKTiled@objc(pl)DebugDrawableType(py)debugDrawOptions">debugDrawOptions</a>
+                    <!-- <a name="/c:@M@SKTiled@objc(pl)DebugDrawableType(py)_debugLevel"></a> -->
+                    <a name="/_debugLevel.c:@M@SKTiled@objc(pl)DebugDrawableType(py)_debugLevel"></a>
+                    <a name="//apple_ref/swift/Property/_debugLevel" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/c:@M@SKTiled@objc(pl)DebugDrawableType(py)_debugLevel">_debugLevel</a> -->
+                    <a class="token" href="#/c:@M@SKTiled@objc(pl)DebugDrawableType(py)_debugLevel">_debugLevel</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -307,7 +322,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Optionset of properties for visualizing node attributes.</p>
+                        <p>Value representing a debug visualization level.</p>
 
                       </div>
                       <div class="declaration">
@@ -315,12 +330,69 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="k">var</span> <span class="nv">debugDrawOptions</span><span class="p">:</span> <span class="kt">DebugDrawOptions</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+<span class="k">var</span> <span class="nv">_debugLevel</span><span class="p">:</span> <span class="kt">UInt8</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/DebugDrawableType.swift#L44">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/DebugDrawableType.swift#L40">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Extensions"></a>
+                <a name="//apple_ref/swift/Section/Extensions" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Extensions"></a>
+                  <h3 class="section-name"><p>Extensions</p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled17DebugDrawableTypePAAE16debugDrawOptionsAA0bfG0Vvp"></a> -->
+                    <a name="/debugDrawOptions.s:7SKTiled17DebugDrawableTypePAAE16debugDrawOptionsAA0bfG0Vvp"></a>
+                    <a name="//apple_ref/swift/Property/debugDrawOptions" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled17DebugDrawableTypePAAE16debugDrawOptionsAA0bfG0Vvp">debugDrawOptions</a> -->
+                    <a class="token" href="#/s:7SKTiled17DebugDrawableTypePAAE16debugDrawOptionsAA0bfG0Vvp">debugDrawOptions</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Default debug draw options for all node types.</p>
+<h3 id='usage' class='heading'>Usage</h3>
+
+<ul>
+<li><code>drawGrid</code>: visualize the nodes&rsquo;s tile grid.</li>
+<li><code>drawFrame</code>: visualize the nodes&rsquo;s bounding rect.</li>
+<li><code>drawGraph</code>: visualize the nodes&rsquo;s pathfinding graph.</li>
+<li><code>drawObjectFrames</code>: draw object&rsquo;s bounding shapes.</li>
+<li><code>drawAnchor</code>: draw the layer&rsquo;s anchor point.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">debugDrawOptions</span><span class="p">:</span> <span class="kt"><a href="../Structs/DebugDrawOptions.html">DebugDrawOptions</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/DebugDrawableType.swift#L81-L87">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -341,8 +413,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled17DebugDrawableTypePAAE21isShowingObjectBoundsSbvp"></a>
+                    <!-- <a name="/s:7SKTiled17DebugDrawableTypePAAE21isShowingObjectBoundsSbvp"></a> -->
+                    <a name="/isShowingObjectBounds.s:7SKTiled17DebugDrawableTypePAAE21isShowingObjectBoundsSbvp"></a>
                     <a name="//apple_ref/swift/Property/isShowingObjectBounds" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled17DebugDrawableTypePAAE21isShowingObjectBoundsSbvp">isShowingObjectBounds</a> -->
                     <a class="token" href="#/s:7SKTiled17DebugDrawableTypePAAE21isShowingObjectBoundsSbvp">isShowingObjectBounds</a>
                     </code>
                       <span class="declaration-note">
@@ -366,7 +440,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/DebugDrawableType.swift#L77-L87">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/DebugDrawableType.swift#L92-L102">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -374,8 +448,45 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled17DebugDrawableTypePAAE15isShowingBoundsSbvp"></a>
+                    <!-- <a name="/s:7SKTiled17DebugDrawableTypePAAE15isShowingAnchorSbvp"></a> -->
+                    <a name="/isShowingAnchor.s:7SKTiled17DebugDrawableTypePAAE15isShowingAnchorSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isShowingAnchor" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled17DebugDrawableTypePAAE15isShowingAnchorSbvp">isShowingAnchor</a> -->
+                    <a class="token" href="#/s:7SKTiled17DebugDrawableTypePAAE15isShowingAnchorSbvp">isShowingAnchor</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Property to show/hide the node&rsquo;s anchor point shape.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isShowingAnchor</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/DebugDrawableType.swift#L105-L115">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div class="task-header">
+                    <code>
+                    <!-- <a name="/s:7SKTiled17DebugDrawableTypePAAE15isShowingBoundsSbvp"></a> -->
+                    <a name="/isShowingBounds.s:7SKTiled17DebugDrawableTypePAAE15isShowingBoundsSbvp"></a>
                     <a name="//apple_ref/swift/Property/isShowingBounds" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled17DebugDrawableTypePAAE15isShowingBoundsSbvp">isShowingBounds</a> -->
                     <a class="token" href="#/s:7SKTiled17DebugDrawableTypePAAE15isShowingBoundsSbvp">isShowingBounds</a>
                     </code>
                       <span class="declaration-note">
@@ -399,7 +510,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/DebugDrawableType.swift#L90-L100">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/DebugDrawableType.swift#L118-L128">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -407,8 +518,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled17DebugDrawableTypePAAE17isShowingTileGridSbvp"></a>
+                    <!-- <a name="/s:7SKTiled17DebugDrawableTypePAAE17isShowingTileGridSbvp"></a> -->
+                    <a name="/isShowingTileGrid.s:7SKTiled17DebugDrawableTypePAAE17isShowingTileGridSbvp"></a>
                     <a name="//apple_ref/swift/Property/isShowingTileGrid" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled17DebugDrawableTypePAAE17isShowingTileGridSbvp">isShowingTileGrid</a> -->
                     <a class="token" href="#/s:7SKTiled17DebugDrawableTypePAAE17isShowingTileGridSbvp">isShowingTileGrid</a>
                     </code>
                       <span class="declaration-note">
@@ -432,7 +545,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/DebugDrawableType.swift#L103-L113">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/DebugDrawableType.swift#L131-L141">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -440,8 +553,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled17DebugDrawableTypePAAE26isShowingTileGridAndBoundsSbvp"></a>
+                    <!-- <a name="/s:7SKTiled17DebugDrawableTypePAAE26isShowingTileGridAndBoundsSbvp"></a> -->
+                    <a name="/isShowingTileGridAndBounds.s:7SKTiled17DebugDrawableTypePAAE26isShowingTileGridAndBoundsSbvp"></a>
                     <a name="//apple_ref/swift/Property/isShowingTileGridAndBounds" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled17DebugDrawableTypePAAE26isShowingTileGridAndBoundsSbvp">isShowingTileGridAndBounds</a> -->
                     <a class="token" href="#/s:7SKTiled17DebugDrawableTypePAAE26isShowingTileGridAndBoundsSbvp">isShowingTileGridAndBounds</a>
                     </code>
                       <span class="declaration-note">
@@ -465,7 +580,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/DebugDrawableType.swift#L116-L132">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/DebugDrawableType.swift#L144-L160">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -473,8 +588,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled17DebugDrawableTypePAAE18isShowingGridGraphSbvp"></a>
+                    <!-- <a name="/s:7SKTiled17DebugDrawableTypePAAE18isShowingGridGraphSbvp"></a> -->
+                    <a name="/isShowingGridGraph.s:7SKTiled17DebugDrawableTypePAAE18isShowingGridGraphSbvp"></a>
                     <a name="//apple_ref/swift/Property/isShowingGridGraph" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled17DebugDrawableTypePAAE18isShowingGridGraphSbvp">isShowingGridGraph</a> -->
                     <a class="token" href="#/s:7SKTiled17DebugDrawableTypePAAE18isShowingGridGraphSbvp">isShowingGridGraph</a>
                     </code>
                       <span class="declaration-note">
@@ -498,7 +615,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/DebugDrawableType.swift#L135-L145">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/DebugDrawableType.swift#L163-L173">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

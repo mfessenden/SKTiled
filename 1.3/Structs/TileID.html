@@ -20,9 +20,9 @@
     <header class='header'>
       <p class='header-col header-col--primary'>
         <a class='header-link' href='../index.html'>
-          SKTiled v1.30b1 Docs
+          SKTiled v1.30b2 Docs
         </a>
-         (90% documented)
+         (91% documented)
       </p>
     
         <p class='header-col header-col--secondary'>
@@ -31,14 +31,12 @@
             View on GitHub
           </a>
         </p>
-    <!-- 
         <p class='header-col header-col--secondary'>
-          <a class='header-link' href='dash-feed://https%3A%2F%2Fmfessenden%2Egithub%2Eio%2FSKTiled%2Fdocsets%2FSKTiled%2Exml'>
+          <a class='header-link' href='dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fmfessenden%2FSKTiled%2Ftree%2Fgh%2Dpages%2F1%2E3%2Fdocsets%2FSKTiled%2Edocset'>
             <img class='header-icon' src='../img/dash.png'/>
             Install in Dash
           </a>
         </p>
-       -->
     </header>
 
     <p class='breadcrumbs'>
@@ -110,7 +108,7 @@
                 <a class='nav-group-task-link' href='../Protocols/DebugDrawableType.html'>DebugDrawableType</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Protocols/TiledAttributedType.html'>TiledAttributedType</a>
+                <a class='nav-group-task-link' href='../Protocols/TiledCustomReflectableType.html'>TiledCustomReflectableType</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledGeometryType.html'>TiledGeometryType</a>
@@ -120,6 +118,9 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledObjectType.html'>TiledObjectType</a>
+              </li>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Protocols/TiledEventHandler.html'>TiledEventHandler</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Protocols/TiledSceneCameraDelegate.html'>TiledSceneCameraDelegate</a>
@@ -158,9 +159,6 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKTileLayer.html'>SKTileLayer</a>
-              </li>
-              <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Classes/SKTileLayerChunk.html'>SKTileLayerChunk</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Classes/SKObjectGroup.html'>SKObjectGroup</a>
@@ -237,13 +235,13 @@
                 <a class='nav-group-task-link' href='../Classes/TiledGlobals/Renderer.html'>– Renderer</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Extensions/DebugDrawOptions.html'>DebugDrawOptions</a>
+                <a class='nav-group-task-link' href='../Structs/DebugDrawOptions.html'>DebugDrawOptions</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/CameraZoomClamping.html'>CameraZoomClamping</a>
               </li>
               <li class='nav-group-task'>
-                <a class='nav-group-task-link' href='../Enums/TileRenderMode.html'>TileRenderMode</a>
+                <a class='nav-group-task-link' href='../Globals.html#/s:7SKTiled14TileRenderModeO'>TileRenderMode</a>
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Enums/TileUpdateMode.html'>TileUpdateMode</a>
@@ -253,6 +251,30 @@
               </li>
               <li class='nav-group-task'>
                 <a class='nav-group-task-link' href='../Structs/TextObjectAttributes.html#/s:7SKTiled20TextObjectAttributesV0B9AlignmentV'>– TextAlignment</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Enumerations.html'>Other Enumerations</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Other%20Enums.html#/c:@M@SKTiled@E@TilemapOrientation'>TilemapOrientation</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Extensions.html'>Other Extensions</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Extensions/Sequence.html'>Sequence</a>
+              </li>
+            </ul>
+          </li>
+          <li class='nav-group-name'>
+            <a class='nav-group-name-link' href='../Other Structures.html'>Other Structures</a>
+            <ul class='nav-group-tasks'>
+              <li class='nav-group-task'>
+                <a class='nav-group-task-link' href='../Structs/TiledGeometryIsolationMode.html'>TiledGeometryIsolationMode</a>
               </li>
             </ul>
           </li>
@@ -270,19 +292,26 @@
 
                 </div>
               </div>
-            <h2 id='overview' class='heading'>Overview</h2>
-
-<p>The <code>TileID</code>structure provides an interface to a <a href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#tile-flipping" target="_blank"><b>masked tile id</b></a>.</p>
+            <!-- <div><h1>Overview</h1></div> -->
+            <p>The <code>TileID</code>structure provides an interface to a <strong><a href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#tile-flipping">masked tile id</a></strong>.</p>
 
 <p>Tile flipping is represented by a mask of a tile global id, with the upper three bits storing orientation values (flipped horizontally, flipped vertically, flipped diagonally).</p>
-<pre class="highlight swift"><code><span class="c1">// A value of 2147483659 translates to 11, flipped horizontally.</span>
+<h2 id='usage' class='heading'>Usage</h2>
+
+<p>This structure is not meant to be used directly; simply passing a value to the <strong><a href="../Classes/SKTile.html#/s:7SKTiled6SKTileC6tileIds6UInt32Vvp"><code>SKTile.tileId</code></a></strong> property will set the global id and orientation of the tile.</p>
+
+<p>See the <a href="../working-with-tiles.html"><strong>Working with Tiles</strong></a> documentation for more information.</p>
+<pre class="highlight swift"><code><span class="c1">// A raw value of 2147483659 translates to 11, flipped horizontally.</span>
 <span class="k">let</span> <span class="nv">gid</span><span class="p">:</span> <span class="kt">UInt32</span> <span class="o">=</span> <span class="mi">2147483659</span>
 <span class="k">var</span> <span class="nv">tileId</span> <span class="o">=</span> <span class="kt">TileID</span><span class="p">(</span><span class="nv">wrappedValue</span><span class="p">:</span> <span class="mi">2147483659</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">tileId</span><span class="p">)</span>
 <span class="c1">// Tile ID: 11, flags: [ hFlip ]</span>
-</code></pre>
 
-<p>This structure is not meant to be used directly; simply passing a value to the <a href="../Classes/SKTile.html#/s:7SKTiled6SKTileC6tileIds6UInt32Vvp"><code>SKTile.tileId</code></a> property will set the global id and orientation of the tile. See the <a href="../working-with-tiles.html"><strong>Working with Tiles</strong></a> documentation for more information.</p>
+<span class="c1">// Alternately, we can set the flags directly:</span>
+<span class="n">tileId</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="n">all</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">tileId</span><span class="p">)</span>
+<span class="c1">// Tile ID: 11, flags: [ hFlip, vFlip, dFlip ]</span>
+</code></pre>
 
           </div>
         </section>
@@ -294,8 +323,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6TileIDV5flagsAA0B5FlagsVvp"></a>
+                    <!-- <a name="/s:7SKTiled6TileIDV5flagsAA0B5FlagsVvp"></a> -->
+                    <a name="/flags.s:7SKTiled6TileIDV5flagsAA0B5FlagsVvp"></a>
                     <a name="//apple_ref/swift/Property/flags" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6TileIDV5flagsAA0B5FlagsVvp">flags</a> -->
                     <a class="token" href="#/s:7SKTiled6TileIDV5flagsAA0B5FlagsVvp">flags</a>
                     </code>
                   </div>
@@ -311,12 +342,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">flags</span><span class="p">:</span> <span class="kt"><a href="../Structs/TileFlags.html">TileFlags</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">flags</span><span class="p">:</span> <span class="kt"><a href="../Structs/TileFlags.html">TileFlags</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L109">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TileID.swift#L90-L94">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -324,8 +355,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6TileIDV12wrappedValueACs6UInt32V_tcfc"></a>
+                    <!-- <a name="/s:7SKTiled6TileIDV12wrappedValueACs6UInt32V_tcfc"></a> -->
+                    <a name="/init(wrappedValue:).s:7SKTiled6TileIDV12wrappedValueACs6UInt32V_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(wrappedValue:)" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6TileIDV12wrappedValueACs6UInt32V_tcfc">init(wrappedValue:<wbr>)</a> -->
                     <a class="token" href="#/s:7SKTiled6TileIDV12wrappedValueACs6UInt32V_tcfc">init(wrappedValue:<wbr>)</a>
                     </code>
                   </div>
@@ -334,7 +367,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Instantiate with a global ID value.</p>
+                        <p>Instantiate with a global ID value. The <code><a href="../Structs/TileID.html#/s:7SKTiled6TileIDV12wrappedValues6UInt32Vvp">wrappedValue</a></code> argument can be either a global id, or a masked global id.</p>
 
                       </div>
                       <div class="declaration">
@@ -365,7 +398,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L114-L117">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TileID.swift#L99-L102">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -373,8 +406,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6TileIDVACycfc"></a>
+                    <!-- <a name="/s:7SKTiled6TileIDVACycfc"></a> -->
+                    <a name="/init().s:7SKTiled6TileIDVACycfc"></a>
                     <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6TileIDVACycfc">init()</a> -->
                     <a class="token" href="#/s:7SKTiled6TileIDVACycfc">init()</a>
                     </code>
                   </div>
@@ -395,7 +430,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L120-L122">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TileID.swift#L105-L107">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -403,8 +438,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6TileIDV12wrappedValues6UInt32Vvp"></a>
+                    <!-- <a name="/s:7SKTiled6TileIDV12wrappedValues6UInt32Vvp"></a> -->
+                    <a name="/wrappedValue.s:7SKTiled6TileIDV12wrappedValues6UInt32Vvp"></a>
                     <a name="//apple_ref/swift/Property/wrappedValue" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6TileIDV12wrappedValues6UInt32Vvp">wrappedValue</a> -->
                     <a class="token" href="#/s:7SKTiled6TileIDV12wrappedValues6UInt32Vvp">wrappedValue</a>
                     </code>
                   </div>
@@ -425,7 +462,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L125-L137">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TileID.swift#L110-L123">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -433,8 +470,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6TileIDV9realValues6UInt32Vvp"></a>
+                    <!-- <a name="/s:7SKTiled6TileIDV9realValues6UInt32Vvp"></a> -->
+                    <a name="/realValue.s:7SKTiled6TileIDV9realValues6UInt32Vvp"></a>
                     <a name="//apple_ref/swift/Property/realValue" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6TileIDV9realValues6UInt32Vvp">realValue</a> -->
                     <a class="token" href="#/s:7SKTiled6TileIDV9realValues6UInt32Vvp">realValue</a>
                     </code>
                   </div>
@@ -443,7 +482,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns the global id (including flip flags) value.</p>
+                        <p>Returns the masedk tile id (including flip flags) value.</p>
 
                       </div>
                       <div class="declaration">
@@ -455,7 +494,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L140-L142">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TileID.swift#L126-L128">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -476,8 +515,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6TileIDV21isFlippedHorizontallySbvp"></a>
+                    <!-- <a name="/s:7SKTiled6TileIDV21isFlippedHorizontallySbvp"></a> -->
+                    <a name="/isFlippedHorizontally.s:7SKTiled6TileIDV21isFlippedHorizontallySbvp"></a>
                     <a name="//apple_ref/swift/Property/isFlippedHorizontally" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6TileIDV21isFlippedHorizontallySbvp">isFlippedHorizontally</a> -->
                     <a class="token" href="#/s:7SKTiled6TileIDV21isFlippedHorizontallySbvp">isFlippedHorizontally</a>
                     </code>
                   </div>
@@ -498,7 +539,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1150-L1162">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TileID.swift#L158-L170">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -506,8 +547,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6TileIDV19isFlippedVerticallySbvp"></a>
+                    <!-- <a name="/s:7SKTiled6TileIDV19isFlippedVerticallySbvp"></a> -->
+                    <a name="/isFlippedVertically.s:7SKTiled6TileIDV19isFlippedVerticallySbvp"></a>
                     <a name="//apple_ref/swift/Property/isFlippedVertically" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6TileIDV19isFlippedVerticallySbvp">isFlippedVertically</a> -->
                     <a class="token" href="#/s:7SKTiled6TileIDV19isFlippedVerticallySbvp">isFlippedVertically</a>
                     </code>
                   </div>
@@ -528,7 +571,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1165-L1177">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TileID.swift#L173-L185">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -536,8 +579,10 @@
                 <li class="item">
                   <div class="task-header">
                     <code>
-                    <a name="/s:7SKTiled6TileIDV19isFlippedDiagonallySbvp"></a>
+                    <!-- <a name="/s:7SKTiled6TileIDV19isFlippedDiagonallySbvp"></a> -->
+                    <a name="/isFlippedDiagonally.s:7SKTiled6TileIDV19isFlippedDiagonallySbvp"></a>
                     <a name="//apple_ref/swift/Property/isFlippedDiagonally" class="dashAnchor"></a>
+                    <!-- <a class="token" href="#/s:7SKTiled6TileIDV19isFlippedDiagonallySbvp">isFlippedDiagonally</a> -->
                     <a class="token" href="#/s:7SKTiled6TileIDV19isFlippedDiagonallySbvp">isFlippedDiagonally</a>
                     </code>
                   </div>
@@ -558,7 +603,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mfessenden/SKTiled/tree/1.3/Sources/SKTile.swift#L1180-L1192">Show on GitHub</a>
+                        <a href="https://github.com/mfessenden/SKTiled/tree/release/1.30/Sources/TileID.swift#L188-L200">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
