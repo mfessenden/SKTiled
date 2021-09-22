@@ -1281,7 +1281,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         let willRemoveOption = sender.state == .on
-        let drawOption = DebugDrawOptions.init(rawValue: identifier)
+        let drawOption = DebugDrawOptions.init(rawValue: UInt8(identifier))
 
         if (willRemoveOption == true) {
             tilemap.debugDrawOptions = tilemap.debugDrawOptions.subtracting(drawOption)
@@ -2400,7 +2400,7 @@ extension AppDelegate {
                 let accessibilityIdentifier = menuitem.accessibilityIdentifier()
 
                 if let identifier = Int(accessibilityIdentifier) {
-                    let menuOption = DebugDrawOptions.init(rawValue: identifier)
+                    let menuOption = DebugDrawOptions.init(rawValue: UInt8(identifier))
                     menuitem.state = (tilemap.debugDrawOptions.contains(menuOption)) ? .on : .off
                     //let contains = menuitem.state == .on
                 }
