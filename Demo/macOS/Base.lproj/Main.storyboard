@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19162"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -33,12 +33,6 @@
                                             <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="qu8-Tk-8zd"/>
-                                        <menuItem title="Inspector..." enabled="NO" keyEquivalent="i" id="IO9-S3-A1l" userLabel="Launch Inspector">
-                                            <connections>
-                                                <action selector="launchInspectorAction:" target="Voe-Tx-rLC" id="Bt4-0P-VUl"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="ePN-qx-YZ0"/>
                                         <menuItem title="Hide SKTiled Demo" keyEquivalent="h" id="iOx-A8-wQp">
                                             <connections>
                                                 <action selector="hide:" target="Ady-hI-5gd" id="v48-mh-GME"/>
@@ -491,7 +485,6 @@
                         <outlet property="sendNotificationMenuItem" destination="CSS-6F-FNe" id="eTQ-2L-T3E"/>
                         <outlet property="sendNotificationSubmenu" destination="grN-K3-b38" id="S5b-3z-PXl"/>
                         <outlet property="showDemoAssetsMenuItem" destination="eC9-wi-nCP" id="mxl-a2-f9d"/>
-                        <outlet property="showInspectorMenuItem" destination="IO9-S3-A1l" id="CD8-jM-ohB"/>
                         <outlet property="tileColorsMenuItem" destination="hnS-2z-nKA" id="Seb-hg-B27"/>
                         <outlet property="tilemapCachesStatisticsMenuItem" destination="Rcr-r2-Ts4" id="hyf-Tn-WBO"/>
                         <outlet property="tilemapOffsetStatisticsMenuItem" destination="Qpm-op-6DI" id="3O0-A6-Zba"/>
@@ -503,7 +496,7 @@
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController representsSharedInstance="YES" id="aIM-ST-Kfn"/>
             </objects>
-            <point key="canvasLocation" x="-1205" y="-361"/>
+            <point key="canvasLocation" x="-1204" y="-448"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">

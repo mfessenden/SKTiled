@@ -457,11 +457,7 @@ extension Notification.Name {
         
         // Infinite
         public static let RepositionLayers              = Notification.Name(rawValue: "org.sktiled.notification.name.debug.repositionLayers")
-        
-        // Inspector
-        public static let DumpAttributeEditor           = Notification.Name(rawValue: "org.sktiled.notification.name.debug.dumpAttributeEditor")
-        public static let DumpAttributeStorage          = Notification.Name(rawValue: "org.sktiled.notification.name.debug.dumpAttributeStorage")
-
+  
     }
 }
 

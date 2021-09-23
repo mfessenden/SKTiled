@@ -33,14 +33,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// controllers
     var preferencesController: PreferencesWindowController?
-    var inspectorController: NSWindowController?
-    
     var receiveCameraUpdates: Bool = true
     var isDevelopment: Bool = TiledGlobals.default.isDevelopment
-    
-    // application menu
-    @IBOutlet weak var showInspectorMenuItem: NSMenuItem!
-    
+
     
     // file menu
     @IBOutlet weak var openMapMenuitem: NSMenuItem!
@@ -214,15 +209,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         cameraTrackVisibleNodesItem.toolTip = "toggles the `SKTiledSceneCamera.notifyDelegatesOnContainedNodesChange` property"
         mouseEventsMenuItem.state = (TiledGlobals.default.enableMouseEvents == true) ? .on : .off
         reloadMapMenuitem.isEnabled = false
-        
-        // disable the inspector UI
-        var inspectorEnabled = false
-        #if DEVELOPMENT_MODE
-        inspectorEnabled = true
-        #endif
-        
-        showInspectorMenuItem.isEnabled = inspectorEnabled
-        showInspectorMenuItem.isHidden = !inspectorEnabled
         setupNotificationsMenu()
     }
     
@@ -246,7 +232,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         
         
-        let notifications = ["Debug.DumpAttributeEditor", "Debug.DumpAttributeStorage", "Debug.MapDebugDrawingChanged", "Debug.MapEffectsRenderingChanged", "Debug.MapObjectVisibilityChanged", "Debug.RepositionLayers", "Demo.DumpSelectedNodes", "Demo.FlushScene", "Demo.HighlightSelectedNodes", "Demo.NodeAttributesChanged", "Demo.NodeHighlightingCleared", "Demo.NodeSelectionChanged", "Demo.NodeSelectionCleared", "Demo.NodesAboutToBeSelected", "Demo.NothingUnderCursor", "Demo.RefreshInspectorInterface", "Demo.SceneWillUnload", "Demo.UpdateDebugging", "DemoController.AssetSearchPathsAdded", "DemoController.AssetSearchPathsRemoved", "DemoController.CurrentMapRemoved", "DemoController.CurrentMapSet", "DemoController.DemoStatusUpdated", "DemoController.LoadNextScene", "DemoController.LoadPreviousScene", "Globals.SavedToUserDefaults", "Globals.Updated", "Map.Updated"]
+        let notifications = ["Debug.MapDebugDrawingChanged", "Debug.MapEffectsRenderingChanged", "Debug.MapObjectVisibilityChanged", "Debug.RepositionLayers", "Demo.DumpSelectedNodes", "Demo.FlushScene", "Demo.HighlightSelectedNodes", "Demo.NodeAttributesChanged", "Demo.NodeHighlightingCleared", "Demo.NodeSelectionChanged", "Demo.NodeSelectionCleared", "Demo.NodesAboutToBeSelected", "Demo.NothingUnderCursor", "Demo.RefreshInspectorInterface", "Demo.SceneWillUnload", "Demo.UpdateDebugging", "DemoController.AssetSearchPathsAdded", "DemoController.AssetSearchPathsRemoved", "DemoController.CurrentMapRemoved", "DemoController.CurrentMapSet", "DemoController.DemoStatusUpdated", "DemoController.LoadNextScene", "DemoController.LoadPreviousScene", "Globals.SavedToUserDefaults", "Globals.Updated", "Map.Updated"]
         
         
         
@@ -265,25 +251,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         
         switch identifier {
-            case "Debug.DumpAttributeEditor":
-                NotificationCenter.default.post(
-                    name: Notification.Name.Debug.DumpAttributeEditor,
-                    object: nil
-                )
-                
-                
-            case "Debug.DumpAttributeStorage":
-                if inspectorController == nil {
-                    Logger.default.log("cannot access attribute storage.", level: .warning, symbol: classNiceName)
-                    return
-                }
-                
-                NotificationCenter.default.post(
-                    name: Notification.Name.Debug.DumpAttributeStorage,
-                    object: nil
-                )
-                
-                
+
             case "Debug.MapDebugDrawingChanged":
                 NotificationCenter.default.post(
                     name: Notification.Name.Debug.MapDebugDrawingChanged,
@@ -683,20 +651,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if (preferencesController != nil) {
             preferencesController!.showWindow(sender)
             preferencesController?.window?.title = "SKTiled Demo Preferences"
-        }
-    }
-    
-    /// Called when the Inspector command is issues.
-    ///
-    /// - Parameter sender: invoking ui.
-    @IBAction func launchInspectorAction(_ sender: Any) {
-        if (inspectorController == nil) {
-            let storyboard = NSStoryboard(name: NSStoryboard.Name(stringLiteral: "Inspector"), bundle: nil)
-            inspectorController = storyboard.instantiateInitialController() as? NSWindowController
-        }
-        
-        if (inspectorController != nil) {
-            inspectorController!.showWindow(sender)
         }
     }
 
