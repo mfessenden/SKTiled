@@ -123,7 +123,7 @@ extension SKTiledObject {
      - returns: `Bool` properties are not empty.
      */
     public var hasProperties: Bool {
-        return properties.isEmpty
+        return !properties.isEmpty
     }
     
     /**
