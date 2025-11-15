@@ -156,7 +156,7 @@ internal class SKTiledDebugDrawNode: SKNode {
 
         switch layer.orientation {
             case .orthogonal:
-                objectPath = polygonPath(layer.bounds.points)
+                objectPath = polygonPath(layer.tiledBounds.points)
 
             case .isometric:
                 let topPoint = CGPoint(x: 0, y: 0)
@@ -176,7 +176,7 @@ internal class SKTiledDebugDrawNode: SKNode {
                 objectPath = polygonPath(invertedPoints)
 
             case .hexagonal, .staggered:
-                objectPath = polygonPath(layer.bounds.points)
+                objectPath = polygonPath(layer.tiledBounds.points)
         }
 
         if let objectPath = objectPath {

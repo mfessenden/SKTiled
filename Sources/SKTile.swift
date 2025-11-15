@@ -216,7 +216,7 @@ open class SKTile: SKSpriteNode {
     internal var alignment: TileAlignmentHint = TileAlignmentHint.bottomLeft
 
     /// Returns the bounding box of the shape.
-    open var bounds: CGRect {
+    open var tileBounds: CGRect {
         return CGRect(x: 0, y: 0, width: tileSize.width, height: -tileSize.height)
     }
 

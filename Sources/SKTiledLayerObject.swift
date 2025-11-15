@@ -319,7 +319,7 @@ public class SKTiledLayerObject: SKEffectNode, SKTiledObject {
     }
     
     /// Returns the frame rectangle of the layer (used to draw bounds).
-    public var bounds: CGRect {
+    public var tiledBounds: CGRect {
         return CGRect(x: 0, y: 0, width: sizeInPoints.width, height: -sizeInPoints.height)
     }
     
@@ -329,7 +329,7 @@ public class SKTiledLayerObject: SKEffectNode, SKTiledObject {
      - returns: `[CGPoint]` array of points.
      */
     public func getVertices() -> [CGPoint] {
-        return self.bounds.points
+        return self.tiledBounds.points
     }
     
     /// Returns layer render statisics
@@ -965,7 +965,7 @@ public class SKTiledLayerObject: SKEffectNode, SKTiledObject {
      - parameter isDynamic: `Bool` layer is dynamic.
      */
     public func setupLayerPhysicsBoundary(isDynamic: Bool = false) {
-        physicsBody = SKPhysicsBody(edgeLoopFrom: self.bounds)
+        physicsBody = SKPhysicsBody(edgeLoopFrom: self.tiledBounds)
         physicsBody?.isDynamic = isDynamic
     }
     

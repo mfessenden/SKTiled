@@ -144,7 +144,8 @@ public enum TileUpdateMode: Int {
  | tileSize    | Map tile size (in pixels).                    |
  | renderSize  | Size of the map in pixels.                    |
  | orientation | Map orientation (orthogonal, isometric, etc.) |
- | bounds      | Map bounding rect.                            |
+-| bounds      | Map bounding rect.                            |
++| mapBounds   | Map bounding rect.                            |
  | tilesets    | Array of stored tileset instances.            |
  | allowZoom   | Allow camera zooming.                         |
  | layers      | Array of child layers.                        |
@@ -294,7 +295,7 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
     public internal(set) var autoResize: Bool = false
 
     /// Map bounds.
-    public var bounds: CGRect = CGRect.zero
+    public var mapBounds: CGRect = .zero  // formerly `bounds`; renamed to avoid conflict with SpriteKit's SKNode.bounds.
 
     /// Receive notifications from camera.
     public var receiveCameraUpdates: Bool = true
@@ -1983,8 +1984,8 @@ public class SKTilemap: SKEffectNode, SKTiledObject {
         // clamp the position of the map & parent nodes
         clampNodePosition(node: self, scale: TiledGlobals.default.contentScale)
 
-        // set the `SKTilemap.bounds` attribute
-        //let vertices = getVertices()
+        // update the local map bounding rect
+        mapBounds = frame
 
         // set the debug zPosition
         let debugStartZPosition = (lastZPosition + zDeltaForLayers)

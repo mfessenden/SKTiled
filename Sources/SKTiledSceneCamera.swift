@@ -39,7 +39,7 @@ import Cocoa
  
  Camera zoom rounding factor. Clamps the zoom value to the nearest whole pixel value in order to alleviate cracks appearing in between individual tiles.
  
- ### Properties 
+ ### Properties
  
  | Property | Description                                 |
  |----------|---------------------------------------------|
@@ -63,7 +63,7 @@ public enum CameraZoomClamping: CGFloat {
  
  Determines how an attached controller interacts with the camera.
  
- ### Properties 
+ ### Properties
  
  | Property | Description                                 |
  |----------|---------------------------------------------|
@@ -88,7 +88,7 @@ public enum CameraControlMode: Int {
  The camera defines a position in the scene to render the scene from, with a reference to the `SKTiledSceneDelegate.worldNode`
  to interact with tile maps.
  
- ### Properties 
+ ### Properties
  
  | Property      | Description                                                       |
  |---------------|-------------------------------------------------------------------|
@@ -107,7 +107,7 @@ public class SKTiledSceneCamera: SKCameraNode {
     unowned let world: SKNode
     
     /// Camera bounds.
-    internal var bounds: CGRect
+    internal var viewBounds: CGRect
     
     /// Camera observers.
     internal var delegates: [SKTiledSceneCameraDelegate] = []
@@ -237,7 +237,7 @@ public class SKTiledSceneCamera: SKCameraNode {
      */
     public init(view: SKView, world node: SKNode) {
         world = node
-        bounds = view.bounds
+        viewBounds = view.bounds
         super.init()
         
         // add the overlay
@@ -428,7 +428,7 @@ public class SKTiledSceneCamera: SKCameraNode {
      - parameter bounds: `CGRect` camera view bounds.
      */
     public func setCameraBounds(bounds: CGRect) {
-        self.bounds = bounds
+        self.viewBounds = bounds
         
         // notify delegates
         for delegate in delegates {
@@ -599,7 +599,7 @@ public class SKTiledSceneCamera: SKCameraNode {
      - returns: `[CGPoint]` array of points.
      */
     public func getVertices() -> [CGPoint] {
-        return self.bounds.points
+        return self.viewBounds.points
     }
 }
 
@@ -672,7 +672,7 @@ extension SKTiledSceneCamera {
     /// Custom camera info description.
     override public var description: String {
         guard let scene = scene else { return "Camera: "}
-        let rect = CGRect(origin: scene.convert(position, from: self), size: bounds.size)
+        let rect = CGRect(origin: scene.convert(position, from: self), size: viewBounds.size)
         let uiScale = getContentScaleFactor()
         let scaleString = (uiScale > 1) ? ", scale: \(uiScale)" : ""
         let sizeString = "origin: \(Int(rect.origin.x)), \(Int(rect.origin.y)), size: \(Int(rect.size.width)) x \(Int(rect.size.height))\(scaleString)"
@@ -683,7 +683,7 @@ extension SKTiledSceneCamera {
     
     override public var debugDescription: String {
         let clampString = (zoomClamping != .none) ? ", clamp: \(zoomClamping.minimum)" : ""
-        return "Camera: \(bounds.roundTo()), zoom: \(zoom.roundTo())\(clampString)"
+        return "Camera: \(viewBounds.roundTo()), zoom: \(zoom.roundTo())\(clampString)"
     }
 }
 
